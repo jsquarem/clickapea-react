@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
 import userService from "../../utils/userService";
-
+import { useNavigate } from "react-router-dom";
 
 export default function SignUpPage(props) {
   const [error, setError] = useState("");
@@ -14,7 +14,12 @@ export default function SignUpPage(props) {
     bio: "",
   });
 
-  const [selectedFile, setSelectedFile] = useState('')
+  const [selectedFile, setSelectedFile] = useState('');
+
+  // initialized the react router hook, which allows you to programatically 
+  // change routes, aka after our signup call in the handleSubmit
+  const navigate = useNavigate();
+
 
   function handleChange(e){
     setState({
@@ -49,10 +54,16 @@ export default function SignUpPage(props) {
 
     try {
 
-      await userService.signup(formData);
+      await userService.signup(formData); // THIS IS WHERE WE ARE MAKING A REQUEST TO THE SERVER, the response is handled inside function .thens, go at the look at the function 
+      // After the line above, 
+      // the new token is in localstorage, 
+      // so now we can update state
+      props.handleSignUpOrLogin() // <- call the function from the app component
+      // that gets the token from localstorage, and sets in our App's state
 
+      
       // navigate whereever after the user has logged in
-
+      navigate('/')// this accepts a route you defined in your App.js 
 
     } catch(err){
       // the error comes from the throw statement in the signup functions 

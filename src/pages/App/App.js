@@ -9,7 +9,7 @@ function App() {
   return (
     <Grid className="App">
       <Routes>
-          <Route path='/' element={<h1>Home Page</h1>} />
+          <Route path='/' element={<h1>THis is the HOME</h1>} />
           <Route path="/login" element={<LoginPage />} />
           
           <Route path="/signup" element={<SignupPage />} />

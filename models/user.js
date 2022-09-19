@@ -6,11 +6,16 @@ const SALT_ROUNDS = 6;
 const userSchema = new mongoose.Schema({
   username: {type: String, required: true, lowercase: true, unique: true},
   email: {type: String, required: true, lowercase: true, unique: true},
-  password: String
+  password: String,
+  bio: String,
+  photoUrl: String
 }, {
   timestamps: true
 });
 
+
+// an event listener for whenever a user document
+// is being transformed into JSON (Thats happening in our contoller)
 userSchema.set('toJSON', {
   transform: function(doc, ret) {
     // remove the password property when serializing doc to JSON
@@ -40,17 +45,20 @@ userSchema.pre('save', function(next) {
     if (err) return next(err);
     // replace the user provided password with the hash
     user.password = hash;
-    next();
+    next(); // tell user.save to add the stuff to the database, 
+    // now that we've encrypted the user's password
   });
 });
 
 userSchema.methods.comparePassword = function(tryPassword, cb) {
     console.log(cb, ' this is cb')
   // 'this' represents the document that you called comparePassword on
+  // this.password is the hash in the database
   bcrypt.compare(tryPassword, this.password, function(err, isMatch) {
     if (err) return cb(err);
 
-    cb(null, isMatch);
+    cb(null, isMatch); // tell the comparePassword function 
+    // in our Login controller, the passwords match, or they don't
   });
 };
 

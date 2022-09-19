@@ -8,8 +8,9 @@ function signup(user) {
     headers: new Headers({'Content-Type': 'application/json'}),  // If you are sending a file/photo over
     // what do datatype do you need to change this too?
     body: JSON.stringify(user)
-  })
+  }) // <- this code and above is what makes the request to the server
   .then(res => {
+    // Inside the .then, is the response from the server!
     if (res.ok) return res.json();
     // Probably a duplicate email
     throw new Error('Email already taken!');
@@ -33,8 +34,9 @@ function login(creds) {
     method: 'POST',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(creds)
-  })
+  }) // <- the request to the server!
   .then(res => {
+    // response from the server!
     // Valid login if we have a status of 2xx (res.ok)
     if (res.ok) return res.json();
     throw new Error('Bad Credentials!');

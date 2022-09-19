@@ -13,7 +13,9 @@ const app = express();
 // add in when the app is ready to be deployed
 // app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(express.json());
+app.use(express.json()); // this line allows our server
+// to process http requests that have a body with JSON
+
 app.use(express.static(path.join(__dirname, 'build')));
 // Configure the auth middleware
 // This decodes the jwt token, and assigns

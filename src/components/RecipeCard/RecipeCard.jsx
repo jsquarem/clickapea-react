@@ -1,16 +1,31 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import Accordion from 'react-bootstrap/Accordion';
-import { ListGroup } from 'react-bootstrap';
+import IngredientList from '../../components/IngredientList/IngredientList';
 import { useEffect } from 'react';
-import IngedientList from '../../components/';
 
-export default function RecipeCard({ recipe }) {
+export default function RecipeCard({ recipeObject }) {
   const [state, setState] = useState('');
+  const [recipe, setRecipe] = useState(null);
+  const [ingredients, setIngredients] = useState(null);
+  const [instructions, setInstructions] = useState();
+  // console.log(recipeObject, '<-recipeObject');
 
   useEffect(() => {
-    console.log(recipe, '<--recipe');
+    setRecipe(recipeObject.recipe);
   }, []);
 
-  return <h2>Recipe Import</h2>;
+  useEffect(() => {
+    if (recipe) {
+      setIngredients(recipe.extendedIngredients);
+    }
+    // console.log(ingredients, '<-ingredients');
+  }, [recipe]);
+  // console.log(recipe, '<-recipe');
+
+  return (
+    <div className="row">
+      <div className="col-12 col-lg-6 mt-4"></div>
+      {ingredients ? <IngredientList ingredients={ingredients} /> : ''}
+    </div>
+  );
 }

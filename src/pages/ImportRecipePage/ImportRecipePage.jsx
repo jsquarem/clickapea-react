@@ -15,7 +15,7 @@ export default function ImportRecipePage({ user }) {
   const [isLoading, setIsLoading] = useState(0);
   const [recipeURL, setRecipeURL] = useState({ url: '' });
   const [submit, setSubmit] = useState(false);
-  const [recipe, setRecipe] = useState({});
+  const [recipeObject, setRecipeObject] = useState(null);
 
   const handleRecipeImport = async (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ export default function ImportRecipePage({ user }) {
       console.log(recipeURL);
       const response = await recipeAPI.addRecipe(recipeURL);
       setRecipeURL({ url: '' });
-      setRecipe(response);
+      setRecipeObject(response);
       console.log(response, '<--response');
     } catch (err) {
       console.log(err.message);
@@ -41,7 +41,11 @@ export default function ImportRecipePage({ user }) {
       <div className="col-12 col-md-12">
         <Form className="form" onSubmit={handleRecipeImport}>
           <Form.Group className="mb-3" controlId="recipeImport">
-            <Form.Label>Import a new recipe!</Form.Label>
+            <Form.Label>
+              Import a new recipe!
+              <br />
+              https://tastesbetterfromscratch.com/pork-chile-verde/
+            </Form.Label>
             <div className="input-group">
               <Form.Control
                 type="text"
@@ -56,7 +60,7 @@ export default function ImportRecipePage({ user }) {
             </div>
           </Form.Group>
         </Form>
-        <RecipeCard recipe={recipe} />
+        {recipeObject ? <RecipeCard recipeObject={recipeObject} /> : ''}
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
   // occasions
   const occasionRaws = newRecipe.occasions;
   let occasionDocuments = [];
-  if (occasionRaws) occasionDocuments = await getOccaisions(occasionRaws);
+  if (occasionRaws) occasionDocuments = await getOccasions(occasionRaws);
   const analyzedInstructionsRaw = newRecipe.analyzedInstructions;
   let equipmentDocuments = [];
   if (analyzedInstructionsRaw)
@@ -108,7 +108,7 @@ const getEquipment = async (analyzedInstructionRaws) => {
   return equipmentDocuments;
 };
 
-const getOccaisions = async (occasionRaws) => {
+const getOccasions = async (occasionRaws) => {
   const occasionDocuments = [];
   for (const occasion of occasionRaws) {
     let occasionDocument = await Occaision.findOne({ name: occasion });

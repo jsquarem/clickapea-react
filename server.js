@@ -6,24 +6,18 @@ const favicon = require('serve-favicon');
 
 require('./config/database');
 
-// Require controllers here
-
 const app = express();
 
-// add in when the app is ready to be deployed
+// TODO: uncomment on deploy
 // app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(express.json()); // this line allows our server
-// to process http requests that have a body with JSON
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'build')));
-// Configure the auth middleware
-// This decodes the jwt token, and assigns
-// the user information to req.user
+
 app.use(require('./config/auth'));
-// api routes must be before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
-app.use('/api/recipe-books', require('./routes/api/recipeBooks'));
+app.use('/api/recipes', require('./routes/api/recipes'));
 // "catch all" route
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import userService from '../../utils/userService';
-import { useNavigate } from 'react-router-dom';
 import Accordion from 'react-bootstrap/Accordion';
-import Image from 'react-bootstrap/Image';
-import { useEffect } from 'react';
 import { ListGroup } from 'react-bootstrap';
 
 export default function RecipeBooks({ recipeBooks }) {
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [recipeBookList, setRecipeBookData] = useState([]);
-  // const [recipeBookData, setRecipeBookData] = useState('');
-  // useEffect(() => {
-  //   setRecipeBooksList(recipeBooks);
-  // }, [recipeBookList]);
-  const makeRecipeComponents = (recipeBook) => {
-    console.log('make ', recipeBook.recipes.length, ' recipes');
-    return recipeBook?.recipes?.map((recipe) => {
+  //   const [error, setError] = useState('');
+  //   const [isLoading, setIsLoading] = useState(true);
+  //   const [recipeBookList, setRecipeBookData] = useState([]);
+  console.log(recipeBooks, '<-recipeBooks');
+
+  const recipeBooksComponent = recipeBooks.map((recipeBook) => {
+    console.log(recipeBook, '<-recipeBook');
+    const recipeComponents = recipeBook.recipes?.map((recipe) => {
       return (
         <ListGroup.Item key={recipe._id}>
           <a
@@ -41,10 +35,7 @@ export default function RecipeBooks({ recipeBooks }) {
         </ListGroup.Item>
       );
     });
-  };
-
-  const recipeBooksComponent = recipeBooks?.recipeBooks?.map((recipeBook) => {
-    const recipeComponents = makeRecipeComponents(recipeBook);
+    console.log(recipeComponents, '<-recipeComponents');
     return (
       <Accordion.Item eventKey={recipeBook._id} key={recipeBook._id}>
         <Accordion.Header>{recipeBook.name}</Accordion.Header>
@@ -52,24 +43,6 @@ export default function RecipeBooks({ recipeBooks }) {
       </Accordion.Item>
     );
   });
-
-  // const MakeRecipeBook = (recipeBooks) => {
-  //   const recipeBookAccordians = [];
-  //   console.log(recipeBooks);
-  //   console.log(recipeBooks.recipeBooks, '<-recipeBooks.recipeBooks');
-  //   if (recipeBooks.recipeBooks.length > 0) {
-  //     recipeBooks.recipeBooks?.map((recipeBook, index) => {
-  //       console.log(recipeBook, '<-recipeBook');
-  //       recipeBookAccordians.push(recipeBook);
-  //       // <Accordion.Item eventKey={index}>
-  //       //   <Accordion.Header>{recipeBook.name}</Accordion.Header>
-  //       // </Accordion.Item>;
-  //     });
-  //   }
-  //   console.log(recipeBookAccordians, '<-recipeBookAccordians');
-  //   return recipeBookAccordians;
-  // };
-  //console.log(MakeRecipeBook(recipeBooks), '<-recipeBooks');
   return (
     <div className="row">
       <div className="col-12 col-md-6">

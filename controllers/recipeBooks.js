@@ -4,14 +4,19 @@ const Recipe = require('../models/recipe');
 const RecipeBook = require('../models/recipeBook');
 
 const create = async (req, res) => {
-  const profileID = req.user.profile._id;
+  const profileID = req.user.profile;
+  console.log(profileID, '<-profileID');
+  const recipeBookName = req.body.name;
+  let recipeBookDocument = {
+    name: '',
+    profile: '',
+  };
+  console.log(recipeBookName, '<-recipeBookName');
   try {
-    const profileDocument = await Profile.findById(profileID);
-    const recipeBookName = req.body.name;
     console.log(recipeBookName, '<-recipeBookName');
-    let recipeBookDocument = await RecipeBook.findOne({
+    recipeBookDocument = await RecipeBook.findOne({
       name: recipeBookName,
-      owner: profileDocument,
+      profile: profileID,
     });
     console.log(recipeBookDocument, '<--recipeBookDocument1');
     if (recipeBookDocument) {
@@ -20,7 +25,7 @@ const create = async (req, res) => {
     }
     recipeBookDocument = {
       name: recipeBookName,
-      owner: profileDocument,
+      profile: profileID,
     };
     console.log(recipeBookDocument, '<--recipeBookDocument2');
     try {

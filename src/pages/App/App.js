@@ -14,8 +14,6 @@ import userService from '../../utils/userService';
 function App() {
   const [user, setUser] = useState(userService.getUser());
 
-  // we pass this down, whenever we get a new token back from the server
-  // we need to decode it and put that object in state
   function handleSignUpOrLogin() {
     setUser(userService.getUser());
   }
@@ -26,8 +24,11 @@ function App() {
       <Container className="p-3">
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route path="/recipe-books" element={<RecipeBookPage />} />
-          <Route path="/import-recipe" element={<ImportRecipePage />} />
+          <Route path="/recipes/books" element={<RecipeBookPage />} />
+          <Route
+            path="/recipes/import"
+            element={<ImportRecipePage user={user} />}
+          />
           <Route
             path="/login"
             element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}

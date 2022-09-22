@@ -18,8 +18,8 @@ export default function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/recipe-books">Recipe Books</Nav.Link>
-            <Nav.Link href="/import-recipe">Import Recipe</Nav.Link>
+            <Nav.Link href="/recipes/books">Recipe Books</Nav.Link>
+            <Nav.Link href="/recipes/import">Import Recipe</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link href="/login">Login</Nav.Link>

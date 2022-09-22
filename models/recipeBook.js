@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const recipeBookSchema = new mongoose.Schema(
   {
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
+    profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
     image: {
       type: String,
     },

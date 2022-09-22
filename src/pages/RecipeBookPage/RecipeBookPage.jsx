@@ -13,7 +13,8 @@ export default function RecipeBookPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(0);
   const [recipeBooks, setRecipeBooks] = useState([]);
-  const [newRecipeBook, setNewRecipeBook] = useState({
+  const [newRecipeBook, setNewRecipeBook] = useState({});
+  const [recipeBook, setRecipeBook] = useState({
     name: '',
   });
   const [recipe, setRecipe] = useState('');
@@ -23,36 +24,39 @@ export default function RecipeBookPage() {
       try {
         const response = await recipeBookAPI.getBooks();
         console.log(response, '<-reponse');
-        setRecipeBooks(response);
+        setRecipeBooks(response.recipeBooks);
         setIsLoading(false);
       } catch (err) {
         console.log(err, '<--err');
       }
     };
     fetchRecipeBooks();
-  }, []);
+  }, [newRecipeBook]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
     let response = [];
     try {
-      console.log(newRecipeBook, '<---newRecipeBook');
-      const response = await recipeBookAPI.create(newRecipeBook);
+      console.log(recipeBook, '<---newRecipeBook');
+      const response = await recipeBookAPI.create(recipeBook);
       console.log(response);
     } catch (err) {
       console.log(err.message);
     }
-    setRecipeBooks([response.recipeBook, ...recipeBooks]);
+    setRecipeBooks([response.recipeBook, recipeBooks]);
+    setNewRecipeBook(response.recipeBook);
   };
 
   function handleChangeBook(e) {
-    setNewRecipeBook({ ...newRecipeBook, name: e.target.value });
+    console.log(recipeBook, '<-recipeBook');
+    setRecipeBook({ ...recipeBook, name: e.target.value });
   }
   function handleChangeRecipe(e) {
-    setRecipe(recipe);
+    //setRecipe(recipe);
   }
 
-  // async function handleSearch(e) {
+  //   TODO:
+  //   async function handleSearch(e) {
   //   e.preventDefault();
 
   //   try {
@@ -77,7 +81,7 @@ export default function RecipeBookPage() {
                 type="text"
                 placeholder="ex. Quick Pizza"
                 name="recipeBookName"
-                value={newRecipeBook.name}
+                value={recipeBook.name}
                 onChange={handleChangeBook}
               />
               <Button variant="outline-secondary" type="submit">
@@ -101,7 +105,7 @@ export default function RecipeBookPage() {
           </Form.Group>
         </Form>
       </div>
-      {!isLoading ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
+      {recipeBooks.length > 0 ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
     </div>
   );
 }

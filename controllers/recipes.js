@@ -4,17 +4,12 @@ const RecipeBook = require('../models/recipeBook');
 
 const index = async (req, res) => {
   const recipeID = req.params.recipeID;
-  let profileDocument = await Profile.findOne({
-    email: 'jeffjmart@gmail.com',
-  });
-  if (!profileDocument)
-    profileDocument = await Profile.create({
-      name: 'Jeff Martin',
-      email: 'jeffjmart@gmail.com',
-    });
-  const recipeBooks = await RecipeBook.find({
-    owner: profileDocument,
-  });
+  const profileID = req.user.profile._id;
+  try {
+    const profileDocument = await Profile.findById(profileID);
+  } catch (err) {
+    console.log(err);
+  }
 
   recipeBooks.forEach((recipeBook) => {});
   console.log(recipeBooks, '<-recipeBookDocuments');

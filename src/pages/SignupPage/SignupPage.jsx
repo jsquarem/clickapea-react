@@ -1,144 +1,140 @@
-import React, { useState } from "react";
-import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
-import { Button, Form, Grid, Header, Image, Segment } from "semantic-ui-react";
-import userService from "../../utils/userService";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import userService from '../../utils/userService';
+import { useNavigate } from 'react-router-dom';
 
-export default function SignUpPage(props) {
-  const [error, setError] = useState("");
+export default function SignUpPage({ handleSignUpOrLogin }) {
+  const [error, setError] = useState('');
+  const [checked, setChecked] = useState(true);
   const [state, setState] = useState({
-    username: "",
-    email: "",
-    password: "",
-    passwordConf: "",
-    bio: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    newsletter: checked,
   });
 
-  const [selectedFile, setSelectedFile] = useState('');
-
-  // initialized the react router hook, which allows you to programatically 
+  // initialized the react router hook, which allows you to programatically
   // change routes, aka after our signup call in the handleSubmit
   const navigate = useNavigate();
 
-
-  function handleChange(e){
-    setState({
-      ...state,
-      [e.target.name]: e.target.value
-    })
+  function handleChange(e) {
+    if (e.target.name === 'newsletter') {
+      setState({
+        ...state,
+        newsletter: !checked,
+      });
+      setChecked(!checked);
+    } else {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+    }
   }
 
-  async function handleSubmit(e){
-    e.preventDefault(); // this stop the browser from submitting the form!
-
-    // Create formData, so we can send over our file, using multipart/formdata header
-    // which sends over the basic inputs, and then the file
-
-    const formData = new FormData(); //< - this constructor from the browser allows us to create data
-    // now we can set key value pairs on the formData
-    formData.append('photo', selectedFile);
-    // Line by line tactic
-    // formData.append('username', state.username);
-    // formData.append('email', state.email);
-    // and so on for the rest or our state
-
-    // A more robust way to generate the rest of the formData is using a loop!
-    // loop over our state object using a for ... in loop
-    for (let key in state){
-      
-      formData.append(key, state[key])
-    }
-
-    console.log(formData, ' <- form Data, you cant see this!', 'you have to loop over it')
-    console.log(formData.forEach((item) => console.log(item)), ' < This lets you see the key values in formData')
-
+  async function handleSubmit(e) {
+    e.preventDefault();
     try {
-
-      await userService.signup(formData); // THIS IS WHERE WE ARE MAKING A REQUEST TO THE SERVER, the response is handled inside function .thens, go at the look at the function 
-      // After the line above, 
-      // the new token is in localstorage, 
+      await userService.signup(state); // THIS IS WHERE WE ARE MAKING A REQUEST TO THE SERVER, the response is handled inside function .thens, go at the look at the function
+      // After the line above,
+      // the new token is in localstorage,
       // so now we can update state
-      props.handleSignUpOrLogin() // <- call the function from the app component
+      handleSignUpOrLogin(); // <- call the function from the app component
       // that gets the token from localstorage, and sets in our App's state
 
-      
       // navigate whereever after the user has logged in
-      navigate('/')// this accepts a route you defined in your App.js 
-
-    } catch(err){
-      // the error comes from the throw statement in the signup functions 
+      navigate('/'); // this accepts a route you defined in your App.js
+    } catch (err) {
+      // the error comes from the throw statement in the signup functions
       // .then
       console.log(err.message);
-      setError(err.message)
+      setError(err.message);
     }
-  } 
-
-  function handleFileInput(e){
-    console.log(e.target.files, " < - this is e.target.files!")
-    setSelectedFile(e.target.files[0]);
   }
 
   return (
-    <Grid textAlign="center" style={{ height: "100vh", width: '100vw' }} verticalAlign="middle">
-      <Grid.Column style={{ maxWidth: 450 }}>
-        <Header as="h2" color="teal" textAlign="center">
-          <Image src="https://i.imgur.com/s4LrnlU.png" /> Sign Up
-        </Header>
-        <Form onSubmit={handleSubmit}>
-          <Segment stacked>
-            <Form.Input
-              name="username"
-              placeholder="username"
-              value={state.username}
-              onChange={handleChange}
-              required
-            />
-            <Form.Input
-              type="email"
-              name="email"
-              placeholder="email"
-              value={state.email}
-              onChange={handleChange}
-              required
-            />
-            <Form.Input
-              name="password"
-              type="password"
-              placeholder="password"
-              value={state.password}
-              onChange={handleChange}
-              required
-            />
-            <Form.Input
-              name="passwordConf"
-              type="password"
-              placeholder="Confirm Password"
-              value={state.passwordConf}
-              onChange={handleChange}
-              required
-            />
-            <Form.TextArea
-              label="bio"
-              name="bio"
-              placeholder="Tell us more about your dogs..."
-              value={state.bio}
-              onChange={handleChange}
-            />
-            <Form.Field>
-              <Form.Input
-                type="file"
-                name="photo"
-                placeholder="upload image"
-                onChange={handleFileInput}
+    <div className="col-12 col-md-4 offset-md-4">
+      <h3 className="text-center">Sign Up</h3>
+      <Card>
+        <Card.Body>
+          <Form className="form" onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="First Name"
+                name="firstName"
+                value={state.firstName}
+                onChange={handleChange}
+                required
               />
-            </Form.Field>
-            <Button type="submit" className="btn">
-              Signup
-            </Button>
-          </Segment>
-          {error ? <ErrorMessage error={error} /> : null}
-        </Form>
-      </Grid.Column>
-    </Grid>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                name="lastName"
+                value={state.lastName}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                value={state.email}
+                onChange={handleChange}
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={state.password}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formPasswordConfirm">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm Password"
+                name="passwordConfirm"
+                value={state.passwordConfirm}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                name="newsletter"
+                label="Sign up for newsletter"
+                checked={checked}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <div className="d-grid gap-2">
+              <Button variant="primary" type="submit">
+                Sign Up
+              </Button>
+            </div>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
   );
 }

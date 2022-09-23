@@ -8,67 +8,54 @@ import EquipmentList from '../EquipmentList/EquipmentList';
 import RecipeInstructions from '../RecipeInstructions/RecipeInstructions';
 import AddToRecipeBookButton from '../AddToRecipeBookButton/AddToRecipeBookButton';
 
-export default function RecipeCard({ recipeObject, recipeBooksObject }) {
-  const [recipe, setRecipe] = useState(null);
-  const [ingredients, setIngredients] = useState(null);
-  const [instructions, setInstructions] = useState([]);
-  const [recipeImage, setRecipeImage] = useState(null);
-  const [recipeExtras, setRecipeExtras] = useState(null);
-  const [recipeName, setRecipeName] = useState(null);
-  const [equipmentList, setEquipmentList] = useState(null);
-  const [recipeInstructions, setRecipeInstructions] = useState(null);
-  const [recipeBooks, setRecipeBooks] = useState(null);
-  // console.log(recipeObject, '<-recipeObject');
+export default function RecipeCard({ recipeObject }) {
+  const [recipeExtras, setRecipeExtras] = useState({});
 
   useEffect(() => {
-    setRecipe(recipeObject.recipe);
+    setRecipeExtras({
+      preparationMinutes: recipeObject.recipe.preparationMinutes,
+      cookingMinutes: recipeObject.recipe.cookingMinutes,
+      readyInMinutes: recipeObject.recipe.readyInMinutes,
+      vegetarian: recipeObject.recipe.vegetarian,
+      vegan: recipeObject.recipe.vegan,
+      glutenFree: recipeObject.recipe.glutenFree,
+      dairyFree: recipeObject.recipe.dairyFree,
+      veryHealthy: recipeObject.recipe.veryHealthy,
+      taste: recipeObject.recipe.taste,
+    });
   }, []);
-
-  useEffect(() => {
-    if (recipe) {
-      setIngredients(recipe.extendedIngredients);
-      setRecipeImage(recipe.image);
-      setRecipeName(recipe.title);
-      setEquipmentList(recipe.equipment);
-      setRecipeInstructions(recipe.analyzedInstructions[0].steps);
-      setRecipeBooks(recipeBooksObject);
-      setRecipeExtras({
-        preparationMinutes: recipe.preparationMinutes,
-        cookingMinutes: recipe.cookingMinutes,
-        readyInMinutes: recipe.readyInMinutes,
-        vegetarian: recipe.vegetarian,
-        vegan: recipe.vegan,
-        glutenFree: recipe.glutenFree,
-        dairyFree: recipe.dairyFree,
-        veryHealthy: recipe.veryHealthy,
-        taste: recipe.taste,
-      });
-    }
-  }, [recipe]);
-  // console.log(recipe, '<-recipe');
+  console.log(recipeObject, '<-recipeObject in recipecard');
 
   return (
     <>
       <div className="row">
-        {recipeBooks ? <AddToRecipeBookButton recipeBooks={recipeBooks} /> : ''}
-        {recipeName ? <h3 className="text-center">{recipeName}</h3> : ''}
-        <div className="col-12 col-md-6">
-          {recipeImage ? <RecipeImage recipeImage={recipeImage} /> : ''}
+        <div className="col-12">
+          <div className="row">
+            <div className="col-6">
+              <h2 className="text-center pt-2">{recipeObject.recipe.title}</h2>
+            </div>
+            <div className="col-6">
+              <AddToRecipeBookButton recipeID={recipeObject.recipe._id} />
+            </div>
+          </div>
         </div>
         <div className="col-12 col-md-6">
-          {ingredients ? <IngredientList ingredients={ingredients} /> : ''}
-          {recipeExtras ? <RecipeExtras recipeExtras={recipeExtras} /> : ''}
+          <RecipeImage recipeImage={recipeObject.recipe.image} />
+        </div>
+        <div className="col-12 col-md-6">
+          <IngredientList
+            ingredients={recipeObject.recipe.extendedIngredients}
+          />
+          <RecipeExtras recipeExtras={recipeExtras} />
         </div>
       </div>
       <div className="row">
-        {equipmentList ? <EquipmentList equipmentList={equipmentList} /> : ''}
+        <EquipmentList equipmentList={recipeObject.recipe.equipment} />
       </div>
       <div className="row">
-        {recipeInstructions ? (
-          <RecipeInstructions recipeInstructions={recipeInstructions} />
-        ) : (
-          ''
-        )}
+        <RecipeInstructions
+          recipeInstructions={recipeObject.recipe.analyzedInstructions[0].steps}
+        />
       </div>
     </>
   );

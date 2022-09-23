@@ -1,28 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import * as recipeAPI from '../../utils/recipeAPI';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 
 export default function ImportRecipePage({ user }) {
   const [error, setError] = useState('');
   const [recipeURL, setRecipeURL] = useState({ url: '' });
   const [recipeObject, setRecipeObject] = useState(null);
-  const [recipeBooksObject, setRecipeBooksObject] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleRecipeImport = async (e) => {
+  useEffect(() => {
+    if (loading) {
+      getRecipe(recipeURL).then((response) => {
+        setRecipeObject(response);
+        setLoading(false);
+      });
+    }
+  }, [loading]);
+
+  const getRecipe = async (url) => {
+    const responseRecipe = await recipeAPI.addRecipe(recipeURL);
+    setRecipeURL({ url: '' });
+    console.log(responseRecipe, '<-responseRecipe');
+    return responseRecipe;
+  };
+
+  const handleRecipeImport = (e) => {
     e.preventDefault();
     try {
-      console.log(recipeURL, '<---recipeURL');
-      recipeURL.profile = user.profile;
-      console.log(recipeURL);
-      const responseRecipe = await recipeAPI.addRecipe(recipeURL);
-      const responseRecipeBooks = await recipeBookAPI.getBooks();
-      setRecipeBooksObject(responseRecipeBooks.recipeBooks);
-      setRecipeObject(responseRecipe);
-      setRecipeURL({ url: '' });
+      setRecipeURL({ ...recipeURL, profile: user.profile });
+      setLoading(true);
     } catch (err) {
       console.log(err.message);
     }
@@ -59,16 +70,12 @@ export default function ImportRecipePage({ user }) {
           </Form>
         </div>
       </div>
-      <div className="row">
-        {recipeObject && recipeBooksObject ? (
-          <RecipeCard
-            recipeObject={recipeObject}
-            recipeBooksObject={recipeBooksObject}
-          />
-        ) : (
-          ''
-        )}
-      </div>
+      {loading ? <RecipeLoading /> : ''}
+      {recipeObject && !loading ? (
+        <RecipeCard recipeObject={recipeObject} />
+      ) : (
+        ''
+      )}
     </>
   );
 }

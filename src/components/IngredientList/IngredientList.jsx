@@ -13,6 +13,8 @@ export default function IngredientList({ ingredients }) {
 
   const ingredientsTable = [];
   if (ingredientState) {
+    console.log(ingredientState, '<-ingredientState');
+
     let row = '';
     for (let i = 0; i < ingredientState.length; i += 2) {
       let ingredientOne = '';

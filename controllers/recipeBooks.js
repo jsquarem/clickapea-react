@@ -42,19 +42,22 @@ const create = async (req, res) => {
 };
 
 const add = async (req, res) => {
+  console.log(req.params, '<-req.params');
   const recipeBookID = req.params.recipeBookID;
   const recipeID = req.params.recipeID;
   const recipeBookDocument = await RecipeBook.findOne({ _id: recipeBookID });
-  console.log(recipeBookDocument, '<-recipeBookDocument');
+  // console.log(recipeBookDocument, '<-recipeBookDocument');
   if (recipeBookDocument.recipes.includes(recipeID)) {
-    return res.redirect(`/recipe-books`);
+    return res.status(304).json({
+      error: 'Recipe already exists in book',
+    });
   }
   const recipeDocument = await Recipe.findOne({ _id: recipeID });
-  console.log(recipeDocument, '<-recipeDocument');
+  // console.log(recipeDocument, '<-recipeDocument');
   recipeBookDocument.recipes.push(recipeDocument);
   await recipeBookDocument.save();
-
-  return res.redirect(`/recipe-books`);
+  
+  return res.status(200).json(recipeBookDocument);
 };
 
 const index = async (req, res) => {

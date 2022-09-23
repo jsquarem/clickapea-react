@@ -8,8 +8,8 @@ import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
 
 export default function RecipeBookPage() {
   const [error, setError] = useState('');
-  // const [isLoading, setIsLoading] = useState(0);
-  const [recipeBooks, setRecipeBooks] = useState([]);
+  const [loading, setLoading] = useState(0);
+  const [recipeBooks, setRecipeBooks] = useState(null);
   const [newRecipeBook, setNewRecipeBook] = useState({});
   const [recipeBook, setRecipeBook] = useState({
     name: '',
@@ -17,35 +17,32 @@ export default function RecipeBookPage() {
   const [recipe, setRecipe] = useState('');
 
   useEffect(() => {
-    const fetchRecipeBooks = async () => {
-      try {
-        const response = await recipeBookAPI.getBooks();
-        console.log(response, '<-reponse');
+    setLoading(true);
+    try {
+      recipeBookAPI.getBooks().then((response) => {
         setRecipeBooks(response.recipeBooks);
-        // setIsLoading(false);
-      } catch (err) {
-        console.log(err, '<--err');
-      }
-    };
-    fetchRecipeBooks();
+        setLoading(false);
+      });
+    } catch (err) {}
   }, [newRecipeBook]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    let response = [];
+    setLoading(true);
     try {
-      console.log(recipeBook, '<---newRecipeBook');
-      const response = await recipeBookAPI.create(recipeBook);
-      console.log(response);
+      const response = await recipeBookAPI
+        .create(recipeBook)
+        .then((response) => {
+          setRecipeBooks([response.recipeBook, recipeBooks]);
+          setNewRecipeBook(response.recipeBook);
+          setLoading(false);
+        });
     } catch (err) {
       console.log(err.message);
     }
-    setRecipeBooks([response.recipeBook, recipeBooks]);
-    setNewRecipeBook(response.recipeBook);
   };
 
   function handleChangeBook(e) {
-    console.log(recipeBook, '<-recipeBook');
     setRecipeBook({ ...recipeBook, name: e.target.value });
   }
   function handleChangeRecipe(e) {
@@ -102,7 +99,7 @@ export default function RecipeBookPage() {
           </Form.Group>
         </Form>
       </div>
-      {recipeBooks.length > 0 ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
+      {recipeBooks && !loading ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
     </div>
   );
 }

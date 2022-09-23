@@ -7,11 +7,9 @@ export default function RecipeBooks({ recipeBooks }) {
   //   const [error, setError] = useState('');
   //   const [isLoading, setIsLoading] = useState(true);
   //   const [recipeBookList, setRecipeBookData] = useState([]);
-  console.log(recipeBooks, '<-recipeBooks');
 
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
-    console.log(recipeBook, '<-recipeBook');
-    const recipeComponents = recipeBook.recipes?.map((recipe) => {
+    const recipeComponents = recipeBook?.recipes?.map((recipe) => {
       return (
         <ListGroup.Item key={recipe._id}>
           <a
@@ -21,11 +19,7 @@ export default function RecipeBooks({ recipeBooks }) {
           >
             <div className="d-flex w-100 align-items-center">
               <div className="col-2 col-lg-1 text-center">
-                <img
-                  style={{ 'max-height': '40px' }}
-                  src={recipe.image}
-                  alt=""
-                />
+                <img style={{ maxHeight: '40px' }} src={recipe.image} alt="" />
               </div>
               <div className="col-10 col-lg-11 px-2">
                 <h5 className="m-0">{recipe.title}</h5>
@@ -35,7 +29,6 @@ export default function RecipeBooks({ recipeBooks }) {
         </ListGroup.Item>
       );
     });
-    console.log(recipeComponents, '<-recipeComponents');
     return (
       <Accordion.Item eventKey={recipeBook._id} key={recipeBook._id}>
         <Accordion.Header>{recipeBook.name}</Accordion.Header>

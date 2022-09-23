@@ -13,8 +13,9 @@ export function addRecipe(recipeURL) {
     },
   }).then((res) => {
     if (res.ok) return res.json();
-    throw new Error(
-      'Bad Credentials, Check Your server terminal for more information'
-    );
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
   });
 }

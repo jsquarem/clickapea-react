@@ -5,20 +5,20 @@ const RecipeBook = require('../models/recipeBook');
 
 const create = async (req, res) => {
   const profileID = req.user.profile;
-  console.log(profileID, '<-profileID');
+  // console.log(profileID, '<-profileID');
   const recipeBookName = req.body.name;
   let recipeBookDocument = {
     name: '',
     profile: '',
   };
-  console.log(recipeBookName, '<-recipeBookName');
+  // console.log(recipeBookName, '<-recipeBookName');
   try {
-    console.log(recipeBookName, '<-recipeBookName');
+    // console.log(recipeBookName, '<-recipeBookName');
     recipeBookDocument = await RecipeBook.findOne({
       name: recipeBookName,
       profile: profileID,
     });
-    console.log(recipeBookDocument, '<--recipeBookDocument1');
+    // console.log(recipeBookDocument, '<--recipeBookDocument1');
     if (recipeBookDocument) {
       console.log('recipe exists');
       return res.status(409).json({ err: 'Recipe Book Exists for User' });
@@ -27,11 +27,11 @@ const create = async (req, res) => {
       name: recipeBookName,
       profile: profileID,
     };
-    console.log(recipeBookDocument, '<--recipeBookDocument2');
+    // console.log(recipeBookDocument, '<--recipeBookDocument2');
     try {
       recipeBookDocument = await RecipeBook.create(recipeBookDocument);
       console.log('created one');
-      console.log(recipeBookDocument, '<-recipeBookDocument3');
+      // console.log(recipeBookDocument, '<-recipeBookDocument3');
       res.status(201).json({ recipeBookDocument });
     } catch (err) {
       res.status(400).json({ err });
@@ -56,7 +56,7 @@ const add = async (req, res) => {
   // console.log(recipeDocument, '<-recipeDocument');
   recipeBookDocument.recipes.push(recipeDocument);
   await recipeBookDocument.save();
-  
+
   return res.status(200).json(recipeBookDocument);
 };
 
@@ -67,7 +67,7 @@ const index = async (req, res) => {
     const recipeBooks = await RecipeBook.find({
       owner: profileDocument,
     }).populate({ path: 'recipes', select: '_id title image' });
-    console.log(recipeBooks, '<-recipeBookDocuments');
+    // console.log(recipeBooks, '<-recipeBookDocuments');
     return res.status(201).json({ recipeBooks });
   } catch (err) {
     return res

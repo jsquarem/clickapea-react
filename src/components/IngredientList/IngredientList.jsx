@@ -20,7 +20,7 @@ export default function IngredientList({ ingredients }) {
       let ingredientOne = '';
       let ingredientTwo = '';
       ingredientOne = ingredientState[i].original;
-      ingredientTwo = ingredientState[i + 1].original;
+      ingredientTwo = ingredientState[i + 1]?.original;
       row = (
         <tr key={i}>
           <td>{ingredientOne}</td>

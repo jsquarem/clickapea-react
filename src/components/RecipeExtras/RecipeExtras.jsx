@@ -21,56 +21,46 @@ export default function RecipeExtras({ recipeExtras }) {
           </div>
           <div className="col-12 text-center">
             <div className="row">
-              {recipeExtras.vegetarian ? (
+              {recipeExtras.vegetarian && (
                 <div className="col-auto text-center mt-5">
                   <img src="https://spoonacular.com/application/frontend/images/badges/vegetarian.svg" />
                   <br />
                   Vegetarian
                 </div>
-              ) : (
-                ''
               )}
-              {recipeExtras.vegan ? (
+              {recipeExtras.vegan && (
                 <div className="col-auto text-center mt-5">
                   <img src="https://spoonacular.com/application/frontend/images/badges/vegan.svg" />
                   <br />
                   Vegan
                 </div>
-              ) : (
-                ''
               )}
-              {recipeExtras.glutenFree ? (
+              {recipeExtras.glutenFree && (
                 <div className="col-auto text-center mt-5">
                   <img src="https://spoonacular.com/application/frontend/images/badges/gluten-free.svg" />
                   <br />
                   Gluten Free
                 </div>
-              ) : (
-                ''
               )}
-              {recipeExtras.dairyFree ? (
+              {recipeExtras.dairyFree && (
                 <div className="col-auto text-center mt-5">
                   <img src="https://spoonacular.com/application/frontend/images/badges/dairy-free.svg" />
                   <br />
                   Dairy Free
                 </div>
-              ) : (
-                ''
               )}
-              {recipeExtras.veryHealthy ? (
+              {recipeExtras.veryHealthy && (
                 <div className="col-auto text-center mt-5">
                   <img src="https://spoonacular.com/application/frontend/images/badges/protein.svg" />
                   <br />
                   Very Healthy
                 </div>
-              ) : (
-                ''
               )}
             </div>
           </div>
         </div>
         <div className="col-12 col-md-6">
-          <TasteChart tasteData={recipeExtras.taste} />
+          {recipeExtras?.taste && <TasteChart tasteData={recipeExtras.taste} />}
         </div>
       </div>
     </div>

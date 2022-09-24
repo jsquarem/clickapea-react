@@ -19,3 +19,21 @@ export function addRecipe(recipeURL) {
     });
   });
 }
+
+export function searchRecipes(query) {
+  const queryURL = `/recipe/search/${query}`;
+  return fetch('/recipe/search', {
+    method: 'GET',
+    body: JSON.stringify(queryURL),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + tokenService.getToken(),
+    },
+  }).then((res) => {
+    if (res.ok) return res.json();
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
+  });
+}

@@ -3,8 +3,12 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
+import * as recipeAPI from '../../utils/recipeAPI';
 import { useEffect } from 'react';
 import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export default function RecipeBookPage() {
   const [error, setError] = useState('');
@@ -15,6 +19,16 @@ export default function RecipeBookPage() {
     name: '',
   });
   const [recipe, setRecipe] = useState('');
+  const [selections, setSelections] = useState([]);
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    if (selections.length > 3) {
+      recipeAPI.searchRecipes(selections).then((response) => {
+        setOptions(response);
+      });
+    }
+  }, [selections]);
 
   useEffect(() => {
     setLoading(true);
@@ -46,23 +60,8 @@ export default function RecipeBookPage() {
     setRecipeBook({ ...recipeBook, name: e.target.value });
   }
   function handleChangeRecipe(e) {
-    //setRecipe(recipe);
+    setRecipe(recipe);
   }
-
-  //   TODO:
-  //   async function handleSearch(e) {
-  //   e.preventDefault();
-
-  //   try {
-  //     await userService.login(state);
-  //     // Route to wherever you want!
-  //     navigate('/');
-  //   } catch (err) {
-  //     // Invalid user data (probably duplicate email)
-  //     // this is from the throw block in the userService.login first then function
-  //     setError(err.message);
-  //   }
-  // }
 
   return (
     <div className="row">
@@ -87,14 +86,15 @@ export default function RecipeBookPage() {
       </div>
       <div className="col-12 col-md-6">
         <Form className="form">
-          <Form.Group className="mb-3" controlId="recipeSearch">
-            <Form.Label>Search for recipes in our database</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Start typing..."
-              name="recipeSearch"
-              value={recipe}
-              onChange={handleChangeRecipe}
+          <Form.Group>
+            <Form.Label>Single Selection</Form.Label>
+            <Typeahead
+              id="basic-typeahead-single"
+              labelKey="name"
+              onChange={setSelections}
+              options={options}
+              placeholder="Choose a state..."
+              selected={selections}
             />
           </Form.Group>
         </Form>

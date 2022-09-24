@@ -21,50 +21,47 @@ ChartJS.register(
 );
 
 export default function TasteChart({ tasteData }) {
-  const [tasteState, setTasteState] = useState(null);
-  const [chartState, setChartState] = useState(null);
+  // const [tasteState, setTasteState] = useState(null);
+  //const [chartState, setChartState] = useState(null);
   const labels = [];
   const data = [];
-  console.log(chartState, '<-chartState');
-  useEffect(() => {
-    setTasteState(tasteData);
-  }, []);
+  // console.log(chartState, '<-chartState');
+  // useEffect(() => {
+  //   setTasteState(tasteData);
+  // }, []);
+  // console.log(chartState, '<-chartState');
 
-  useEffect(() => {
-    if (tasteState) {
-      console.log(tasteState, '<-tasteState');
-      for (const [key, value] of Object.entries(tasteState)) {
-        if (key != 'spiciness') {
-          labels.push(key);
-          data.push(value);
-        }
-      }
-      console.log(data, '<-data');
-      const chartData = {
-        labels: labels,
-        datasets: [
-          {
-            data: data,
-            backgroundColor: 'rgba(13, 110, 253, 0.5)',
-            borderColor: 'rgba(13, 110, 253, 1)',
-          },
-        ],
-      };
-      const options = {
-        plugins: {
-          responsive: true,
-          legend: {
-            display: false,
-          },
-        },
-      };
-      setChartState({ data: chartData, options: options });
+  // useEffect(() => {
+  //   if (tasteState) {
+  console.log(tasteData, '<-tasteData');
+  for (const [key, value] of Object.entries(tasteData)) {
+    if (key != 'spiciness') {
+      labels.push(key);
+      data.push(value);
     }
-  }, [tasteState]);
+  }
+  console.log(data, '<-data');
+  const chartData = {
+    labels: labels,
+    datasets: [
+      {
+        data: data,
+        backgroundColor: 'rgba(13, 110, 253, 0.5)',
+        borderColor: 'rgba(13, 110, 253, 1)',
+      },
+    ],
+  };
+  const options = {
+    plugins: {
+      responsive: true,
+      legend: {
+        display: false,
+      },
+    },
+  };
+  //setChartState({ data: chartData, options: options });
+  //   }
+  // }, [tasteState]);
 
-  return chartState ? (
-    <Radar data={chartState.data} options={chartState.options} />
-  ) : (
-    ''
-  );
+  return <Radar data={chartData} options={options} />;
 }

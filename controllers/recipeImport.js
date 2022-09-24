@@ -233,8 +233,11 @@ const requestData = async (url, options) => {
     const data = await response.json();
     console.log(data, '<-data');
     return data;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch 3rd party API Data' });
   }
 };
 
@@ -300,8 +303,9 @@ const addRecipe = async (req, res) => {
       profile: profileDocument,
       recipeBooks: recipeBookDocuments,
     });
-  } catch (err) {
+  } catch (error) {
     console.log(err);
+    return res.status(500).json({ message: error.message });
   }
 };
 

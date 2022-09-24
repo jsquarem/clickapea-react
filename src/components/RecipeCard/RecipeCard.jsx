@@ -54,7 +54,7 @@ export default function RecipeCard({ recipeObject }) {
       </div>
       <div className="row">
         <RecipeInstructions
-          recipeInstructions={recipeObject.recipe.analyzedInstructions[0].steps}
+          recipeInstructions={recipeObject.recipe.analyzedInstructions}
         />
       </div>
     </>

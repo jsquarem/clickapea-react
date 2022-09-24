@@ -12,6 +12,7 @@ export default function RecipeLoading() {
   // //}, []);
   // const startAnimation = () => {
   //console.log(message, '<-message');
+
   useEffect(() => {
     const textList = [
       'Checking our database...',
@@ -25,18 +26,17 @@ export default function RecipeLoading() {
     ];
     let index = 0;
     const showNextMessage = () => {
-      console.log(index, '<index');
-      setMessage(textList[index]);
-      index++;
-      setTimeout(showNextMessage, 5000);
       if (index >= textList.length) {
         setMessage('Sowwy :(');
         return;
       }
+      setMessage(textList[index]);
+      index++;
+      let timer = setTimeout(showNextMessage, 2000);
     };
     showNextMessage();
     return () => {
-      showNextMessage(); // This worked for me
+      clearTimeout(showNextMessage); // This worked for me
     };
   }, []);
 

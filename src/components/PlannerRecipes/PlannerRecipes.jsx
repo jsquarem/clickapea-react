@@ -12,13 +12,14 @@ const style = {
 export const PlannerRecipes = memo(function PlannerRecipes({
   image,
   name,
+  recipeID,
   type,
   isDropped,
 }) {
   const [{ opacity }, drag] = useDrag(
     () => ({
       type,
-      item: { name },
+      item: { name, recipeID },
       collect: (monitor) => ({
         opacity: monitor.isDragging() ? 0.4 : 1,
       }),
@@ -26,9 +27,15 @@ export const PlannerRecipes = memo(function PlannerRecipes({
     [name, type]
   );
   return (
-    <div ref={drag} style={{ ...style, opacity }} data-testid="box">
-      {isDropped ? <s>{name}</s> : name}
-      <img src={image} style={{ maxHeight: '40px', maxWidth: '40px' }} />
+    <div
+      ref={drag}
+      style={{ ...style, opacity }}
+      data-testid="box"
+      className="d-flex flex-row justify-content-center w-100"
+    >
+      <BsGripVertical />
+      {name}
+      <img src={image} style={{ maxHeight: '30px', maxWidth: '40px' }} />
     </div>
   );
 });

@@ -12,20 +12,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 export const Planner = memo(function Planner() {
   const [loading, setLoading] = useState(false);
   const [recipeBooks, setRecipeBooks] = useState([]);
-  const [dustbins, setDustbins] = useState([
-    { accepts: [ItemTypes.GLASS], lastDroppedItem: null },
-    { accepts: [ItemTypes.FOOD], lastDroppedItem: null },
-    {
-      accepts: [ItemTypes.PAPER, ItemTypes.GLASS, NativeTypes.URL],
-      lastDroppedItem: null,
-    },
-    { accepts: [ItemTypes.PAPER, NativeTypes.FILE], lastDroppedItem: null },
-  ]);
-  const [boxes] = useState([
-    { name: 'Bottle', type: ItemTypes.GLASS },
-    { name: 'Banana', type: ItemTypes.FOOD },
-    { name: 'Magazine', type: ItemTypes.PAPER },
-  ]);
 
   useEffect(() => {
     setLoading(true);
@@ -37,37 +23,14 @@ export const Planner = memo(function Planner() {
     } catch (err) {}
   }, []);
 
-  const [droppedBoxNames, setDroppedBoxNames] = useState([]);
-  function isDropped(boxName) {
-    return droppedBoxNames.indexOf(boxName) > -1;
-  }
-  const handleDrop = useCallback(
-    (index, item) => {
-      const { name } = item;
-      setDroppedBoxNames(
-        update(droppedBoxNames, name ? { $push: [name] } : { $push: [] })
-      );
-      setDustbins(
-        update(dustbins, {
-          [index]: {
-            lastDroppedItem: {
-              $set: item,
-            },
-          },
-        })
-      );
-    },
-    [droppedBoxNames, dustbins]
-  );
-
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
     const recipeComponents = recipeBook?.recipes?.map((recipe) => {
       return (
         <ListGroup.Item className="draggable-recipe" key={recipe._id}>
           <PlannerRecipes
-            isDropped={isDropped(recipe.title)}
             image={recipe.image}
             name={recipe.title}
+            recipeID={recipe._id}
             type="recipe"
           />
         </ListGroup.Item>
@@ -88,10 +51,7 @@ export const Planner = memo(function Planner() {
         <Accordion>{recipeBooksComponent}</Accordion>
       </div>
       <div className="col-8">
-        <PlannerCalendar
-          accept={'recipe'}
-          handleOnDrop={(item) => handleDrop(item)}
-        />
+        <PlannerCalendar accept={'recipe'} />
       </div>
     </div>
   );

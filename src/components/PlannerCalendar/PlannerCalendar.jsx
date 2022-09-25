@@ -4,23 +4,9 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useDrop } from 'react-dnd';
 import { PlannerCalendarDay } from '../PlannerCalendarDay/PlannerCalendarDay.jsx';
 import './PlannerCalendar.css';
-const style = {
-  height: '12rem',
-  width: '12rem',
-  marginRight: '1.5rem',
-  marginBottom: '1.5rem',
-  color: 'white',
-  padding: '1rem',
-  textAlign: 'center',
-  fontSize: '1rem',
-  lineHeight: 'normal',
-  float: 'left',
-};
-export const PlannerCalendar = memo(function PlannerCalendar(
-  accept,
-  handleOnDrop
-) {
+export const PlannerCalendar = memo(function PlannerCalendar(accept) {
   console.log('in PlannerCalendar');
+  const [lastRecipeDropped, setLastRecipeDropped] = useState('');
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
@@ -61,6 +47,14 @@ export const PlannerCalendar = memo(function PlannerCalendar(
     return firstDayOfEachWeek.map((date) => generateWeek(date));
   }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
+  const handleDrop = useCallback(
+    (index, item) => {
+      console.log(item, index, '<-item, index');
+
+    },
+    []
+  );
+
   return (
     <div className="col-12">
       <div className="row">
@@ -90,19 +84,13 @@ export const PlannerCalendar = memo(function PlannerCalendar(
           key={`week-${weekIndex}`}
         >
           {week.map((day, dayIndex) => {
-            // let dateType =
-            //   selectedDate.clone().toDate().getMonth() !== day.getMonth()
-            //     ? 'nextMonth'
-            //     : dayjs(currentDay).isSame(day, 'date')
-            //     ? 'today'
-            //     : 'default';
             return (
               // Month Days
               <PlannerCalendarDay
                 key={`day-${dayIndex}`}
                 accept={['recipe']}
                 dayNumber={day.getDate()}
-                handleOnDrop={(item) => handleOnDrop(item)}
+                handleOnDrop={(item) => handleDrop(day, item)}
               />
             );
           })}
@@ -111,15 +99,3 @@ export const PlannerCalendar = memo(function PlannerCalendar(
     </div>
   );
 });
-
-// return (
-//   <div ref={drop} style={{ ...style, backgroundColor }} data-testid="dustbin">
-//     {isActive
-//       ? 'Release to drop'
-//       : `This dustbin accepts: ${accept.join(', ')}`}
-
-//     {lastDroppedItem && (
-//       <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-//     )}
-//   </div>
-// );

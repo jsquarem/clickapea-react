@@ -12,6 +12,7 @@ import HomePage from '../HomePage/HomePage';
 import NavBar from '../../components/Nav/Nav';
 import Container from 'react-bootstrap/Container';
 import userService from '../../utils/userService';
+import MealPlanner from '../MealPlannerPage/MealPlannerPage';
 
 function App() {
   const [user, setUser] = useState(userService.getUser());
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
           <Route path="/recipes/books" element={<RecipeBookPage />} />
+          <Route path="/planner" element={<MealPlanner />} />
           <Route
             path="/recipes/import"
             element={<ImportRecipePage user={user} />}

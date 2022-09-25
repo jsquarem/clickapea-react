@@ -6,6 +6,8 @@ import React, { useState, useEffect } from 'react';
 import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
 import MealPlanner from '../../components/MealPlanner/MealPlanner';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 export default function CalendarPage() {
   const [recipeBooks, setRecipeBooks] = useState([]);
@@ -31,17 +33,19 @@ export default function CalendarPage() {
   };
 
   return (
-    <div className="row">
-      <div className="col-3">
-        {recipeBooks && !loading ? (
-          <RecipeBooks recipeBooks={recipeBooks} draggable="true" />
-        ) : (
-          ''
-        )}
+    <DndProvider backend={HTML5Backend}>
+      <div className="row">
+        <div className="col-3">
+          {recipeBooks && !loading ? (
+            <RecipeBooks recipeBooks={recipeBooks} />
+          ) : (
+            ''
+          )}
+        </div>
+        <div className="col-9">
+          <MealPlanner />
+        </div>
       </div>
-      <div className="col-9">
-        <MealPlanner />
-      </div>
-    </div>
+    </DndProvider>
   );
 }

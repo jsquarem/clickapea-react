@@ -12,6 +12,10 @@ export default function MealPlannerDay({ dateType, dayNumber }) {
     setIsHovering(false);
   };
 
+  const handleDragOver = () => {
+    setIsHovering(true);
+  };
+
   return (
     <div
       className={`day-month border${' ' + dateType}${
@@ -19,6 +23,7 @@ export default function MealPlannerDay({ dateType, dayNumber }) {
       }`}
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
+      onDragOver={handleDragOver}
     >
       <div className="date-label">{dayNumber}</div>
     </div>

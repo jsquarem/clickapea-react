@@ -1,16 +1,62 @@
 import React, { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import Accordion from 'react-bootstrap/Accordion';
-import { ListGroup } from 'react-bootstrap';
 import { useEffect } from 'react';
-import IngedientList from '../../components/';
+import IngredientList from '../../components/IngredientList/IngredientList';
+import RecipeImage from '../../components/RecipeImage/RecipeImage';
+import RecipeExtras from '../../components/RecipeExtras/RecipeExtras';
+import EquipmentList from '../EquipmentList/EquipmentList';
+import RecipeInstructions from '../RecipeInstructions/RecipeInstructions';
+import AddToRecipeBookButton from '../AddToRecipeBookButton/AddToRecipeBookButton';
 
-export default function RecipeCard({ recipe }) {
-  const [state, setState] = useState('');
+export default function RecipeCard({ recipeObject }) {
+  const [recipeExtras, setRecipeExtras] = useState({});
 
   useEffect(() => {
-    console.log(recipe, '<--recipe');
+    setRecipeExtras({
+      preparationMinutes: recipeObject.recipe.preparationMinutes,
+      cookingMinutes: recipeObject.recipe.cookingMinutes,
+      readyInMinutes: recipeObject.recipe.readyInMinutes,
+      vegetarian: recipeObject.recipe.vegetarian,
+      vegan: recipeObject.recipe.vegan,
+      glutenFree: recipeObject.recipe.glutenFree,
+      dairyFree: recipeObject.recipe.dairyFree,
+      veryHealthy: recipeObject.recipe.veryHealthy,
+      taste: recipeObject.recipe.taste,
+    });
   }, []);
+  console.log(recipeObject, '<-recipeObject in recipecard');
 
-  return <h2>Recipe Import</h2>;
+  return (
+    <>
+      <div className="row">
+        <div className="col-12">
+          <div className="row">
+            <div className="col-6">
+              <h2 className="text-center pt-2">{recipeObject.recipe.title}</h2>
+            </div>
+            <div className="col-6">
+              <AddToRecipeBookButton recipeID={recipeObject.recipe._id} />
+            </div>
+          </div>
+        </div>
+        <div className="col-12 col-md-6">
+          <RecipeImage recipeImage={recipeObject.recipe.image} />
+        </div>
+        <div className="col-12 col-md-6">
+          <IngredientList
+            ingredients={recipeObject.recipe.extendedIngredients}
+          />
+          <RecipeExtras recipeExtras={recipeExtras} />
+        </div>
+      </div>
+      <div className="row">
+        <EquipmentList equipmentList={recipeObject.recipe.equipment} />
+      </div>
+      <div className="row">
+        <RecipeInstructions
+          recipeInstructions={recipeObject.recipe.analyzedInstructions}
+        />
+      </div>
+    </>
+  );
 }

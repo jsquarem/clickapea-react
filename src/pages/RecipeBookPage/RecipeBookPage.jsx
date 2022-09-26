@@ -2,73 +2,66 @@ import React, { useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import userService from '../../utils/userService';
-import { useNavigate } from 'react-router-dom';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
+import * as recipeAPI from '../../utils/recipeAPI';
 import { useEffect } from 'react';
 import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
+import { Typeahead } from 'react-bootstrap-typeahead';
 
 export default function RecipeBookPage() {
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(0);
-  const [recipeBooks, setRecipeBooks] = useState([]);
+  const [loading, setLoading] = useState(0);
+  const [recipeBooks, setRecipeBooks] = useState(null);
   const [newRecipeBook, setNewRecipeBook] = useState({});
   const [recipeBook, setRecipeBook] = useState({
     name: '',
   });
   const [recipe, setRecipe] = useState('');
+  const [selections, setSelections] = useState([]);
+  const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    const fetchRecipeBooks = async () => {
-      try {
-        const response = await recipeBookAPI.getBooks();
-        console.log(response, '<-reponse');
+    if (selections.length > 3) {
+      recipeAPI.searchRecipes(selections).then((response) => {
+        setOptions(response);
+      });
+    }
+  }, [selections]);
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      recipeBookAPI.getBooks().then((response) => {
         setRecipeBooks(response.recipeBooks);
-        setIsLoading(false);
-      } catch (err) {
-        console.log(err, '<--err');
-      }
-    };
-    fetchRecipeBooks();
+        setLoading(false);
+      });
+    } catch (err) {}
   }, [newRecipeBook]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
-    let response = [];
+    setLoading(true);
     try {
-      console.log(recipeBook, '<---newRecipeBook');
-      const response = await recipeBookAPI.create(recipeBook);
-      console.log(response);
+      const response = await recipeBookAPI
+        .create(recipeBook)
+        .then((response) => {
+          setRecipeBooks([response.recipeBook, recipeBooks]);
+          setNewRecipeBook(response.recipeBook);
+          setLoading(false);
+        });
     } catch (err) {
       console.log(err.message);
     }
-    setRecipeBooks([response.recipeBook, recipeBooks]);
-    setNewRecipeBook(response.recipeBook);
   };
 
   function handleChangeBook(e) {
-    console.log(recipeBook, '<-recipeBook');
     setRecipeBook({ ...recipeBook, name: e.target.value });
   }
   function handleChangeRecipe(e) {
-    //setRecipe(recipe);
+    setRecipe(recipe);
   }
-
-  //   TODO:
-  //   async function handleSearch(e) {
-  //   e.preventDefault();
-
-  //   try {
-  //     await userService.login(state);
-  //     // Route to wherever you want!
-  //     navigate('/');
-  //   } catch (err) {
-  //     // Invalid user data (probably duplicate email)
-  //     // this is from the throw block in the userService.login first then function
-  //     setError(err.message);
-  //   }
-  // }
 
   return (
     <div className="row">
@@ -93,19 +86,20 @@ export default function RecipeBookPage() {
       </div>
       <div className="col-12 col-md-6">
         <Form className="form">
-          <Form.Group className="mb-3" controlId="recipeSearch">
-            <Form.Label>Search for recipes in our database</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Start typing..."
-              name="recipeSearch"
-              value={recipe}
-              onChange={handleChangeRecipe}
+          <Form.Group>
+            <Form.Label>Single Selection</Form.Label>
+            <Typeahead
+              id="basic-typeahead-single"
+              labelKey="name"
+              onChange={setSelections}
+              options={options}
+              placeholder="Choose a state..."
+              selected={selections}
             />
           </Form.Group>
         </Form>
       </div>
-      {recipeBooks.length > 0 ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
+      {recipeBooks && !loading ? <RecipeBooks recipeBooks={recipeBooks} /> : ''}
     </div>
   );
 }

@@ -1,0 +1,14 @@
+.dropdown-menu {
+  min-width: 100%;
+}
+.dropdown-menu.show {
+  box-shadow: 0 10px 10px #666;
+}
+
+a.book-form.dropdown-item {
+  background: none;
+}
+
+.btn-group > .book-create {
+  border-radius: 0;
+}

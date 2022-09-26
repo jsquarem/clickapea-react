@@ -1,0 +1,69 @@
+import React, { useState, useEffect } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
+import * as recipeBookAPI from '../../utils/recipeBookAPI';
+
+export default function CalendarPage() {
+  const [recipeBooks, setRecipeBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    try {
+      recipeBookAPI.getBooks().then((response) => {
+        setRecipeBooks(response.recipeBooks);
+        setLoading(false);
+      });
+    } catch (err) {}
+  }, []);
+
+  const handleDateClick = (e) => {
+    // bind with an arrow function
+    console.log(e, '<-e');
+  };
+  const handleDateHover = (e) => {
+    // bind with an arrow function
+    console.log(e, '<-e');
+  };
+
+  return (
+    <div className="row">
+      <div className="col-3">
+        {recipeBooks && !loading ? (
+          <RecipeBooks recipeBooks={recipeBooks} draggable="true" />
+        ) : (
+          ''
+        )}
+      </div>
+      <div className="col-9">
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin, bootstrap5Plugin]}
+          initialView="dayGridMonth"
+          dateClick={handleDateClick}
+          themeSystem="bootstrap5"
+          events={[
+            { title: 'event 1', date: '2022-09-25' },
+            { title: 'event 2', date: '2022-09-28' },
+          ]}
+          dayRender={(date, cell) => {
+            cell.append(
+              "<span class='hoverEffect' style='display:none;'>+</span>"
+            );
+            cell
+              .mouseenter(function () {
+                cell.find('.hoverEffect').show();
+                cell.css('background', 'rgba(0,0,0,.1)');
+              })
+              .mouseleave(function () {
+                $('.hoverEffect').hide();
+                cell.removeAttr('style');
+              });
+          }}
+        />
+      </div>
+    </div>
+  );
+}

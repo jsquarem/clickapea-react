@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -18,8 +18,10 @@ export default function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/recipes/books">Recipe Books</Nav.Link>
             <Nav.Link href="/recipes/import">Import Recipe</Nav.Link>
+            {user && <Nav.Link href="/recipes/books">Recipe Books</Nav.Link>}
+            {user && <Nav.Link href="/calendar">Calendar</Nav.Link>}
+            {user && <Nav.Link href="/planner">Planner</Nav.Link>}
           </Nav>
           <Nav>
             <Nav.Link href="/login">Login</Nav.Link>

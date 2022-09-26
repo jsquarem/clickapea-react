@@ -1,12 +1,11 @@
 import tokenService from './tokenService';
 
-const BASE_URL = '/api/recipes/import';
+const BASE_URL = '/api/planner';
 
-export function addRecipe(recipeURL) {
-  console.log(recipeURL, '<-- recipeBook in api');
-  return fetch(BASE_URL, {
+export function addEvent(event) {
+  return fetch(`${BASE_URL}/add`, {
     method: 'POST',
-    body: JSON.stringify(recipeURL),
+    body: JSON.stringify(event),
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + tokenService.getToken(),
@@ -20,11 +19,10 @@ export function addRecipe(recipeURL) {
   });
 }
 
-export function searchRecipes(query) {
-  const queryURL = `/recipe/search/${query}`;
-  return fetch('/recipe/search', {
-    method: 'GET',
-    body: JSON.stringify(queryURL),
+export function getEvents(query) {
+  return fetch(BASE_URL, {
+    method: 'POST',
+    body: JSON.stringify(query),
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + tokenService.getToken(),

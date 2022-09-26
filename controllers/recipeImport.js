@@ -57,7 +57,7 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
   // occasions
   const occasionRaws = newRecipe.occasions;
   let occasionDocuments = [];
-  if (occasionRaws) occasionDocuments = await getOccaisions(occasionRaws);
+  if (occasionRaws) occasionDocuments = await getOccasions(occasionRaws);
   const analyzedInstructionsRaw = newRecipe.analyzedInstructions;
   let equipmentDocuments = [];
   if (analyzedInstructionsRaw)
@@ -108,7 +108,7 @@ const getEquipment = async (analyzedInstructionRaws) => {
   return equipmentDocuments;
 };
 
-const getOccaisions = async (occasionRaws) => {
+const getOccasions = async (occasionRaws) => {
   const occasionDocuments = [];
   for (const occasion of occasionRaws) {
     let occasionDocument = await Occaision.findOne({ name: occasion });
@@ -225,14 +225,19 @@ const getRecipeURL = async (recipeURL) => {
   }
 };
 
+// const baseUrl = https://api.spotify.com/v1
+
 const requestData = async (url, options) => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
     console.log(data, '<-data');
     return data;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.log(err);
+    return res
+      .status(500)
+      .json({ message: 'Failed to fetch 3rd party API Data' });
   }
 };
 
@@ -245,8 +250,6 @@ const addRecipe = async (req, res) => {
   const recipeURLRaw = req.body.url;
   console.log(recipeURLRaw, '<-recipeURLRaw');
   try {
-    //console.log(recipeURL, '<-recipeURL');
-    //console.log(process.env.RAPIDAIP_KEY,'<-process.env.RAPIDAIP_KEY')
     const options = {
       method: 'GET',
       headers: {
@@ -256,6 +259,7 @@ const addRecipe = async (req, res) => {
       },
     };
     const extractAPIURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/extract?analyze=true&includeTaste=true`;
+
     let recipe = {};
     //console.log(await getRecipeURL(recipeURLRaw), '<-getRecipeURL');
     const [recipeURLDocument, newRecipe] = await getRecipeURL(recipeURLRaw);
@@ -266,19 +270,28 @@ const addRecipe = async (req, res) => {
       }`;
       console.log(recipeRequestURL, '<-recipeRequestURL');
       const recipeData = await requestData(recipeRequestURL, options);
-      console.log('added one');
       //console.log(recipeData, '<-added');
+      if (
+        recipeData.preparationMinutes == -1 &&
+        recipeData.cookingMinutes == -1
+      ) {
+        return res.status(503).json({
+          error: 'Could not find valid recipe',
+        });
+      }
       recipe = await addRecipeToDB(recipeData, recipeURLDocument);
+      console.log('added one');
     } else {
-      console.log('found one');
       recipe = await Recipe.findOne({
         recipeURL: recipeURLDocument._id,
       }).populate('ingredients cuisines dishTypes diets occasions equipment');
+      console.log('found one');
       //console.log(recipe, '<-recipe');
     }
     recipeBookDocuments = await RecipeBook.find({ owner: profileDocument });
     //console.log(recipeBookDocuments, '<-recipeBookDocuments');
     //console.log(await addRecipeToDB(RecipeData, recipeURL), '<-addRecipeToDB');
+
     const sendResponse = {
       recipe,
       profile: profileDocument,
@@ -290,8 +303,9 @@ const addRecipe = async (req, res) => {
       profile: profileDocument,
       recipeBooks: recipeBookDocuments,
     });
-  } catch (err) {
+  } catch (error) {
     console.log(err);
+    return res.status(500).json({ message: error.message });
   }
 };
 

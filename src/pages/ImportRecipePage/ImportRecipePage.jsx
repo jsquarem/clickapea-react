@@ -1,32 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import userService from '../../utils/userService';
-import { useNavigate } from 'react-router-dom';
 import * as recipeAPI from '../../utils/recipeAPI';
-import { useEffect } from 'react';
-import RecipeBooks from '../../components/RecipeBooks/RecipeBooks';
+import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 
 export default function ImportRecipePage({ user }) {
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(0);
   const [recipeURL, setRecipeURL] = useState({ url: '' });
-  const [submit, setSubmit] = useState(false);
-  const [recipe, setRecipe] = useState({});
+  const [recipeObject, setRecipeObject] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleRecipeImport = async (e) => {
+  useEffect(() => {
+    if (loading) {
+      getRecipe(recipeURL).then((response) => {
+        setRecipeObject(response);
+        setLoading(false);
+      });
+    }
+  }, [loading]);
+
+  const getRecipe = async (url) => {
+    const responseRecipe = await recipeAPI.addRecipe(recipeURL);
+    setRecipeURL({ url: '' });
+    console.log(responseRecipe, '<-responseRecipe');
+    return responseRecipe;
+  };
+
+  const handleRecipeImport = (e) => {
     e.preventDefault();
     try {
-      console.log(recipeURL, '<---recipeURL');
-      recipeURL.profile = user.profile;
-      console.log(recipeURL);
-      const response = await recipeAPI.addRecipe(recipeURL);
-      setRecipeURL({ url: '' });
-      setRecipe(response);
-      console.log(response, '<--response');
+      setRecipeURL({ ...recipeURL, profile: user.profile });
+      setLoading(true);
     } catch (err) {
       console.log(err.message);
     }
@@ -37,27 +44,38 @@ export default function ImportRecipePage({ user }) {
   }
 
   return (
-    <div className="row">
-      <div className="col-12 col-md-12">
-        <Form className="form" onSubmit={handleRecipeImport}>
-          <Form.Group className="mb-3" controlId="recipeImport">
-            <Form.Label>Import a new recipe!</Form.Label>
-            <div className="input-group">
-              <Form.Control
-                type="text"
-                placeholder="https://example.com/recipe/"
-                name="recipeURL"
-                value={recipeURL.url}
-                onChange={handleChange}
-              />
-              <Button variant="outline-secondary" type="submit">
-                Create
-              </Button>
-            </div>
-          </Form.Group>
-        </Form>
-        <RecipeCard recipe={recipe} />
+    <>
+      <div className="row">
+        <div className="col-12 col-md-12">
+          <Form className="form" onSubmit={handleRecipeImport}>
+            <Form.Group className="mb-3" controlId="recipeImport">
+              <Form.Label>
+                Import a new recipe!
+                <br />
+                https://tastesbetterfromscratch.com/pork-chile-verde/
+              </Form.Label>
+              <div className="input-group">
+                <Form.Control
+                  type="text"
+                  placeholder="https://example.com/recipe/"
+                  name="recipeURL"
+                  value={recipeURL.url}
+                  onChange={handleChange}
+                />
+                <Button variant="outline-secondary" type="submit">
+                  Create
+                </Button>
+              </div>
+            </Form.Group>
+          </Form>
+        </div>
       </div>
-    </div>
+      {loading ? <RecipeLoading /> : ''}
+      {recipeObject && !loading ? (
+        <RecipeCard recipeObject={recipeObject} />
+      ) : (
+        ''
+      )}
+    </>
   );
 }

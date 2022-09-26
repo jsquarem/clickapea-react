@@ -20,8 +20,8 @@ export default function NavBar({ user }) {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/recipes/import">Import Recipe</Nav.Link>
             {user && <Nav.Link href="/recipes/books">Recipe Books</Nav.Link>}
-            {user && <Nav.Link href="/calendar">Calendar</Nav.Link>}
             {user && <Nav.Link href="/planner">Planner</Nav.Link>}
+            {user && <Nav.Link href="/cart">Shopping Cart</Nav.Link>}
           </Nav>
           <Nav>
             <Nav.Link href="/login">Login</Nav.Link>

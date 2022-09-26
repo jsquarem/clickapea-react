@@ -2,6 +2,9 @@ const express = require('express');
 const router = require('express').Router();
 const recipeImportController = require('../../controllers/recipeImport');
 const recipeBookController = require('../../controllers/recipeBooks');
+const recipeController = require('../../controllers/recipes');
+
+router.get('/search/profile/:profileID', recipeController.index);
 
 router.post('/import', recipeImportController.addRecipe);
 

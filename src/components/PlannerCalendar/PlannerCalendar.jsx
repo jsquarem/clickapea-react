@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import './PlannerCalendar.css';
 
 export const PlannerCalendar = memo(function PlannerCalendar(accept) {
-  console.log('in PlannerCalendar');
+  // console.log('in PlannerCalendar');
   const [lastRecipeDropped, setLastRecipeDropped] = useState('');
   const [loading, setLoading] = useState(true);
   //console.log(loading, '<-loading');
@@ -19,7 +19,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
       recipes: [],
     },
   ]);
-  console.log(plannerEvents, '<-plannerEvents');
+  // console.log(plannerEvents, '<-plannerEvents');
 
   const getPlanner = useCallback(async () => {
     //setLoading(true);
@@ -78,7 +78,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
   }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
   const handleDrop = useCallback((day, item) => {
-    console.log(item, day, '<-item, index');
+    // console.log(item, day, '<-item, index');
     plannerAPI.addEvent({ recipeID: item.recipeID, date: day }).then(() => {
       getPlanner();
     });
@@ -100,9 +100,9 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
         <div className="col-auto">
           <span className="h2">{selectedDate.clone().format('MMM YYYY')}</span>
         </div>
-        <div className="col-auto align-self-end position-absolute cart-button">
-          <Button variant="primary">Create Shipping List</Button>
-        </div>
+        {/* <div className="col-auto align-self-end position-absolute cart-button">
+          <Button variant="primary">Create Shopping List</Button>
+        </div> */}
       </div>
       <div className="d-flex justify-content-around">
         {generateWeeksOfTheMonth[0].map((day, index) => (
@@ -133,7 +133,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
                 recipes.push(...event.recipes);
               }
             });
-            console.log(recipes, '<-recipes calendar');
+            // console.log(recipes, '<-recipes calendar');
             return (
               // Month Days
               <PlannerCalendarDay

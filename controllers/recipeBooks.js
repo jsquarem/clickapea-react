@@ -1,5 +1,4 @@
 const Profile = require('../models/profile');
-const User = require('../models/user');
 const Recipe = require('../models/recipe');
 const RecipeBook = require('../models/recipeBook');
 

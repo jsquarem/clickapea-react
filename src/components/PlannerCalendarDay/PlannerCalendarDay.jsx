@@ -32,7 +32,7 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   } else if (canDrop) {
     backgroundColor = 'darkkhaki';
   }
-  console.log(recipes, '<-recipes');
+  // console.log(recipes, '<-recipes');
   return (
     <div
       ref={drop}
@@ -40,12 +40,15 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
       className={`day-month border d-flex flex-column ${dateType}`}
     >
       <div className="date-label">{dayNumber}</div>
-      <div style={{ margin: '0px 2px' }} className="align-self-end mt-auto">
+      <div
+        style={{ margin: '0px 2px', width: '96%' }}
+        className="align-self-end mt-auto"
+      >
         {recipes.map((recipe, index) => {
           return (
             <div
               key={recipe._id + '-' + index}
-              className="bg-primary text-center text-white rounded mb-1 p-1"
+              className="bg-primary text-center text-white rounded mb-1 p-1 w-100"
             >
               <p
                 style={{

@@ -1,25 +1,17 @@
-const Profile = require('../models/profile');
+// const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
-const RecipeBook = require('../models/recipeBook');
+// const RecipeBook = require('../models/recipeBook');
 
 const index = async (req, res) => {
-  const recipeID = req.params.recipeID;
-  const profileID = req.user.profile._id;
+  const profileID = req.user.profile;
   try {
-    const profileDocument = await Profile.findById(profileID);
+    const recipes = await Recipe.find({
+      profile: profileID,
+    });
+    res.status(201).json({ recipes });
   } catch (err) {
-    console.log(err);
+    res.status(400).json({ err });
   }
-
-  recipeBooks.forEach((recipeBook) => {});
-  console.log(recipeBooks, '<-recipeBookDocuments');
-  const recipe = await Recipe.findOne({ _id: recipeID });
-  console.log(recipe, '<-recipe');
-  return res.render('recipes/index', {
-    recipe,
-    profile: profileDocument,
-    recipeBooks: recipeBooks,
-  });
 };
 
 module.exports = {

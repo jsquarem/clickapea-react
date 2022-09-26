@@ -26,7 +26,7 @@ export const Planner = memo(function Planner() {
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
     const recipeComponents = recipeBook?.recipes?.map((recipe) => {
       return (
-        <ListGroup.Item className="draggable-recipe" key={recipe._id}>
+        <ListGroup.Item className="p-0" key={recipe._id}>
           <PlannerRecipes
             image={recipe.image}
             name={recipe.title}
@@ -39,7 +39,7 @@ export const Planner = memo(function Planner() {
     return (
       <Accordion.Item eventKey={recipeBook._id} key={recipeBook._id}>
         <Accordion.Header>{recipeBook.name}</Accordion.Header>
-        <Accordion.Body>{recipeComponents}</Accordion.Body>
+        <Accordion.Body className="p-0">{recipeComponents}</Accordion.Body>
       </Accordion.Item>
     );
   });

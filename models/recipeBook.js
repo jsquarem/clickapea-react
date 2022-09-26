@@ -10,7 +10,6 @@ const recipeBookSchema = new mongoose.Schema(
       type: String,
     },
     recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
-    mealPlan: [{ type: mongoose.Schema.Types.ObjectId, ref: 'MealPlan' }],
   },
   {
     timestamps: true,

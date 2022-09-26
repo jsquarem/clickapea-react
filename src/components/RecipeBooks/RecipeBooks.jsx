@@ -26,13 +26,7 @@ export default function RecipeBooks({ recipeBooks, draggable }) {
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
     const recipeComponents = recipeBook?.recipes?.map((recipe) => {
       return isDraggable ? (
-        // <Draggable key={recipe._id} onStart={handleStart} onStop={handleStop}>
         <ListGroup.Item className="draggable-recipe">
-          {/* <a
-              href={`/recipes/${recipe._id}`}
-              className="list-group-item list-group-item-action"
-              aria-current="true"
-            > */}
           <div className="d-flex w-100 align-items-center">
             <div className="col-2 text-center">
               <img
@@ -45,10 +39,8 @@ export default function RecipeBooks({ recipeBooks, draggable }) {
               <span>{recipe.title}</span>
             </div>
           </div>
-          {/* </a> */}
         </ListGroup.Item>
       ) : (
-        // </Draggable>
         <ListGroup.Item key={recipe._id}>
           <a
             href={`/recipes/${recipe._id}`}

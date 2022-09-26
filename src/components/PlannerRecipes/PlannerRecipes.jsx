@@ -1,9 +1,10 @@
 import { memo } from 'react';
 import { useDrag } from 'react-dnd';
+import { GripVertical } from 'react-bootstrap-icons';
 const style = {
   border: '1px dashed gray',
   backgroundColor: 'white',
-  padding: '0.5rem 1rem',
+  lineHeight: '40px',
   //marginRight: '1.5rem',
   //marginBottom: '1.5rem',
   cursor: 'move',
@@ -14,7 +15,6 @@ export const PlannerRecipes = memo(function PlannerRecipes({
   name,
   recipeID,
   type,
-  isDropped,
 }) {
   const [{ opacity }, drag] = useDrag(
     () => ({
@@ -31,11 +31,15 @@ export const PlannerRecipes = memo(function PlannerRecipes({
       ref={drag}
       style={{ ...style, opacity }}
       data-testid="box"
-      className="d-flex flex-row justify-content-center w-100"
+      className="d-flex flex-row justify-content-start h-100"
     >
-      <BsGripVertical />
-      {name}
-      <img src={image} style={{ maxHeight: '30px', maxWidth: '40px' }} />
+      <div className="px-2">
+        <GripVertical style={{ fontSize: '1.5rem' }} />
+      </div>
+      <div className="px-2 flex-grow-1">{name}</div>
+      <div className="px-2">
+        <img src={image} style={{ maxHeight: '30px', maxWidth: '40px' }} />
+      </div>
     </div>
   );
 });

@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
 import { memo } from 'react';
 import { useDrop } from 'react-dnd';
 export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   accept,
   dayNumber,
   handleOnDrop,
+  recipes,
 }) {
+  //const [dayRecipes, setDayRecipes] = useState(recipes);
+
+  // useEffect();
   // console.log(accept, '<-accept');
   // console.log(dayNumber, 'dayNumber');
   // console.log(handleOnDrop, 'handleOnDrop');
@@ -23,9 +28,24 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   } else if (canDrop) {
     backgroundColor = 'darkkhaki';
   }
+  // console.log(recipes, '<-recipes');
   return (
-    <div ref={drop} style={{ backgroundColor }} className="day-month border">
+    <div
+      ref={drop}
+      style={{ backgroundColor }}
+      className="day-month border d-flex"
+    >
       <div className="date-label">{dayNumber}</div>
+      {recipes.map((recipe) => {
+        return (
+          <div
+            key={recipe._id}
+            className="m-2 bg-primary align-self-end text-center text-white p-2 rounded"
+          >
+            <span style={{ fontSize: '.9rem' }}>{recipe.title}</span>
+          </div>
+        );
+      })}
     </div>
   );
 });

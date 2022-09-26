@@ -1,16 +1,45 @@
-import { useCallback, useMemo, useState, memo } from 'react';
+import { useCallback, useMemo, useState, memo, useEffect } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import dayjs, { Dayjs } from 'dayjs';
-import { useDrop } from 'react-dnd';
+import * as plannerAPI from '../../utils/plannerApi';
 import { PlannerCalendarDay } from '../PlannerCalendarDay/PlannerCalendarDay.jsx';
 import './PlannerCalendar.css';
+
 export const PlannerCalendar = memo(function PlannerCalendar(accept) {
   console.log('in PlannerCalendar');
   const [lastRecipeDropped, setLastRecipeDropped] = useState('');
+  const [loading, setLoading] = useState(true);
+  //console.log(loading, '<-loading');
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [plannerEvents, setPlannerEvents] = useState([
+    {
+      date: '',
+      recipes: [],
+    },
+  ]);
+  console.log(plannerEvents, '<-plannerEvents');
+
+  const getPlanner = useCallback(async () => {
+    //setLoading(true);
+    const month = generateWeeksOfTheMonth;
+    const firstDay = month[0][0];
+    const lastDay = month[month.length - 1][6];
+    try {
+      const response = await plannerAPI.getEvents({ firstDay, lastDay });
+      setPlannerEvents(response.plannerEvents);
+      // setLoading(false);
+      //setEvents(response);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }, [selectedDate]);
 
   const currentDay = useMemo(() => dayjs().toDate(), []);
+
+  useEffect(() => {
+    getPlanner();
+  }, []);
 
   const firstDayOfTheMonth = useMemo(
     () => selectedDate.clone().startOf('month'),
@@ -47,13 +76,12 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
     return firstDayOfEachWeek.map((date) => generateWeek(date));
   }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
-  const handleDrop = useCallback(
-    (index, item) => {
-      console.log(item, index, '<-item, index');
-
-    },
-    []
-  );
+  const handleDrop = useCallback((day, item) => {
+    console.log(item, day, '<-item, index');
+    plannerAPI.addEvent({ recipeID: item.recipeID, date: day }).then(() => {
+      getPlanner();
+    });
+  }, []);
 
   return (
     <div className="col-12">
@@ -84,6 +112,28 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
           key={`week-${weekIndex}`}
         >
           {week.map((day, dayIndex) => {
+            //console.log(dayjs('2022-09-14T05:00:00.000Z').format(), '<-event');
+            //console.log(dayjs(day).format(), '<-day');
+            let recipes = [];
+            // console.log(
+            //   dayjs(day).format('YYYY-MM-DD'),
+            //   '<-dayjs(day).format()'
+            // );
+            plannerEvents.forEach((event) => {
+              // console.log(
+              //   dayjs(event.date).format('YYYY-MM-DD'),
+              //   '<-dayjs(event.date).format()'
+              // );
+              if (
+                dayjs(day).format('YYYY-MM-DD') ===
+                dayjs(event.date).format('YYYY-MM-DD')
+              ) {
+                // console.log(event.recipes, '<-event.recipes');
+                recipes = event.recipes;
+              }
+            });
+            console.log(recipes, '<-recipes');
+            //console.log(plannerEvents, '<-plannerEvents');
             return (
               // Month Days
               <PlannerCalendarDay
@@ -91,6 +141,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
                 accept={['recipe']}
                 dayNumber={day.getDate()}
                 handleOnDrop={(item) => handleDrop(day, item)}
+                recipes={recipes}
               />
             );
           })}

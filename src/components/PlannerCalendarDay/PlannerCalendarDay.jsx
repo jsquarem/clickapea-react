@@ -6,6 +6,7 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   dayNumber,
   handleOnDrop,
   recipes,
+  dateType,
 }) {
   //const [dayRecipes, setDayRecipes] = useState(recipes);
 
@@ -13,6 +14,9 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   // console.log(accept, '<-accept');
   // console.log(dayNumber, 'dayNumber');
   // console.log(handleOnDrop, 'handleOnDrop');
+  if (dateType === 'nextMonth') {
+    accept = [''];
+  }
   const [{ isOver, canDrop }, drop] = useDrop({
     accept,
     drop: handleOnDrop,
@@ -28,24 +32,35 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   } else if (canDrop) {
     backgroundColor = 'darkkhaki';
   }
-  // console.log(recipes, '<-recipes');
+  console.log(recipes, '<-recipes');
   return (
     <div
       ref={drop}
       style={{ backgroundColor }}
-      className="day-month border d-flex"
+      className={`day-month border d-flex flex-column ${dateType}`}
     >
       <div className="date-label">{dayNumber}</div>
-      {recipes.map((recipe) => {
-        return (
-          <div
-            key={recipe._id}
-            className="m-2 bg-primary align-self-end text-center text-white p-2 rounded"
-          >
-            <span style={{ fontSize: '.9rem' }}>{recipe.title}</span>
-          </div>
-        );
-      })}
+      <div style={{ margin: '0px 2px' }} className="align-self-end mt-auto">
+        {recipes.map((recipe, index) => {
+          return (
+            <div
+              key={recipe._id + '-' + index}
+              className="bg-primary text-center text-white rounded mb-1 p-1"
+            >
+              <p
+                style={{
+                  fontSize: '.8rem',
+                  lineHeight: '.9rem',
+                  width: '100%',
+                }}
+                className="p-0 m-0"
+              >
+                {recipe.title}
+              </p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 });

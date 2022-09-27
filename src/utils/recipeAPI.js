@@ -39,3 +39,39 @@ export function profileRecipes(query = '') {
     });
   });
 }
+
+export function getRecipes(data) {
+  const queryURL = `${BASE_URL}/search`;
+  return fetch(queryURL, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + tokenService.getToken(),
+    },
+  }).then((res) => {
+    if (res.ok) return res.json();
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
+  });
+}
+
+export function getNewRecipeImages() {
+  const queryURL = `${BASE_URL}/search/new`;
+  console.log(queryURL, '<-queryURL');
+  return fetch(queryURL, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer ' + tokenService.getToken(),
+    },
+  }).then((res) => {
+    console.log(res, '<-res');
+    if (res.ok) return res.json();
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
+  });
+}

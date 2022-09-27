@@ -1,9 +1,11 @@
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import { LinkContainer } from 'react-router-bootstrap';
 
-export default function NavBar({ user }) {
+export default function NavBar({ user, handleLogout }) {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -17,16 +19,41 @@ export default function NavBar({ user }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/recipes/import">Import Recipe</Nav.Link>
-            {user && <Nav.Link href="/recipes/books">Recipe Books</Nav.Link>}
-            {user && <Nav.Link href="/planner">Planner</Nav.Link>}
-            {user && <Nav.Link href="/cart">Shopping Cart</Nav.Link>}
+            <LinkContainer to="/">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/recipes/import">
+              <Nav.Link>Import Recipe</Nav.Link>
+            </LinkContainer>
+            {user && (
+              <LinkContainer to="/planner">
+                <Nav.Link>Planner</Nav.Link>
+              </LinkContainer>
+            )}
+            {user && (
+              <LinkContainer to="/cart">
+                <Nav.Link>Shopping Cart</Nav.Link>
+              </LinkContainer>
+            )}
           </Nav>
-          <Nav>
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Button href="/signup">Signup</Button>
-          </Nav>
+          {user ? (
+            <Nav>
+              <LinkContainer to="">
+                <Button variant="danger" onClick={handleLogout}>
+                  Log Out
+                </Button>
+              </LinkContainer>
+            </Nav>
+          ) : (
+            <Nav>
+              <LinkContainer to="/login">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/signup">
+                <Button>Signup</Button>
+              </LinkContainer>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

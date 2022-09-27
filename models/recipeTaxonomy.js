@@ -9,18 +9,18 @@ const dishTypeSchema = new mongoose.Schema({
 const dietSchema = new mongoose.Schema({
   name: String,
 });
-const occaisionSchema = new mongoose.Schema({
+const occasionSchema = new mongoose.Schema({
   name: String,
 });
 
 const Cuisine = mongoose.model('Cuisine', cuisineSchema);
 const DishType = mongoose.model('DishType', dishTypeSchema);
 const Diet = mongoose.model('Diet', dietSchema);
-const Occaision = mongoose.model('Occaision', occaisionSchema);
+const Occasion = mongoose.model('Occasion', occasionSchema);
 
 module.exports = {
   Cuisine,
   DishType,
   Diet,
-  Occaision,
+  Occasion,
 };

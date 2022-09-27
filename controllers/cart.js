@@ -3,15 +3,14 @@ const Profile = require('../models/profile');
 const Planner = require('../models/planner');
 
 const index = async (req, res) => {
-  const profileID = req.user.profile._id;
+  const profileID = req.user.profile;
   try {
-    const plannerDocuments = await Planner.find({
-      profile: profileDocument,
-    });
-    console.log(plannerDocuments, '<-plannerDocuments');
+    const planners = await Planner.find({
+      profile: profileID,
+    }).populate({ path: 'recipes', select: '_id title' });
 
-    // res.status(201).json({ err });
-    res.status(201).json({ plannerDocument });
+    //console.log(plannerEvents, '<-plannerEvents');
+    res.status(201).json({ planners });
   } catch (err) {
     res.status(400).json({ err });
   }

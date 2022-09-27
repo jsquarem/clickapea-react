@@ -303,9 +303,9 @@ const addRecipe = async (req, res) => {
       profile: profileDocument,
       recipeBooks: recipeBookDocuments,
     });
-  } catch (error) {
+  } catch (err) {
     console.log(err);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: err.message });
   }
 };
 

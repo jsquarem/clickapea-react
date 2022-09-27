@@ -129,7 +129,7 @@ const recipeSchema = new mongoose.Schema(
     cuisines: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cuisine' }],
     dishTypes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'DishType' }],
     diets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Diet' }],
-    occasions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Occaision' }],
+    occasions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Occasion' }],
     analyzedInstructions: [],
   },
   {

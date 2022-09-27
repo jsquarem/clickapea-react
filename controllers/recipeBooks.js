@@ -1,5 +1,4 @@
 const Profile = require('../models/profile');
-const User = require('../models/user');
 const Recipe = require('../models/recipe');
 const RecipeBook = require('../models/recipeBook');
 
@@ -61,18 +60,17 @@ const add = async (req, res) => {
 };
 
 const index = async (req, res) => {
-  const profileID = req.user.profile._id;
+  const profileID = req.user.profile.id;
   try {
-    const profileDocument = await Profile.findById(profileID);
     const recipeBooks = await RecipeBook.find({
-      owner: profileDocument,
+      owner: profileID,
     }).populate({ path: 'recipes', select: '_id title image' });
     // console.log(recipeBooks, '<-recipeBookDocuments');
     return res.status(201).json({ recipeBooks });
   } catch (err) {
     return res
       .status(409)
-      .json({ err: 'Coulding find profile and/or recipe book' });
+      .json({ err: 'Couldnt find profile and/or recipe book' });
   }
 };
 

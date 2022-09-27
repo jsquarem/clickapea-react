@@ -3,10 +3,11 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import dayjs, { Dayjs } from 'dayjs';
 import * as plannerAPI from '../../utils/plannerApi';
 import { PlannerCalendarDay } from '../PlannerCalendarDay/PlannerCalendarDay.jsx';
+import Button from 'react-bootstrap/Button';
 import './PlannerCalendar.css';
 
 export const PlannerCalendar = memo(function PlannerCalendar(accept) {
-  console.log('in PlannerCalendar');
+  // console.log('in PlannerCalendar');
   const [lastRecipeDropped, setLastRecipeDropped] = useState('');
   const [loading, setLoading] = useState(true);
   //console.log(loading, '<-loading');
@@ -18,7 +19,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
       recipes: [],
     },
   ]);
-  console.log(plannerEvents, '<-plannerEvents');
+  // console.log(plannerEvents, '<-plannerEvents');
 
   const getPlanner = useCallback(async () => {
     //setLoading(true);
@@ -77,7 +78,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
   }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
   const handleDrop = useCallback((day, item) => {
-    console.log(item, day, '<-item, index');
+    // console.log(item, day, '<-item, index');
     plannerAPI.addEvent({ recipeID: item.recipeID, date: day }).then(() => {
       getPlanner();
     });
@@ -85,18 +86,23 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
 
   return (
     <div className="col-12">
-      <div className="row">
-        <h3>{selectedDate.clone().format('MMM YYYY')}</h3>
-        <div>
+      <div className="row position-relative">
+        <div className="col-auto align-self-center">
           <MdKeyboardArrowLeft
-            size={25}
+            size={40}
             onClick={() => setSelectedDate((date) => date.subtract(1, 'month'))}
           />
           <MdKeyboardArrowRight
-            size={25}
+            size={40}
             onClick={() => setSelectedDate((date) => date.add(1, 'month'))}
           />
         </div>
+        <div className="col-auto">
+          <span className="h2">{selectedDate.clone().format('MMM YYYY')}</span>
+        </div>
+        {/* <div className="col-auto align-self-end position-absolute cart-button">
+          <Button variant="primary">Create Shopping List</Button>
+        </div> */}
       </div>
       <div className="d-flex justify-content-around">
         {generateWeeksOfTheMonth[0].map((day, index) => (
@@ -112,28 +118,22 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
           key={`week-${weekIndex}`}
         >
           {week.map((day, dayIndex) => {
-            //console.log(dayjs('2022-09-14T05:00:00.000Z').format(), '<-event');
-            //console.log(dayjs(day).format(), '<-day');
+            let dateType =
+              selectedDate.clone().toDate().getMonth() !== day.getMonth()
+                ? 'nextMonth'
+                : dayjs(currentDay).isSame(day, 'date')
+                ? 'today'
+                : 'default';
             let recipes = [];
-            // console.log(
-            //   dayjs(day).format('YYYY-MM-DD'),
-            //   '<-dayjs(day).format()'
-            // );
             plannerEvents.forEach((event) => {
-              // console.log(
-              //   dayjs(event.date).format('YYYY-MM-DD'),
-              //   '<-dayjs(event.date).format()'
-              // );
               if (
                 dayjs(day).format('YYYY-MM-DD') ===
                 dayjs(event.date).format('YYYY-MM-DD')
               ) {
-                // console.log(event.recipes, '<-event.recipes');
-                recipes = event.recipes;
+                recipes.push(...event.recipes);
               }
             });
-            console.log(recipes, '<-recipes');
-            //console.log(plannerEvents, '<-plannerEvents');
+            // console.log(recipes, '<-recipes calendar');
             return (
               // Month Days
               <PlannerCalendarDay
@@ -142,6 +142,7 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
                 dayNumber={day.getDate()}
                 handleOnDrop={(item) => handleDrop(day, item)}
                 recipes={recipes}
+                dateType={dateType}
               />
             );
           })}

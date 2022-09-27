@@ -1,0 +1,20 @@
+/* header {
+  min-height: 100vh;
+} */
+header img {
+  width: 100vw;
+  height: 100vh;
+  min-height: 70vh;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+section {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  min-width: 50vw;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+}

@@ -65,7 +65,7 @@ export default function Footer() {
         <div className="col-12">
           © 2022 Copyright:&nbsp;&nbsp;
           <a className="text-white" href="https://www.jsquarem.com/">
-            JSqaureM.com
+            JSquareM.com
           </a>
         </div>
       </div>

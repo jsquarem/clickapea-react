@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -12,6 +13,15 @@ export default function ImportRecipePage({ user }) {
   const [recipeURL, setRecipeURL] = useState({ url: '' });
   const [recipeObject, setRecipeObject] = useState(null);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
+  console.log(location);
+
+  useEffect(() => {
+    if (location.state && location.state.url) {
+      setRecipeURL({ url: location.state.url });
+      setLoading(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (loading) {
@@ -63,7 +73,7 @@ export default function ImportRecipePage({ user }) {
                   onChange={handleChange}
                 />
                 <Button variant="outline-secondary" type="submit">
-                  Create
+                  Find
                 </Button>
               </div>
             </Form.Group>

@@ -30,24 +30,26 @@ function App() {
   return (
     <Router>
       <NavBar user={user} handleLogout={handleLogout} />
-      <Routes>
-        <Route exact path="/" element={<HomePage />} />
-        {/* <Route path="/recipes/books" element={<RecipeBookPage />} /> */}
-        <Route path="/planner" element={<MealPlannerPage user={user} />} />
-        <Route path="/cart" element={<ShoppingCartPage user={user} />} />
-        <Route
-          path="/recipes/import"
-          element={<ImportRecipePage user={user} />}
-        />
-        <Route
-          path="/login"
-          element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}
-        />
-        <Route
-          path="/signup"
-          element={<SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />}
-        />
-      </Routes>
+      <Container>
+        <Routes>
+          <Route exact path="/" element={<HomePage />} />
+          {/* <Route path="/recipes/books" element={<RecipeBookPage />} /> */}
+          <Route path="/planner" element={<MealPlannerPage user={user} />} />
+          <Route path="/cart" element={<ShoppingCartPage user={user} />} />
+          <Route
+            path="/recipes/import"
+            element={<ImportRecipePage user={user} />}
+          />
+          <Route
+            path="/login"
+            element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}
+          />
+          <Route
+            path="/signup"
+            element={<SignupPage handleSignUpOrLogin={handleSignUpOrLogin} />}
+          />
+        </Routes>
+      </Container>
       <Footer />
     </Router>
   );

@@ -8,6 +8,7 @@ import { ItemTypes } from './ItemTypes.js';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
+import './Planner.css';
 
 export const Planner = memo(function Planner() {
   const [loading, setLoading] = useState(false);
@@ -38,19 +39,23 @@ export const Planner = memo(function Planner() {
     });
     return (
       <Accordion.Item eventKey={recipeBook._id} key={recipeBook._id}>
-        <Accordion.Header>{recipeBook.name}</Accordion.Header>
+        <Accordion.Header>
+          <h4 className="p-0 m-0">{recipeBook.name}</h4>
+        </Accordion.Header>
         <Accordion.Body className="p-0">{recipeComponents}</Accordion.Body>
       </Accordion.Item>
     );
   });
 
   return (
-    <div className="row">
-      <div className="col-4">
-        <h3 className="mb-4 pb-2">Recipe Books</h3>
+    <div className="row my-3">
+      <h1 className="text-center">Meal Planner</h1>
+      <hr />
+      <div className="col-4 my-3">
+        <h2 className="mb-1">Recipe Books</h2>
         <Accordion>{recipeBooksComponent}</Accordion>
       </div>
-      <div className="col-8">
+      <div className="col-8 my-3">
         <PlannerCalendar accept={'recipe'} />
       </div>
     </div>

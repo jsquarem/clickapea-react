@@ -79,9 +79,11 @@ export default function CartRecipeList({ recipes, onClick, shoppingList }) {
       }
     });
     return (
-      <div key={book._id}>
+      <div key={book._id} className="pt-3">
         <h5>{book.name}</h5>
-        <ul className="list-group list-group-flush">{recipeListItems}</ul>
+        <ul className="list-group list-group-flush rounded border">
+          {recipeListItems}
+        </ul>
       </div>
     );
   });

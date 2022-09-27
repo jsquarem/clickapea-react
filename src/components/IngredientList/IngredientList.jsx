@@ -33,8 +33,8 @@ export default function IngredientList({ ingredients }) {
   //return <h1>ingredient list</h1>;
   return (
     <div className="col-12 mt-2">
-      <h4 className="text-center">Ingredients</h4>
-      <Table bordered size="sm">
+      <h2 className="text-center">Ingredients</h2>
+      <Table size="sm">
         <tbody>{ingredientsTable}</tbody>
       </Table>
     </div>

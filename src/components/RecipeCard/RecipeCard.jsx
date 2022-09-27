@@ -7,6 +7,7 @@ import RecipeExtras from '../../components/RecipeExtras/RecipeExtras';
 import EquipmentList from '../EquipmentList/EquipmentList';
 import RecipeInstructions from '../RecipeInstructions/RecipeInstructions';
 import AddToRecipeBookButton from '../AddToRecipeBookButton/AddToRecipeBookButton';
+import './RecipeCard.css';
 
 export default function RecipeCard({ recipeObject }) {
   const [recipeExtras, setRecipeExtras] = useState({});
@@ -28,30 +29,36 @@ export default function RecipeCard({ recipeObject }) {
 
   return (
     <>
-      <div className="row">
-        <div className="col-12">
+      <div className="row recipe-header">
+        <div
+          className="col-12 p-3 rounded"
+          style={{
+            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)) , url(${recipeObject.recipe.image})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+          }}
+        >
           <div className="row">
-            <div className="col-6">
-              <h2 className="text-center pt-2">{recipeObject.recipe.title}</h2>
-            </div>
-            <div className="col-6">
+            <div className="col-12 col-md-6">
+              <h1 className="text-center text-light">
+                {recipeObject.recipe.title}
+              </h1>
               <AddToRecipeBookButton recipeID={recipeObject.recipe._id} />
+            </div>
+            <div className="col-12 col-md-6 recipe-ingredients bordered rounded">
+              <IngredientList
+                ingredients={recipeObject.recipe.extendedIngredients}
+              />
+              <RecipeExtras recipeExtras={recipeExtras} />
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-6">
-          <RecipeImage recipeImage={recipeObject.recipe.image} />
-        </div>
-        <div className="col-12 col-md-6">
-          <IngredientList
-            ingredients={recipeObject.recipe.extendedIngredients}
-          />
-          <RecipeExtras recipeExtras={recipeExtras} />
+        <div className="equipment-list bg-white bordered rounded mt-3 py-3">
+          <EquipmentList equipmentList={recipeObject.recipe.equipment} />
         </div>
       </div>
-      <div className="row">
-        <EquipmentList equipmentList={recipeObject.recipe.equipment} />
-      </div>
+
       <div className="row">
         <RecipeInstructions
           recipeInstructions={recipeObject.recipe.analyzedInstructions}

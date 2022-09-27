@@ -21,13 +21,15 @@ export default function CartShoppingList({ shoppingList }) {
   }, [shoppingList, fetchRecipes]);
   console.log('Im here');
   return (
-    <div className="col-12">
+    <div className="col-12 bg-white rounded my-4 py-3">
       {shoppingListItems.map((aisle, index) => {
         console.log('Im here2');
         return (
           <div key={`aisle-${index}`}>
             <div className="row">
-              <h4 className="mx-5">{aisle.aisle}</h4>
+              <div className="col-10 offset-2">
+                <h4>{aisle.aisle}</h4>
+              </div>
             </div>
             {aisle.ingredients.map((ingredient) => {
               let image = 'no.jpg';
@@ -37,7 +39,7 @@ export default function CartShoppingList({ shoppingList }) {
               console.log('Im here3');
               return (
                 <div className="row">
-                  <div className="col-1 offset-1">
+                  <div className="col-1 offset-2">
                     <div className="form-check form-switch">
                       <input className="form-check-input" type="checkbox" />
                     </div>

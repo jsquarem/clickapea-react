@@ -3,7 +3,7 @@ import { useDrag } from 'react-dnd';
 import { GripVertical } from 'react-bootstrap-icons';
 const style = {
   border: '1px dashed gray',
-  backgroundColor: 'white',
+  //backgroundColor: 'white',
   lineHeight: '40px',
   //marginRight: '1.5rem',
   //marginBottom: '1.5rem',
@@ -31,7 +31,7 @@ export const PlannerRecipes = memo(function PlannerRecipes({
       ref={drag}
       style={{ ...style, opacity }}
       data-testid="box"
-      className="d-flex flex-row justify-content-start h-100"
+      className="d-flex flex-row justify-content-start h-100 bg-light"
     >
       <div className="px-2">
         <GripVertical style={{ fontSize: '1.5rem' }} />

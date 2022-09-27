@@ -42,10 +42,10 @@ export default function RecipeLoading() {
 
   return (
     <div
-      style={{ minHeight: '38em' }}
-      className="col-12 p-5 mt-2 d-flex align-items-center justify-content-center bg-primary text-center"
+      style={{ minHeight: '38em', opacity: '.5', color: '#463d39' }}
+      className="col-12 p-5 mt-2 d-flex align-items-center justify-content-center bg-primary text-center rounded-pill"
     >
-      <h1>{message}</h1>
+      <h1 style={{ fontSize: '5rem' }}>{message}</h1>
     </div>
   );
 }

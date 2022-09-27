@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import userService from '../../utils/userService';
 import { useNavigate } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
 
 export default function RecipeBookPage({ handleSignUpOrLogin }) {
   const [error, setError] = useState('');
@@ -35,39 +36,41 @@ export default function RecipeBookPage({ handleSignUpOrLogin }) {
     }
   }
   return (
-    <div className="col-12 col-md-4 offset-md-4">
-      <h3 className="text-center">Log In</h3>
-      <Card>
-        <Card.Body>
-          <Form className="form" onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                name="email"
-                value={state.email}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={state.password}
-                onChange={handleChange}
-              />
-            </Form.Group>
-            <div className="d-grid gap-2">
-              <Button variant="primary" type="submit">
-                Log in
-              </Button>
-            </div>
-          </Form>
-        </Card.Body>
-      </Card>
-    </div>
+    <Container style={{ minHeight: '69.5vh' }}>
+      <div className="col-12 col-md-4 offset-md-4 mt-5 pt-5">
+        <h3 className="text-center mt-5">Log In</h3>
+        <Card>
+          <Card.Body>
+            <Form className="form" onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={state.email}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  value={state.password}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <div className="d-grid gap-2">
+                <Button variant="primary text-white" type="submit">
+                  Log in
+                </Button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
+    </Container>
   );
 }

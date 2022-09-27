@@ -63,7 +63,6 @@ export default function AddToRecipeBookButton({ recipeID }) {
         } else {
           setRecipeBooks([response.recipeBookDocument]);
         }
-        setLoading(false);
         setAddBook(false);
       });
     } catch (err) {
@@ -80,6 +79,7 @@ export default function AddToRecipeBookButton({ recipeID }) {
       id="dropdown-button-drop-recipe-book"
       size="lg"
       title="Add to Recipe Book"
+      variant="primary text-white"
     >
       {recipeBooks.map((recipeBook, index) => {
         let checkmarkClass = '';

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import CartRecipeList from '../../components/CartRecipeList/CartRecipeList';
 import CartShoppingList from '../../components/CartShoppingList/CartShoppingList';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
+import Container from 'react-bootstrap/Container';
 
 export default function ShoppingCartPage({ user }) {
   const [recipes, setRecipes] = useState([]);
@@ -35,19 +36,24 @@ export default function ShoppingCartPage({ user }) {
   useEffect(() => {
     fetchRecipes();
   }, []);
+  console.log(cartItems.length, '<-cartItems.length');
 
   return (
-    <div className="row">
-      <div className="col-4">
-        <CartRecipeList
-          shoppingList={cartItems}
-          recipes={recipes}
-          onClick={handleClick}
-        />
+    <Container style={{ minHeight: '73.4vh' }}>
+      <div className="row">
+        <div className="col-12 col-md-4 mt-3">
+          <CartRecipeList
+            shoppingList={cartItems}
+            recipes={recipes}
+            onClick={handleClick}
+          />
+        </div>
+        <div className="col-12 col-md-6 offset-md-2">
+          {cartItems.length > 0 && (
+            <CartShoppingList shoppingList={cartItems} />
+          )}
+        </div>
       </div>
-      <div className="col-8">
-        <CartShoppingList shoppingList={cartItems} />
-      </div>
-    </div>
+    </Container>
   );
 }

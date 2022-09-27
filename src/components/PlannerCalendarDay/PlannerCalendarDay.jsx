@@ -28,10 +28,12 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   const isActive = isOver && canDrop;
   let backgroundColor = '';
   if (isActive) {
-    backgroundColor = 'darkgreen';
+    backgroundColor = '#819ea5';
   } else if (canDrop) {
-    backgroundColor = 'darkkhaki';
+    backgroundColor = '#d5eff2';
   }
+  /* $primary: #93a603;
+$secondary: #819ea5; */
   // console.log(recipes, '<-recipes');
   return (
     <div

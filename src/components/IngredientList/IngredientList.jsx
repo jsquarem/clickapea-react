@@ -34,7 +34,7 @@ export default function IngredientList({ ingredients }) {
   return (
     <div className="col-12 mt-2">
       <h4 className="text-center">Ingredients</h4>
-      <Table bordered size="sm">
+      <Table size="sm">
         <tbody>{ingredientsTable}</tbody>
       </Table>
     </div>

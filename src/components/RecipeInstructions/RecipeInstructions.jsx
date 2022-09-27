@@ -6,7 +6,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 export default function RecipeInstructions({ recipeInstructions }) {
   console.log(recipeInstructions, '<-recipeInstructions');
   return (
-    <div className="col-12">
+    <div className="col-12 bg-white rounded my-3 pb-2">
       <h3 className="text-center">Cooking Instructions</h3>
       {recipeInstructions.map((step, idx) => {
         console.log(step, '<-step');

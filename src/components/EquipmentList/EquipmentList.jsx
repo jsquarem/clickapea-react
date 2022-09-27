@@ -6,8 +6,8 @@ import Image from 'react-bootstrap/Image';
 export default function EquipmentList({ equipmentList }) {
   console.log(equipmentList, '<--equipmentList');
   return (
-    <div className="col-12 text-center">
-      <div className="row d-flex align-items-end justify-content-around mt-3">
+    <div className="col-12 text-center mx-2">
+      <div className="row d-flex align-items-end justify-content-around">
         <h3 className="text-center">Equipment Needed</h3>
         {equipmentList.map((equipment, index) => {
           return (

@@ -4,14 +4,14 @@
 header img {
   width: 100vw;
   height: 100vh;
-  min-height: 70vh;
+  min-height: 73vh;
   object-fit: cover;
   filter: brightness(0.6);
 }
 
 section {
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 50%;
   min-width: 50vw;
   transform: translate(-50%, -50%);

@@ -80,6 +80,7 @@ export default function AddToRecipeBookButton({ recipeID }) {
       id="dropdown-button-drop-recipe-book"
       size="lg"
       title="Add to Recipe Book"
+      variant="primary text-white"
     >
       {recipeBooks.map((recipeBook, index) => {
         let checkmarkClass = '';

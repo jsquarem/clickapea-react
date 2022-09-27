@@ -104,50 +104,52 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
           <Button variant="primary">Create Shopping List</Button>
         </div> */}
       </div>
-      <div className="d-flex justify-content-around">
-        {generateWeeksOfTheMonth[0].map((day, index) => (
-          <div className="day-week-header" key={`week-day-${index}`}>
-            {dayjs(day).format('dd')}
+      <div className="bg-white rounded border">
+        <div className="d-flex justify-content-around">
+          {generateWeeksOfTheMonth[0].map((day, index) => (
+            <div className="day-week-header" key={`week-day-${index}`}>
+              {dayjs(day).format('dd')}
+            </div>
+          ))}
+        </div>
+        {generateWeeksOfTheMonth.map((week, weekIndex) => (
+          // Days of the week text
+          <div
+            className="d-flex justify-content-around"
+            key={`week-${weekIndex}`}
+          >
+            {week.map((day, dayIndex) => {
+              let dateType =
+                selectedDate.clone().toDate().getMonth() !== day.getMonth()
+                  ? 'nextMonth'
+                  : dayjs(currentDay).isSame(day, 'date')
+                  ? 'today'
+                  : 'default';
+              let recipes = [];
+              plannerEvents.forEach((event) => {
+                if (
+                  dayjs(day).format('YYYY-MM-DD') ===
+                  dayjs(event.date).format('YYYY-MM-DD')
+                ) {
+                  recipes.push(...event.recipes);
+                }
+              });
+              // console.log(recipes, '<-recipes calendar');
+              return (
+                // Month Days
+                <PlannerCalendarDay
+                  key={`day-${dayIndex}`}
+                  accept={['recipe']}
+                  dayNumber={day.getDate()}
+                  handleOnDrop={(item) => handleDrop(day, item)}
+                  recipes={recipes}
+                  dateType={dateType}
+                />
+              );
+            })}
           </div>
         ))}
       </div>
-      {generateWeeksOfTheMonth.map((week, weekIndex) => (
-        // Days of the week text
-        <div
-          className="d-flex justify-content-around"
-          key={`week-${weekIndex}`}
-        >
-          {week.map((day, dayIndex) => {
-            let dateType =
-              selectedDate.clone().toDate().getMonth() !== day.getMonth()
-                ? 'nextMonth'
-                : dayjs(currentDay).isSame(day, 'date')
-                ? 'today'
-                : 'default';
-            let recipes = [];
-            plannerEvents.forEach((event) => {
-              if (
-                dayjs(day).format('YYYY-MM-DD') ===
-                dayjs(event.date).format('YYYY-MM-DD')
-              ) {
-                recipes.push(...event.recipes);
-              }
-            });
-            // console.log(recipes, '<-recipes calendar');
-            return (
-              // Month Days
-              <PlannerCalendarDay
-                key={`day-${dayIndex}`}
-                accept={['recipe']}
-                dayNumber={day.getDate()}
-                handleOnDrop={(item) => handleDrop(day, item)}
-                recipes={recipes}
-                dateType={dateType}
-              />
-            );
-          })}
-        </div>
-      ))}
     </div>
   );
 });

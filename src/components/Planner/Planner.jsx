@@ -8,6 +8,7 @@ import { ItemTypes } from './ItemTypes.js';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
+import './Planner.css';
 
 export const Planner = memo(function Planner() {
   const [loading, setLoading] = useState(false);
@@ -45,12 +46,14 @@ export const Planner = memo(function Planner() {
   });
 
   return (
-    <div className="row">
-      <div className="col-4">
-        <h3 className="mb-4 pb-2">Recipe Books</h3>
+    <div className="row my-3">
+      <h2 className="text-center">Meal Planner</h2>
+      <hr />
+      <div className="col-4 my-3">
+        <h3 className="mb-4 pt-2">Recipe Books</h3>
         <Accordion>{recipeBooksComponent}</Accordion>
       </div>
-      <div className="col-8">
+      <div className="col-8 my-3">
         <PlannerCalendar accept={'recipe'} />
       </div>
     </div>

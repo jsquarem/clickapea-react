@@ -14,13 +14,19 @@ export default function HomePage() {
       <header>
         <img src="https://catcollection7-11.s3.us-east-2.amazonaws.com/pexels-ella-olsson-1600.jpg" />
         <section>
+          <h1
+            className="text-center mb-5"
+            style={{
+              fontFamily: `'Caveat', cursive`,
+              fontSize: '5rem',
+              textShadow: '2px 2px 5px #abbfc2',
+            }}
+          >
+            Welcome to Clickapea!
+          </h1>
+          <h5>Paste a recipe URL or search by name</h5>
           <Form className="form header-form">
             <Form.Group className="mb-3" controlId="recipeImport">
-              <Form.Label>
-                Import a new recipe!
-                <br />
-                https://tastesbetterfromscratch.com/pork-chile-verde/
-              </Form.Label>
               <div className="input-group input-group-lg">
                 <Form.Control
                   type="text"

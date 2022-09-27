@@ -7,7 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 export default function NavBar({ user, handleLogout }) {
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" style={{ boxShadow: '0 8px 6px -6px #999' }}>
       <Container>
         <Navbar.Brand href="#home">
           <img
@@ -39,7 +39,7 @@ export default function NavBar({ user, handleLogout }) {
           {user ? (
             <Nav>
               <LinkContainer to="">
-                <Button variant="danger" onClick={handleLogout}>
+                <Button variant="danger text-white" onClick={handleLogout}>
                   Log Out
                 </Button>
               </LinkContainer>
@@ -50,7 +50,7 @@ export default function NavBar({ user, handleLogout }) {
                 <Nav.Link>Login</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/signup">
-                <Button>Signup</Button>
+                <Button variant="primary text-white">Signup</Button>
               </LinkContainer>
             </Nav>
           )}

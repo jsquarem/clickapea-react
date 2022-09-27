@@ -8,7 +8,7 @@ export default function EquipmentList({ equipmentList }) {
   return (
     <div className="col-12 text-center mx-2">
       <div className="row d-flex align-items-end justify-content-around">
-        <h3 className="text-center">Equipment Needed</h3>
+        <h2 className="text-center">Equipment Needed</h2>
         {equipmentList.map((equipment, index) => {
           return (
             <div className="col-auto text-center" key={index}>

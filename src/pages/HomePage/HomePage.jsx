@@ -17,7 +17,7 @@ export default function HomePage() {
           <h1
             className="text-center mb-5"
             style={{
-              fontFamily: `'Caveat', cursive`,
+              // fontFamily: `Indie Flower, cursive`,
               fontSize: '5rem',
               textShadow: '2px 2px 5px #abbfc2',
             }}
@@ -37,7 +37,7 @@ export default function HomePage() {
                 />
                 <LinkContainer to="/recipes/import" state={recipeURL}>
                   <Button variant="primary text-white" type="submit">
-                    Create
+                    Find
                   </Button>
                 </LinkContainer>
               </div>

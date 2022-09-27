@@ -37,3 +37,45 @@
     transform: rotate(360deg);
   }
 } */
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Indie+Flower&display=swap');
+@font-face {
+  font-family: 'Gumela';
+  src: url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.eot');
+  src: url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.woff2')
+      format('woff2'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.woff')
+      format('woff'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.ttf')
+      format('truetype'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.svg#Gumela')
+      format('svg');
+}
+
+* {
+  font-family: Gumela;
+  /* font-size: 1.3rem; */
+  /* font-weight: normal;
+  font-size: 20px; */
+  /* font: Gumela normal 20px; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Caveat', cursive;
+  /* font-size: 2em !important; */
+}
+
+nav a {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.5em !important;
+}
+
+.btn {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.7em !important;
+}

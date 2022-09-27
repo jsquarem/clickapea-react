@@ -7,7 +7,7 @@ export default function RecipeInstructions({ recipeInstructions }) {
   console.log(recipeInstructions, '<-recipeInstructions');
   return (
     <div className="col-12 bg-white rounded my-3 pb-2">
-      <h3 className="text-center">Cooking Instructions</h3>
+      <h2 className="text-center">Cooking Instructions</h2>
       {recipeInstructions.map((step, idx) => {
         console.log(step, '<-step');
         return (
@@ -24,7 +24,7 @@ export default function RecipeInstructions({ recipeInstructions }) {
                       <div className="col-3 col-lg-1 m-auto">
                         <div
                           style={{ height: '50px', width: '50px' }}
-                          className="bg-success rounded-circle text-center text-white m-auto"
+                          className="bg-info rounded-circle text-center text-white m-auto"
                         >
                           <h3 style={{ lineHeight: '50px' }}>
                             {instruction.number}

@@ -6,12 +6,12 @@ header img {
   height: 100vh;
   min-height: 73vh;
   object-fit: cover;
-  filter: brightness(0.6);
+  filter: brightness(0.7);
 }
 
 section {
   position: absolute;
-  top: 30%;
+  top: 40%;
   left: 50%;
   min-width: 50vw;
   transform: translate(-50%, -50%);

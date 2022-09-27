@@ -41,9 +41,9 @@ export default function RecipeCard({ recipeObject }) {
         >
           <div className="row">
             <div className="col-12 col-md-6">
-              <h2 className="text-center text-light">
+              <h1 className="text-center text-light">
                 {recipeObject.recipe.title}
-              </h2>
+              </h1>
               <AddToRecipeBookButton recipeID={recipeObject.recipe._id} />
             </div>
             <div className="col-12 col-md-6 recipe-ingredients bordered rounded">

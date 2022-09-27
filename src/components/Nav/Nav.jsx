@@ -4,17 +4,22 @@ import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import { LinkContainer } from 'react-router-bootstrap';
+import './Nav.css';
 
 export default function NavBar({ user, handleLogout }) {
   return (
     <Navbar bg="light" expand="lg" style={{ boxShadow: '0 8px 6px -6px #999' }}>
       <Container>
         <Navbar.Brand href="#home">
-          <img
-            src="https://via.placeholder.com/60x40.png?text=Logo"
-            alt="..."
-            className="d-block img-fluid"
-          />
+          <div
+            style={{
+              fontFamily: `'Indie Flower', cursive`,
+              fontSize: '2rem',
+              textShadow: '2px 2px 5px #abbfc2',
+            }}
+          >
+            CP
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -22,18 +27,31 @@ export default function NavBar({ user, handleLogout }) {
             <LinkContainer to="/">
               <Nav.Link>Home</Nav.Link>
             </LinkContainer>
+            <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
+              /
+            </span>
             <LinkContainer to="/recipes/import">
               <Nav.Link>Import Recipe</Nav.Link>
             </LinkContainer>
             {user && (
-              <LinkContainer to="/planner">
-                <Nav.Link>Planner</Nav.Link>
-              </LinkContainer>
+              <>
+                <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
+                  /
+                </span>
+                <LinkContainer to="/planner">
+                  <Nav.Link>Planner</Nav.Link>
+                </LinkContainer>
+              </>
             )}
             {user && (
-              <LinkContainer to="/cart">
-                <Nav.Link>Shopping Cart</Nav.Link>
-              </LinkContainer>
+              <>
+                <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
+                  /
+                </span>
+                <LinkContainer to="/cart">
+                  <Nav.Link>Shopping Cart</Nav.Link>
+                </LinkContainer>
+              </>
             )}
           </Nav>
           {user ? (

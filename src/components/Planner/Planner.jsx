@@ -39,7 +39,9 @@ export const Planner = memo(function Planner() {
     });
     return (
       <Accordion.Item eventKey={recipeBook._id} key={recipeBook._id}>
-        <Accordion.Header>{recipeBook.name}</Accordion.Header>
+        <Accordion.Header>
+          <h4 className="p-0 m-0">{recipeBook.name}</h4>
+        </Accordion.Header>
         <Accordion.Body className="p-0">{recipeComponents}</Accordion.Body>
       </Accordion.Item>
     );
@@ -47,10 +49,10 @@ export const Planner = memo(function Planner() {
 
   return (
     <div className="row my-3">
-      <h2 className="text-center">Meal Planner</h2>
+      <h1 className="text-center">Meal Planner</h1>
       <hr />
       <div className="col-4 my-3">
-        <h3 className="mb-4 pt-2">Recipe Books</h3>
+        <h2 className="mb-1">Recipe Books</h2>
         <Accordion>{recipeBooksComponent}</Accordion>
       </div>
       <div className="col-8 my-3">

@@ -63,7 +63,6 @@ export default function AddToRecipeBookButton({ recipeID }) {
         } else {
           setRecipeBooks([response.recipeBookDocument]);
         }
-        setLoading(false);
         setAddBook(false);
       });
     } catch (err) {

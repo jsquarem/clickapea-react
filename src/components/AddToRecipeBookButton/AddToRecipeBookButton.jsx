@@ -8,17 +8,19 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { Check } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import './AddRecipeBookButton.css';
 import { addRecipe } from '../../utils/recipeAPI';
 
-export default function AddToRecipeBookButton({ recipeID }) {
-  const [recipeBooks, setRecipeBooks] = useState(null);
+export default function AddToRecipeBookButton({ recipeID, user }) {
+  const [recipeBooks, setRecipeBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addBook, setAddBook] = useState(false);
   const [bookName, setBookName] = useState({
     name: '',
   });
+  console.log(user, '<-user');
 
   const getRecipeBooks = () => {
     recipeBookAPI.getBooks().then((response) => {
@@ -28,7 +30,9 @@ export default function AddToRecipeBookButton({ recipeID }) {
   };
 
   useEffect(() => {
-    getRecipeBooks();
+    if (user) {
+      getRecipeBooks();
+    }
   }, [loading]);
 
   // useEffect(() => {
@@ -72,7 +76,7 @@ export default function AddToRecipeBookButton({ recipeID }) {
 
   const handleBookCancel = (e) => {};
 
-  return recipeBooks ? (
+  return recipeBooks.length > 0 ? (
     <DropdownButton
       style={{ minWidth: '100%' }}
       as={ButtonGroup}
@@ -84,9 +88,11 @@ export default function AddToRecipeBookButton({ recipeID }) {
       {recipeBooks.map((recipeBook, index) => {
         let checkmarkClass = '';
         let checkmark = '';
+        let unchecked = 'book-name';
         if (recipeBook.recipes.find((recipe) => recipe._id === recipeID)) {
           checkmark = <Check />;
           checkmarkClass = 'text-success disabled';
+          unchecked = '';
         }
         return (
           <Dropdown.Item
@@ -98,7 +104,7 @@ export default function AddToRecipeBookButton({ recipeID }) {
             id={recipeBook._id}
           >
             <div className="row">
-              <div className="col-9">
+              <div className={`col-9 ${unchecked}`}>
                 {checkmark} {recipeBook.name}{' '}
               </div>
               {checkmark ? <div className="col-3 text-center">Added</div> : ''}
@@ -112,7 +118,59 @@ export default function AddToRecipeBookButton({ recipeID }) {
         onClick={handleBookCreateForm}
         className="book-form"
       >
-        {addBook ? (
+        {addBook && user ? (
+          <InputGroup className="">
+            <Form.Control
+              autoFocus
+              className=""
+              placeholder="Create New Book"
+              onChange={handleBookChange}
+              value={bookName.name}
+            />
+            <ButtonGroup className="me-2">
+              <Button
+                onClick={handleBookCreate}
+                variant="success"
+                className="book-create text-white"
+              >
+                Create
+              </Button>
+              <Button
+                onClick={handleBookCancel}
+                variant="danger"
+                className="book-cancel text-white"
+              >
+                Cancel
+              </Button>
+            </ButtonGroup>
+          </InputGroup>
+        ) : user ? (
+          <span className="instructions-text">
+            Add a recipe book to save this recipe!
+          </span>
+        ) : (
+          <span className="instructions-text">
+            Login to create a recipe book
+          </span>
+        )}
+      </Dropdown.Item>
+    </DropdownButton>
+  ) : user ? (
+    <DropdownButton
+      as={ButtonGroup}
+      id="dropdown-button-drop-recipe-book"
+      size="lg"
+      title="Add to Recipe Book"
+      style={{ minWidth: '100%' }}
+      variant="primary text-white"
+    >
+      <Dropdown.Item
+        style={{ minWidth: '100%' }}
+        eventKey={0}
+        onClick={handleBookCreateForm}
+        className="book-form text-white"
+      >
+        {addBook && user ? (
           <InputGroup className="">
             <Form.Control
               autoFocus
@@ -138,8 +196,14 @@ export default function AddToRecipeBookButton({ recipeID }) {
               </Button>
             </ButtonGroup>
           </InputGroup>
+        ) : user ? (
+          <span className="instructions-text">
+            Add a recipe book to save this recipe!
+          </span>
         ) : (
-          'Add a recipe book to save this recipe!'
+          <span className="instructions-text">
+            Login to create a recipe book
+          </span>
         )}
       </Dropdown.Item>
     </DropdownButton>
@@ -150,42 +214,16 @@ export default function AddToRecipeBookButton({ recipeID }) {
       size="lg"
       title="Add to Recipe Book"
       style={{ minWidth: '100%' }}
+      variant="primary text-white"
     >
       <Dropdown.Item
         style={{ minWidth: '100%' }}
+        as={Link}
+        to="/login"
         eventKey={0}
-        onClick={handleBookCreateForm}
         className="book-form"
       >
-        {addBook ? (
-          <InputGroup className="">
-            <Form.Control
-              autoFocus
-              className=""
-              placeholder="Create New Book"
-              onChange={handleBookChange}
-              value={bookName.name}
-            />
-            <ButtonGroup className="me-2">
-              <Button
-                onClick={handleBookCreate}
-                variant="success"
-                className="book-create"
-              >
-                Create
-              </Button>
-              <Button
-                onClick={handleBookCancel}
-                variant="danger"
-                className="book-cancel"
-              >
-                Cancel
-              </Button>
-            </ButtonGroup>
-          </InputGroup>
-        ) : (
-          'Add a recipe book to save this recipe!'
-        )}
+        <span className="instructions-text">Login to create a recipe book</span>
       </Dropdown.Item>
     </DropdownButton>
   );

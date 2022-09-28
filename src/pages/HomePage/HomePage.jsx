@@ -4,10 +4,19 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
 
-export default function HomePage() {
-  const [recipeURL, setRecipeURL] = useState({ url: '' });
+export default function HomePage({ user }) {
+  const [recipeURL, setRecipeURL] = useState({ url: '', profile: null });
+  console.log(user, '<-user');
   function handleChange(e) {
-    setRecipeURL({ ...recipeURL, url: e.target.value });
+    if (user) {
+      setRecipeURL({
+        ...recipeURL,
+        url: e.target.value,
+        profile: user.profile,
+      });
+    } else {
+      setRecipeURL({ ...recipeURL, url: e.target.value });
+    }
   }
   return (
     <>

@@ -14,6 +14,7 @@ import Footer from '../../components/Footer/Footer';
 import userService from '../../utils/userService';
 import MealPlannerPage from '../MealPlannerPage/MealPlannerPage';
 import ShoppingCartPage from '../ShoppingCartPage/ShoppingCartPage';
+import Typeahead from '../../components/Typeahead/Typeahead';
 
 function App() {
   const [user, setUser] = useState(userService.getUser());
@@ -31,7 +32,7 @@ function App() {
     <Router>
       <NavBar user={user} handleLogout={handleLogout} />
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
+        <Route exact path="/" element={<HomePage user={user} />} />
         {/* <Route path="/recipes/books" element={<RecipeBookPage />} /> */}
         <Route path="/planner" element={<MealPlannerPage user={user} />} />
         <Route path="/cart" element={<ShoppingCartPage user={user} />} />
@@ -39,6 +40,7 @@ function App() {
           path="/recipes/import"
           element={<ImportRecipePage user={user} />}
         />
+        <Route path="/typeahead" element={<Typeahead user={user} />} />
         <Route
           path="/login"
           element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}

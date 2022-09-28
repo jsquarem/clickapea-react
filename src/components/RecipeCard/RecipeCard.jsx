@@ -9,7 +9,7 @@ import RecipeInstructions from '../RecipeInstructions/RecipeInstructions';
 import AddToRecipeBookButton from '../AddToRecipeBookButton/AddToRecipeBookButton';
 import './RecipeCard.css';
 
-export default function RecipeCard({ recipeObject }) {
+export default function RecipeCard({ recipeObject, user }) {
   const [recipeExtras, setRecipeExtras] = useState({});
 
   useEffect(() => {
@@ -44,7 +44,10 @@ export default function RecipeCard({ recipeObject }) {
               <h1 className="text-center text-light">
                 {recipeObject.recipe.title}
               </h1>
-              <AddToRecipeBookButton recipeID={recipeObject.recipe._id} />
+              <AddToRecipeBookButton
+                recipeID={recipeObject.recipe._id}
+                user={user}
+              />
             </div>
             <div className="col-12 col-md-6 recipe-ingredients bordered rounded">
               <IngredientList

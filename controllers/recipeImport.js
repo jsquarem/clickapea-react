@@ -242,70 +242,77 @@ const requestData = async (url, options) => {
 };
 
 const addRecipe = async (req, res) => {
-  //console.log(req, '<-req');
-  console.log(req.body, '<-req.body');
-  const profileID = req.body.profile;
-  const profileDocument = await Profile.findById(profileID);
-  console.log(profileDocument, '<-profileDocument');
-  const recipeURLRaw = req.body.url;
-  console.log(recipeURLRaw, '<-recipeURLRaw');
-  try {
-    const options = {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': `${process.env.RAPIDAPI_KEY}`,
-        'X-RapidAPI-Host':
-          'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
-      },
-    };
-    const extractAPIURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/extract?analyze=true&includeTaste=true`;
+  // console.log(req.params.query, '<-req.params.query');
+  // console.log(req.params.profileID, '<-req.params.profileID');
+  if (req.params.query.startsWith('http')) {
+    const recipeURLRaw = req.params.query;
+    console.log(recipeURLRaw, '<-recipeURLRaw');
+    try {
+      const options = {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': `${process.env.RAPIDAPI_KEY}`,
+          'X-RapidAPI-Host':
+            'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com',
+        },
+      };
+      const extractAPIURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/extract?analyze=true&includeTaste=true`;
 
-    let recipe = {};
-    //console.log(await getRecipeURL(recipeURLRaw), '<-getRecipeURL');
-    const [recipeURLDocument, newRecipe] = await getRecipeURL(recipeURLRaw);
-    //console.log(newRecipe, '<-newRecipe');
-    if (newRecipe) {
-      const recipeRequestURL = `${extractAPIURL}&url=${
-        recipeURLDocument.origin + recipeURLDocument.pathname
-      }`;
-      console.log(recipeRequestURL, '<-recipeRequestURL');
-      const recipeData = await requestData(recipeRequestURL, options);
-      //console.log(recipeData, '<-added');
-      if (
-        recipeData.preparationMinutes == -1 &&
-        recipeData.cookingMinutes == -1
-      ) {
-        return res.status(503).json({
-          error: 'Could not find valid recipe',
-        });
+      let recipe = {};
+      //console.log(await getRecipeURL(recipeURLRaw), '<-getRecipeURL');
+      const [recipeURLDocument, newRecipe] = await getRecipeURL(recipeURLRaw);
+      //console.log(newRecipe, '<-newRecipe');
+      if (newRecipe) {
+        const recipeRequestURL = `${extractAPIURL}&url=${
+          recipeURLDocument.origin + recipeURLDocument.pathname
+        }`;
+        console.log(recipeRequestURL, '<-recipeRequestURL');
+        const recipeData = await requestData(recipeRequestURL, options);
+        //console.log(recipeData, '<-added');
+        if (
+          recipeData.preparationMinutes == -1 &&
+          recipeData.cookingMinutes == -1
+        ) {
+          return res.status(503).json({
+            error: 'Could not find valid recipe',
+          });
+        }
+        recipe = await addRecipeToDB(recipeData, recipeURLDocument);
+        console.log('added one');
+      } else {
+        recipe = await Recipe.findOne({
+          recipeURL: recipeURLDocument._id,
+        }).populate('ingredients cuisines dishTypes diets occasions equipment');
+        console.log('found one');
+        //console.log(recipe, '<-recipe');
       }
-      recipe = await addRecipeToDB(recipeData, recipeURLDocument);
-      console.log('added one');
-    } else {
-      recipe = await Recipe.findOne({
-        recipeURL: recipeURLDocument._id,
-      }).populate('ingredients cuisines dishTypes diets occasions equipment');
-      console.log('found one');
-      //console.log(recipe, '<-recipe');
-    }
-    recipeBookDocuments = await RecipeBook.find({ owner: profileDocument });
-    //console.log(recipeBookDocuments, '<-recipeBookDocuments');
-    //console.log(await addRecipeToDB(RecipeData, recipeURL), '<-addRecipeToDB');
+      if ('profile' in req.body) {
+        const profileID = req.body.profile;
+        const profileDocument = await Profile.findById(profileID);
+        console.log(profileDocument, '<-profileDocument');
+        recipeBookDocuments = await RecipeBook.find({ owner: profileDocument });
+      } else {
+        profileDocument = null;
+        recipeBookDocuments = [];
+      }
 
-    const sendResponse = {
-      recipe,
-      profile: profileDocument,
-      recipeBooks: recipeBookDocuments,
-    };
-    console.log(JSON.stringify(sendResponse), '<-sendResponse');
-    return res.status(201).json({
-      recipe,
-      profile: profileDocument,
-      recipeBooks: recipeBookDocuments,
-    });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ message: err.message });
+      const sendResponse = {
+        recipe,
+        profile: profileDocument,
+        recipeBooks: recipeBookDocuments,
+      };
+      console.log(JSON.stringify(sendResponse), '<-sendResponse');
+      return res.status(201).json({
+        recipe,
+        profile: profileDocument,
+        recipeBooks: recipeBookDocuments,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ message: err.message });
+    }
+  } else {
+    return res.status(500).json({ message: 'malformed query url' });
   }
 };
 

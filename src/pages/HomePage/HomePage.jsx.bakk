@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from 'react';
+import './HomePage.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Typeahead, withAsync } from 'react-bootstrap-typeahead';
+import { options } from './Data';
+
+export default function HomePage() {
+  const [recipeURL, setRecipeURL] = useState({ url: '' });
+  const [singleSelections, setSingleSelections] = useState([]);
+  const [queryType, setQueryType] = useState('');
+
+  function handleChange(e) {
+    setRecipeURL({ ...recipeURL, url: e.target.value });
+  }
+  return (
+    <>
+      <header>
+        <img src="https://catcollection7-11.s3.us-east-2.amazonaws.com/pexels-ella-olsson-1600.jpg" />
+        <section>
+          <h1
+            className="text-center mb-5"
+            style={{
+              // fontFamily: `Indie Flower, cursive`,
+              fontSize: '5rem',
+              textShadow: '2px 2px 5px #abbfc2',
+            }}
+          >
+            Welcome to Clickapea!
+          </h1>
+          <h5>Paste a recipe URL or search by name</h5>
+          <Form className="form header-form">
+            <Form.Group>
+              <Typeahead
+                id="basic-typeahead-single"
+                labelKey="name"
+                onChange={setSingleSelections}
+                options={options}
+                placeholder="Paste a url or search for a recipe"
+                selected={singleSelections}
+              />
+            </Form.Group>
+          </Form>
+        </section>
+      </header>
+    </>
+  );
+}

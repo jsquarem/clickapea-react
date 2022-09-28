@@ -8,7 +8,7 @@ router.get('/search/profile/:profileID', recipeController.index);
 router.get('/search/new', recipeController.getNewRecipeImages);
 router.post('/search', recipeController.getRecipes);
 
-router.post('/import', recipeImportController.addRecipe);
+router.get('/import/:query', recipeImportController.addRecipe);
 
 //Books
 router.get('/books', recipeBookController.index);

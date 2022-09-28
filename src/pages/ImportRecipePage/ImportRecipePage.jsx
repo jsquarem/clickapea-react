@@ -11,11 +11,12 @@ import Container from 'react-bootstrap/Container';
 
 export default function ImportRecipePage({ user }) {
   const [error, setError] = useState('');
-  const [recipeURL, setRecipeURL] = useState({ url: '' });
+  const [recipeURL, setRecipeURL] = useState({ url: '', user });
   const [recipeObject, setRecipeObject] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   console.log(location);
+  console.log(recipeURL, '<-recipeURL');
 
   useEffect(() => {
     if (location.state && location.state.url) {
@@ -43,7 +44,7 @@ export default function ImportRecipePage({ user }) {
   const handleRecipeImport = (e) => {
     e.preventDefault();
     try {
-      setRecipeURL({ ...recipeURL, profile: user.profile });
+      setRecipeURL({ ...recipeURL });
       setLoading(true);
     } catch (err) {
       console.log(err.message);
@@ -83,7 +84,7 @@ export default function ImportRecipePage({ user }) {
       </div>
       {loading ? <RecipeLoading /> : ''}
       {recipeObject && !loading ? (
-        <RecipeCard recipeObject={recipeObject} />
+        <RecipeCard recipeObject={recipeObject} user={user} />
       ) : (
         ''
       )}

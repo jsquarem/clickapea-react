@@ -53,6 +53,17 @@ export default function NavBar({ user, handleLogout }) {
                 </LinkContainer>
               </>
             )}
+
+            {user && (
+              <>
+                <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
+                  /
+                </span>
+                <LinkContainer to="/typeahead">
+                  <Nav.Link>Typeahead</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
           </Nav>
           {user ? (
             <Nav>

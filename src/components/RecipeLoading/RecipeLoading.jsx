@@ -15,6 +15,7 @@ export default function RecipeLoading() {
 
   useEffect(() => {
     const textList = [
+      'Cooking in progress..',
       'Checking our database...',
       "Didn't find it, checking somewhere else",
       'Oh wow not there either, ok! Searching the internet...',
@@ -32,7 +33,7 @@ export default function RecipeLoading() {
       }
       setMessage(textList[index]);
       index++;
-      let timer = setTimeout(showNextMessage, 2000);
+      let timer = setTimeout(showNextMessage, 3000);
     };
     showNextMessage();
     return () => {
@@ -40,12 +41,42 @@ export default function RecipeLoading() {
     };
   }, []);
 
+  // return (
+  //   <div
+  //     style={{ minHeight: '38em', opacity: '.5', color: '#463d39' }}
+  //     className="col-12 p-5 mt-2 d-flex align-items-center justify-content-center bg-primary text-center rounded-pill"
+  //   >
+  //     <h1 style={{ fontSize: '5rem' }}>{message}</h1>
+  //   </div>
+  // );
   return (
-    <div
-      style={{ minHeight: '38em', opacity: '.5', color: '#463d39' }}
-      className="col-12 p-5 mt-2 d-flex align-items-center justify-content-center bg-primary text-center rounded-pill"
-    >
-      <h1 style={{ fontSize: '5rem' }}>{message}</h1>
+    <div className="container">
+      <div className="row">
+        <div className="col-12 animation-col">
+          <h1 className="load-heading">{message}</h1>
+          <div id="cooking">
+            <div className="bubble"></div>
+            <div className="bubble"></div>
+            <div className="bubble"></div>
+            <div className="bubble"></div>
+            <div className="bubble"></div>
+            <div id="area">
+              <div id="sides">
+                <div id="pan"></div>
+                <div id="handle"></div>
+              </div>
+              <div
+                id="pancake"
+                className="text-center align-items-center text-white"
+              >
+                <div id="pastry">
+                  <h1 className="mt-4">?</h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

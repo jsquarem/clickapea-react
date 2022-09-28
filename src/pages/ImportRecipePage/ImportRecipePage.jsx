@@ -74,7 +74,7 @@ export default function ImportRecipePage({ user }) {
                   value={recipeURL.url}
                   onChange={handleChange}
                 />
-                <Button variant="outline-secondary" type="submit">
+                <Button variant="outline-success" type="submit">
                   Find
                 </Button>
               </div>

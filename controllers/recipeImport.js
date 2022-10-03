@@ -234,7 +234,7 @@ const requestData = async (url, options) => {
     console.log(data, '<-data');
     return data;
   } catch (error) {
-    console.log(err);
+    console.log(error);
     return res
       .status(500)
       .json({ message: 'Failed to fetch 3rd party API Data' });

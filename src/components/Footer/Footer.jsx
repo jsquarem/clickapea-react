@@ -63,10 +63,11 @@ export default function Footer() {
           </Carousel>
         </div>
         <div className="col-12">
-          © 2022 Copyright:&nbsp;&nbsp;
+          © 2022 Copyright:&nbsp;&nbsp; Clickapea, Inc. - a&nbsp;
           <a className="text-white" href="https://www.jsquarem.com/">
             JSquareM.com
           </a>
+          &nbsp;joint
         </div>
       </div>
     </div>

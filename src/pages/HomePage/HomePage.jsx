@@ -3,21 +3,55 @@ import './HomePage.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
+import { AsyncTypeahead, Menu, MenuItem } from 'react-bootstrap-typeahead';
+import * as recipeAPI from '../../utils/recipeAPI';
 
 export default function HomePage({ user }) {
-  const [recipeURL, setRecipeURL] = useState({ url: '', profile: null });
+  const [query, setQuery] = useState({ query: '', profile: null });
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
   console.log(user, '<-user');
   function handleChange(e) {
-    if (user) {
-      setRecipeURL({
-        ...recipeURL,
-        url: e.target.value,
-        profile: user.profile,
-      });
-    } else {
-      setRecipeURL({ ...recipeURL, url: e.target.value });
+    if (e.length > 2) {
+      if (e.startsWith('htt')) {
+        if (user) {
+          setQuery({
+            ...query,
+            query: e,
+            profile: user.profile,
+          });
+        } else {
+          setQuery({ ...query, query: e });
+        }
+      } else {
+        //recipe query
+        setIsLoading(true);
+        recipeAPI.searchRecipes(e).then((response) => {
+          console.log(response, '<-response');
+          setIsLoading(false);
+          setOptions(response);
+          setQuery({ ...query, query: e });
+        });
+      }
     }
   }
+
+  const renderMenu = (results, menuProps) => {
+    return (
+      <Menu {...menuProps}>
+        {results.map((result, idx) => (
+          <MenuItem
+            key={result.label}
+            onClick={() => setQuery({ query: result.value })}
+            option={result}
+            position={idx}
+          >
+            {result.label}
+          </MenuItem>
+        ))}
+      </Menu>
+    );
+  };
   return (
     <>
       <header>
@@ -37,18 +71,25 @@ export default function HomePage({ user }) {
           <Form className="form header-form">
             <Form.Group className="mb-3" controlId="recipeImport">
               <div className="input-group input-group-lg">
-                <Form.Control
-                  type="text"
-                  placeholder="https://example.com/recipe/"
-                  name="recipeURL"
-                  value={recipeURL.url}
-                  onChange={handleChange}
+                <AsyncTypeahead
+                  inputProps={{
+                    name: 'query',
+                  }}
+                  isLoading={isLoading}
+                  labelKey={(option) => `${option.label}`}
+                  onSearch={handleChange}
+                  options={options}
+                  placeholder="Enter a url or search term"
+                  id="recipe-typeahead"
+                  renderMenu={renderMenu}
                 />
-                <LinkContainer to="/recipes/import" state={recipeURL}>
-                  <Button variant="primary text-white" type="submit">
-                    Find
-                  </Button>
-                </LinkContainer>
+                <div className="input-group-append">
+                  <LinkContainer to="/recipes/import" state={query}>
+                    <Button variant="primary text-white" type="submit">
+                      Find
+                    </Button>
+                  </LinkContainer>
+                </div>
               </div>
             </Form.Group>
           </Form>

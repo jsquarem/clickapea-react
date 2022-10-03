@@ -14,6 +14,7 @@ import Footer from '../../components/Footer/Footer';
 import userService from '../../utils/userService';
 import MealPlannerPage from '../MealPlannerPage/MealPlannerPage';
 import ShoppingCartPage from '../ShoppingCartPage/ShoppingCartPage';
+import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 import Typeahead from '../../components/Typeahead/Typeahead';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         {/* <Route path="/recipes/books" element={<RecipeBookPage />} /> */}
         <Route path="/planner" element={<MealPlannerPage user={user} />} />
         <Route path="/cart" element={<ShoppingCartPage user={user} />} />
+        <Route path="/loading" element={<RecipeLoading user={user} />} />
         <Route
           path="/recipes/import"
           element={<ImportRecipePage user={user} />}

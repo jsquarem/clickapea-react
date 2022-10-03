@@ -11,7 +11,7 @@ import Container from 'react-bootstrap/Container';
 
 export default function ImportRecipePage({ user }) {
   const [error, setError] = useState('');
-  const [recipeURL, setRecipeURL] = useState({ url: '', user });
+  const [recipeURL, setRecipeURL] = useState({ query: '', user });
   const [recipeObject, setRecipeObject] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
@@ -19,8 +19,8 @@ export default function ImportRecipePage({ user }) {
   console.log(recipeURL, '<-recipeURL');
 
   useEffect(() => {
-    if (location.state && location.state.url) {
-      setRecipeURL({ url: location.state.url });
+    if (location.state && location.state.query) {
+      setRecipeURL({ ...recipeURL, query: location.state.query });
       setLoading(true);
     }
   }, []);
@@ -28,6 +28,7 @@ export default function ImportRecipePage({ user }) {
   useEffect(() => {
     if (loading) {
       getRecipe(recipeURL).then((response) => {
+        console.log(response, '<-response in use effect');
         setRecipeObject(response);
         setLoading(false);
       });
@@ -35,10 +36,18 @@ export default function ImportRecipePage({ user }) {
   }, [loading]);
 
   const getRecipe = async (url) => {
-    const responseRecipe = await recipeAPI.addRecipe(recipeURL);
-    setRecipeURL({ url: '' });
-    console.log(responseRecipe, '<-responseRecipe');
-    return responseRecipe;
+    console.log(url, '<-url');
+    if (url.query.startsWith('http')) {
+      const responseRecipe = await recipeAPI.addRecipe(url);
+      setRecipeURL({ ...recipeURL, query: '' });
+      console.log(responseRecipe, '<-responseRecipe1');
+      return responseRecipe;
+    } else {
+      const responseRecipe = await recipeAPI.findRecipe(url);
+      setRecipeURL({ ...recipeURL, query: '' });
+      console.log(responseRecipe, '<-responseRecipe2');
+      return responseRecipe;
+    }
   };
 
   const handleRecipeImport = (e) => {
@@ -52,7 +61,7 @@ export default function ImportRecipePage({ user }) {
   };
 
   function handleChange(e) {
-    setRecipeURL({ ...recipeURL, url: e.target.value });
+    setRecipeURL({ ...recipeURL, query: e.target.value });
   }
 
   return (
@@ -61,20 +70,16 @@ export default function ImportRecipePage({ user }) {
         <div className="col-8 offset-2 mt-5">
           <Form className="form" onSubmit={handleRecipeImport}>
             <Form.Group className="mb-3" controlId="recipeImport">
-              <Form.Label>
-                Import a new recipe!
-                <br />
-                https://tastesbetterfromscratch.com/pork-chile-verde/
-              </Form.Label>
+              <Form.Label></Form.Label>
               <div className="input-group input-group-lg">
                 <Form.Control
                   type="text"
-                  placeholder="https://example.com/recipe/"
+                  placeholder="Enter a url"
                   name="recipeURL"
-                  value={recipeURL.url}
+                  value={recipeURL.query}
                   onChange={handleChange}
                 />
-                <Button variant="outline-secondary" type="submit">
+                <Button variant="outline-success" type="submit">
                   Find
                 </Button>
               </div>

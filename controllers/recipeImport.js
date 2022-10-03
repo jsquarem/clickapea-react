@@ -1,10 +1,12 @@
 require('dotenv').config();
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const RecipeBook = require('../models/recipeBook');
 const Equipment = require('../models/equipment');
 const Ingredient = require('../models/ingredient');
 const RecipeURL = require('../models/recipeURL');
 const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
+
 const {
   Cuisine,
   DishType,
@@ -268,7 +270,7 @@ const addRecipe = async (req, res) => {
         }`;
         console.log(recipeRequestURL, '<-recipeRequestURL');
         const recipeData = await requestData(recipeRequestURL, options);
-        //console.log(recipeData, '<-added');
+        console.log(recipeData, '<-added');
         if (
           recipeData.preparationMinutes == -1 &&
           recipeData.cookingMinutes == -1

@@ -18,3 +18,19 @@ section {
   color: #fff;
   font-family: 'Roboto', sans-serif;
 }
+
+.rbt {
+  width: 80%;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.rbt > div > input {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.input-group-append > .btn {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}

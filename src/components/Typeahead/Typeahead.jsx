@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import * as recipeAPI from '../../utils/recipeAPI';
 
 import { options } from './Data';
 
@@ -18,13 +19,13 @@ const BasicExample = () => {
         // url query
       } else {
         //recipe query
-        setIsLoading({ isLoading: true });
-        fetch(`https://api.github.com/search/users?q=${e}`)
-          .then((resp) => resp.json())
-          .then((json) => {
-            setIsLoading(false);
-            setOptions(json.items);
-          });
+        setIsLoading(true);
+        recipeAPI.searchRecipes(e).then((response) => {
+          console.log(response, '<-response');
+
+          setIsLoading(false);
+          setOptions(response);
+        });
       }
     }
     console.log(e, '<-e');
@@ -39,7 +40,7 @@ const BasicExample = () => {
         <Form.Label>Single Selection</Form.Label>
         <AsyncTypeahead
           isLoading={isLoading}
-          labelKey={(option) => `${option.login}`}
+          labelKey={(option) => `${option.label}`}
           onSearch={handleChange}
           options={options}
           id="recipe-typeahead"

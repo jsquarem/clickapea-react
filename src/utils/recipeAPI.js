@@ -3,10 +3,26 @@ import tokenService from './tokenService';
 const BASE_URL = '/api/recipes';
 
 export function addRecipe(recipeURL) {
-  const cleanURL = encodeURIComponent(recipeURL.url);
-  const profileID = recipeURL.profile;
-
+  console.log(recipeURL, '<-recipeURL in api')
+  const cleanURL = encodeURIComponent(recipeURL.query);
+  const profileID = recipeURL.user.profile;
   const queryURL = `${BASE_URL}/import/${cleanURL}/`;
+  console.log(queryURL, '<-- recipeBook in api');
+  return fetch(queryURL, {
+    method: 'GET',
+  }).then((res) => {
+    if (res.ok) return res.json();
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
+  });
+}
+
+export function findRecipe(query) {
+  console.log(query.query, '<-query')
+  const cleanURL = encodeURIComponent(query.query);
+  const queryURL = `${BASE_URL}/search/find/${cleanURL}/`;
   console.log(queryURL, '<-- recipeBook in api');
   return fetch(queryURL, {
     method: 'GET',
@@ -58,6 +74,21 @@ export function getRecipes(data) {
 
 export function getNewRecipeImages() {
   const queryURL = `${BASE_URL}/search/new`;
+  console.log(queryURL, '<-queryURL');
+  return fetch(queryURL, {
+    method: 'GET',
+  }).then((res) => {
+    console.log(res, '<-res');
+    if (res.ok) return res.json();
+    return res.json().then((response) => {
+      console.log(response);
+      throw new Error(response.error);
+    });
+  });
+}
+
+export function searchRecipes(query) {
+  const queryURL = `${BASE_URL}/search/${query}`;
   console.log(queryURL, '<-queryURL');
   return fetch(queryURL, {
     method: 'GET',

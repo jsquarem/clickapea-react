@@ -54,7 +54,7 @@ export default function NavBar({ user, handleLogout }) {
               </>
             )}
 
-            {user && (
+            {/* {user && (
               <>
                 <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
                   /
@@ -63,7 +63,7 @@ export default function NavBar({ user, handleLogout }) {
                   <Nav.Link>Typeahead</Nav.Link>
                 </LinkContainer>
               </>
-            )}
+            )} */}
           </Nav>
           {user ? (
             <Nav>

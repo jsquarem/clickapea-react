@@ -242,8 +242,8 @@ const requestData = async (url, options) => {
 };
 
 const addRecipe = async (req, res) => {
-  // console.log(req.params.query, '<-req.params.query');
-  // console.log(req.params.profileID, '<-req.params.profileID');
+  console.log(req.params.query, '<-req.params.query');
+  //console.log(req.params.profileID, '<-req.params.profileID');
   if (req.params.query.startsWith('http')) {
     const recipeURLRaw = req.params.query;
     console.log(recipeURLRaw, '<-recipeURLRaw');

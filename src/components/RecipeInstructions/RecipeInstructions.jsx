@@ -4,12 +4,12 @@ import { useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function RecipeInstructions({ recipeInstructions }) {
-  console.log(recipeInstructions, '<-recipeInstructions');
+  // console.log(recipeInstructions, '<-recipeInstructions');
   return (
     <div className="col-12 bg-white rounded my-3 pb-2">
       <h2 className="text-center">Cooking Instructions</h2>
       {recipeInstructions.map((step, idx) => {
-        console.log(step, '<-step');
+        // console.log(step, '<-step');
         return (
           <>
             <h4 className="mt-2">
@@ -17,7 +17,7 @@ export default function RecipeInstructions({ recipeInstructions }) {
             </h4>
             <ListGroup key={'instruction-' + idx}>
               {step.steps.map((instruction, index) => {
-                console.log(instruction, '<-instruction');
+                // console.log(instruction, '<-instruction');
                 return (
                   <ListGroup.Item key={'instruction-' + idx + '-' + index}>
                     <div className="row">

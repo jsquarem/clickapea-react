@@ -15,7 +15,7 @@ const index = async (req, res) => {
 };
 
 const getRecipes = async (req, res) => {
-  console.log(req.body, '<-rec.body');
+  // console.log(req.body, '<-rec.body');
   const recipeIDs = req.body;
   const multiplier = 1;
   try {
@@ -88,7 +88,7 @@ const getRecipes = async (req, res) => {
       });
     });
     ingredientsList.sort((a, b) => (a.aisle > b.aisle ? 1 : -1));
-    console.log(ingredientsList, '<-ingredientsList');
+    // console.log(ingredientsList, '<-ingredientsList');
     res.status(201).send(ingredientsList);
   } catch (err) {
     console.log(err);
@@ -97,21 +97,72 @@ const getRecipes = async (req, res) => {
 };
 
 const getNewRecipeImages = async (req, res) => {
-  console.log('here');
+  // console.log('here');
   try {
     const recipeURLs = await Recipe.find({})
       .sort('-createdAt')
       .limit(25)
       .select('image title');
-    console.log(recipeURLs, '<-recipes');
+    // console.log(recipeURLs, '<-recipes');
     res.status(201).json({ recipeURLs });
   } catch (err) {
     res.status(400).json({ err });
   }
 };
 
+const searchRecipes = async (req, res) => {
+  // console.log(req.params.query, 'req.params.query');
+  try {
+    const searchTerm = req.params.query;
+    console.log(searchTerm, '<-trying');
+    const data = await Recipe.aggregate()
+      .search({
+        "autocomplete": {
+          "query": `${searchTerm}`,
+          "path": 'title',
+          "fuzzy": {
+            "maxEdits": 2,
+          },
+        },
+      });
+    console.log(data, '<-data');
+    const dataArray = data.map((object) => {
+      const dataObj = {
+        label: object.title,
+        value: String(object._id),
+      };
+      return dataObj;
+    });
+
+    console.log(dataArray, '<-dataArray');
+    res.status(201).send(dataArray);
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+};
+
+const getRecipeByID = async (req, res) => {
+  try {
+    const recipeID = req.params.recipeID;
+    const recipe = await Recipe.findById(recipeID).populate('ingredients cuisines dishTypes diets occasions equipment');
+    console.log(recipe, '<-recipe');
+    res.status(201).json({
+      recipe,
+      profile: '',
+      recipeBooks: [],
+    });
+    
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+};
+
+
+
 module.exports = {
   index,
   getRecipes,
   getNewRecipeImages,
+  searchRecipes,
+  getRecipeByID
 };

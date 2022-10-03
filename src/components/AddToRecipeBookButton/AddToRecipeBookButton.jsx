@@ -20,7 +20,8 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
   const [bookName, setBookName] = useState({
     name: '',
   });
-  console.log(user, '<-user');
+  // console.log(user, '<-user');
+  console.log(recipeBooks, '<--recipeBooks');
 
   const getRecipeBooks = () => {
     recipeBookAPI.getBooks().then((response) => {
@@ -44,7 +45,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
 
   const handleBookAdd = (e) => {
     e.preventDefault();
-    setRecipeBooks(null);
+    setRecipeBooks([]);
     setLoading(true);
     const url = `${e.target.parentNode.parentNode.id}/add/${recipeID}`;
     recipeBookAPI.addRecipeToBook(url);

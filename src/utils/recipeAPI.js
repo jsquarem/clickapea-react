@@ -5,7 +5,6 @@ const BASE_URL = '/api/recipes';
 export function addRecipe(recipeURL) {
   console.log(recipeURL, '<-recipeURL in api')
   const cleanURL = encodeURIComponent(recipeURL.query);
-  const profileID = recipeURL.user.profile;
   const queryURL = `${BASE_URL}/import/${cleanURL}/`;
   console.log(queryURL, '<-- recipeBook in api');
   return fetch(queryURL, {

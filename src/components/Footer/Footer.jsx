@@ -50,7 +50,10 @@ export default function Footer() {
                         .slice(i * imageCount, (i + 1) * imageCount)
                         .map((recipe) => (
                           <Card className="bg-transparent" key={recipe._id}>
-                            <LinkContainer to={`/recipes/import/${recipe._id}`}>
+                            <LinkContainer
+                              to={`/recipes/import/${recipe._id}`}
+                              style={{ cursor: 'pointer' }}
+                            >
                               <Card.Img
                                 src={recipe.image}
                                 alt={recipe.name}

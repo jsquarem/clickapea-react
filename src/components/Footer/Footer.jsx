@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
@@ -28,7 +29,7 @@ export default function Footer() {
   console.log(newRecipeImages, '<-newRecipeImages');
   let imageCount = 8;
   return (
-    <div className="bg-light 100vw p-3">
+    <div className="bg-light 100vw p-3" style={{ minHeight: '200px' }}>
       <div
         className="text-center p-3"
         style={{ backgroundColor: `rgba(0, 0, 0, 0.2)` }}
@@ -49,11 +50,13 @@ export default function Footer() {
                         .slice(i * imageCount, (i + 1) * imageCount)
                         .map((recipe) => (
                           <Card className="bg-transparent" key={recipe._id}>
-                            <Card.Img
-                              src={recipe.image}
-                              alt={recipe.name}
-                              className="footer-image"
-                            />
+                            <LinkContainer to={`/recipes/import/${recipe._id}`}>
+                              <Card.Img
+                                src={recipe.image}
+                                alt={recipe.name}
+                                className="footer-image"
+                              />
+                            </LinkContainer>
                           </Card>
                         ))}
                     </Stack>

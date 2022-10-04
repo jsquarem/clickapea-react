@@ -101,7 +101,7 @@ const getNewRecipeImages = async (req, res) => {
   try {
     const recipeURLs = await Recipe.find({})
       .sort('-createdAt')
-      .limit(25)
+      .limit(24)
       .select('image title');
     // console.log(recipeURLs, '<-recipes');
     res.status(201).json({ recipeURLs });

@@ -33,7 +33,7 @@ export default function RecipeCard({ recipeObject, user }) {
         <div
           className="col-12 p-3 rounded"
           style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)) , url(${recipeObject.recipe.image})`,
+            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)) , url('${recipeObject.recipe.image}')`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',

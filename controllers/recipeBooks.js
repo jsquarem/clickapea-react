@@ -41,31 +41,34 @@ const create = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  console.log(req.params, '<-req.params');
   const recipeBookID = req.params.recipeBookID;
   const recipeID = req.params.recipeID;
-  const recipeBookDocument = await RecipeBook.findOne({ _id: recipeBookID });
-  // console.log(recipeBookDocument, '<-recipeBookDocument');
-  if (recipeBookDocument.recipes.includes(recipeID)) {
-    return res.status(304).json({
-      error: 'Recipe already exists in book',
-    });
-  }
-  const recipeDocument = await Recipe.findOne({ _id: recipeID });
-  // console.log(recipeDocument, '<-recipeDocument');
-  recipeBookDocument.recipes.push(recipeDocument);
-  await recipeBookDocument.save();
-
-  return res.status(200).json(recipeBookDocument);
+  try {
+    const recipeBookDocument = await RecipeBook.findOne({ _id: recipeBookID });
+    // console.log(recipeBookDocument, '<-recipeBookDocument');
+    if (recipeBookDocument.recipes.includes(recipeID)) {
+      return res.status(304).json({
+        error: 'Recipe already exists in book',
+      });
+    }
+    const recipeDocument = await Recipe.findOne({ _id: recipeID });
+    // console.log(recipeDocument, '<-recipeDocument');
+    recipeBookDocument.recipes.push(recipeDocument);
+    await recipeBookDocument.save();
+    return res.status(200).json(recipeBookDocument);
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ err: 'Failed to create recipe book' });
+  }  
 };
 
 const index = async (req, res) => {
-  const profileID = req.user.profile.id;
+  const profileID = req.user.profile._id;
   try {
     const recipeBooks = await RecipeBook.find({
-      owner: profileID,
+      profile: profileID,
     }).populate({ path: 'recipes', select: '_id title image' });
-    // console.log(recipeBooks, '<-recipeBookDocuments');
     return res.status(201).json({ recipeBooks });
   } catch (err) {
     return res

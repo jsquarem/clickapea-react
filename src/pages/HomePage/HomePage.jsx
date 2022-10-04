@@ -67,7 +67,9 @@ export default function HomePage({ user }) {
           >
             Welcome to Clickapea!
           </h1>
-          <h5>Paste a recipe URL or search by name</h5>
+          <h3>
+            Import a recipe with a URL or search our database of recipes by name
+          </h3>
           <Form className="form header-form">
             <Form.Group className="mb-3" controlId="recipeImport">
               <div className="input-group input-group-lg">
@@ -92,6 +94,10 @@ export default function HomePage({ user }) {
                 </div>
               </div>
             </Form.Group>
+            <Form.Label>
+              You can also select one of the newest recipes added below to get
+              started.
+            </Form.Label>
           </Form>
         </section>
       </header>

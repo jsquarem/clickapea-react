@@ -9,14 +9,31 @@ header img {
   filter: brightness(0.7);
 }
 
+header {
+  position: relative;
+}
+
 section {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   min-width: 50vw;
   transform: translate(-50%, -50%);
   color: #fff;
   font-family: 'Roboto', sans-serif;
+}
+
+@media screen and (max-width: 480px) {
+  section {
+    min-width: 80vw;
+  }
+  section > h1 {
+    font-size: 4rem !important;
+    line-height: 3.5rem;
+  }
+  .rbt {
+    width: 75% !important;
+  }
 }
 
 .rbt {

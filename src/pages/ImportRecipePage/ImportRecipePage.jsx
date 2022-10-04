@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -17,6 +17,10 @@ export default function ImportRecipePage({ user }) {
   const location = useLocation();
   console.log(location);
   console.log(recipeURL, '<-recipeURL');
+  const { recipeID } = useParams();
+  if (recipeID) {
+    console.log(recipeID, '<-recipeID');
+  }
 
   useEffect(() => {
     if (location.state && location.state.query) {
@@ -24,6 +28,14 @@ export default function ImportRecipePage({ user }) {
       setLoading(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (recipeID) {
+      setRecipeURL({ ...recipeURL, query: recipeID });
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      setLoading(true);
+    }
+  }, [recipeID]);
 
   useEffect(() => {
     if (loading) {
@@ -40,12 +52,12 @@ export default function ImportRecipePage({ user }) {
     if (url.query.startsWith('http')) {
       const responseRecipe = await recipeAPI.addRecipe(url);
       setRecipeURL({ ...recipeURL, query: '' });
-      console.log(responseRecipe, '<-responseRecipe1');
+      // console.log(responseRecipe, '<-responseRecipe1');
       return responseRecipe;
     } else {
       const responseRecipe = await recipeAPI.findRecipe(url);
       setRecipeURL({ ...recipeURL, query: '' });
-      console.log(responseRecipe, '<-responseRecipe2');
+      // console.log(responseRecipe, '<-responseRecipe2');
       return responseRecipe;
     }
   };
@@ -70,7 +82,6 @@ export default function ImportRecipePage({ user }) {
         <div className="col-8 offset-2 mt-5">
           <Form className="form" onSubmit={handleRecipeImport}>
             <Form.Group className="mb-3" controlId="recipeImport">
-              <Form.Label></Form.Label>
               <div className="input-group input-group-lg">
                 <Form.Control
                   type="text"
@@ -83,6 +94,11 @@ export default function ImportRecipePage({ user }) {
                   Find
                 </Button>
               </div>
+              <Form.Label>
+                While Clickapea supports recipe importing from 100s of sites,
+                recipe formats are wildly inconsistent and the import may fail.
+                If importing fails, try again with a new recipe!
+              </Form.Label>
             </Form.Group>
           </Form>
         </div>

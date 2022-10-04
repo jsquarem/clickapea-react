@@ -21,7 +21,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     name: '',
   });
   // console.log(user, '<-user');
-  console.log(recipeBooks, '<--recipeBooks');
+  // console.log(recipeBooks, '<--recipeBooks');
 
   const getRecipeBooks = () => {
     recipeBookAPI.getBooks().then((response) => {
@@ -36,26 +36,22 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     }
   }, [loading]);
 
-  // useEffect(() => {
-  //   getRecipeBooks();
-  // },[])
   const handleBookChange = (e) => {
-    setBookName({ name: e.target.value });
+    e.stopPropagation();
+    setBookName({ [e.target.name]: e.currentTarget.value });
   };
 
   const handleBookAdd = (e) => {
     e.preventDefault();
     setRecipeBooks([]);
-    setLoading(true);
     const url = `${e.target.parentNode.parentNode.id}/add/${recipeID}`;
-    recipeBookAPI.addRecipeToBook(url);
+    recipeBookAPI.addRecipeToBook(url).then(() => setLoading(true));
   };
 
   const handleBookCreateForm = (e) => {
     setAddBook(true);
     e.preventDefault();
     e.stopPropagation();
-    //
   };
 
   const handleBookCreate = async (e) => {
@@ -68,6 +64,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
         } else {
           setRecipeBooks([response.recipeBookDocument]);
         }
+        setBookName({ name: '' });
         setAddBook(false);
       });
     } catch (err) {
@@ -75,7 +72,10 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     }
   };
 
-  const handleBookCancel = (e) => {};
+  const handleBookCancel = (e) => {
+    e.preventDefault();
+    setAddBook(false);
+  };
 
   return recipeBooks.length > 0 ? (
     <DropdownButton
@@ -117,13 +117,22 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
         style={{ minWidth: '100%' }}
         eventKey={0}
         onClick={handleBookCreateForm}
+        onChange={(e) => e.stopPropagation()}
         className="book-form"
       >
         {addBook && user ? (
-          <InputGroup className="">
+          <div
+            className="input-group"
+            onKeyDown={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
+            onFocus={(e) => e.stopPropagation()}
+            onMouseOver={(e) => e.stopPropagation()}
+            onChange={(e) => e.stopPropagation()}
+          >
             <Form.Control
               autoFocus
-              className=""
+              type="text"
+              name="name"
               placeholder="Create New Book"
               onChange={handleBookChange}
               value={bookName.name}
@@ -144,7 +153,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
                 Cancel
               </Button>
             </ButtonGroup>
-          </InputGroup>
+          </div>
         ) : user ? (
           <span className="instructions-text">
             Add a recipe book to save this recipe!
@@ -169,13 +178,15 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
         style={{ minWidth: '100%' }}
         eventKey={0}
         onClick={handleBookCreateForm}
+        onChange={(e) => e.stopPropagation()}
         className="book-form text-white"
       >
         {addBook && user ? (
-          <InputGroup className="">
+          <div className="input-group" onKeyDown={(e) => e.stopPropagation()}>
             <Form.Control
               autoFocus
-              className=""
+              type="text"
+              name="name"
               placeholder="Create New Book"
               onChange={handleBookChange}
               value={bookName.name}
@@ -184,19 +195,19 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
               <Button
                 onClick={handleBookCreate}
                 variant="success"
-                className="book-create"
+                className="book-create text-white"
               >
                 Create
               </Button>
               <Button
                 onClick={handleBookCancel}
                 variant="danger"
-                className="book-cancel"
+                className="book-cancel text-white"
               >
                 Cancel
               </Button>
             </ButtonGroup>
-          </InputGroup>
+          </div>
         ) : user ? (
           <span className="instructions-text">
             Add a recipe book to save this recipe!

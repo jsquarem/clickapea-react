@@ -50,8 +50,8 @@ export default function SignUpPage({ handleSignUpOrLogin }) {
 
   return (
     <Container style={{ minHeight: '69.5vh' }}>
-      <div className="col-12 col-md-4 offset-md-4 mt-5 pt-5">
-        <h3 className="text-center mt-5">Sign Up</h3>
+      <div className="col-12 col-md-4 offset-md-4 my-5">
+        <h1 className="text-center mt-5">Sign Up</h1>
         <Card>
           <Card.Body>
             <Form className="form" onSubmit={handleSubmit}>

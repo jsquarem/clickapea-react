@@ -10,7 +10,7 @@ export default function NavBar({ user, handleLogout }) {
   return (
     <Navbar bg="light" expand="lg" style={{ boxShadow: '0 8px 6px -6px #999' }}>
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
           <div
             style={{
               fontFamily: `'Indie Flower', cursive`,
@@ -53,17 +53,6 @@ export default function NavBar({ user, handleLogout }) {
                 </LinkContainer>
               </>
             )}
-
-            {/* {user && (
-              <>
-                <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
-                  /
-                </span>
-                <LinkContainer to="/typeahead">
-                  <Nav.Link>Typeahead</Nav.Link>
-                </LinkContainer>
-              </>
-            )} */}
           </Nav>
           {user ? (
             <Nav>

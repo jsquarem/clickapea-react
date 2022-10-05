@@ -3,8 +3,8 @@
 } */
 header img {
   width: 100vw;
-  height: 100vh;
-  min-height: 73vh;
+  height: 76vh;
+  min-height: 76vh;
   object-fit: cover;
   filter: brightness(0.7);
 }
@@ -15,7 +15,7 @@ header {
 
 section {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   min-width: 50vw;
   transform: translate(-50%, -50%);

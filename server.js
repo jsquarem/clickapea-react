@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use(require('./server/config/auth'));
 app.use('/api/users', require('./server/routes/api/users'));
 app.use('/api/recipes', require('./server/routes/api/recipes'));
+app.use('/api/books', require('./server/routes/api/recipeBooks'));
 app.use('/api/planner', require('./server/routes/api/planner'));
 // "catch all" route
 app.get('/*', function (req, res) {

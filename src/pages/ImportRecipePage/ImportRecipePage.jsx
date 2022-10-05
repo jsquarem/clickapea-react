@@ -47,6 +47,8 @@ export default function ImportRecipePage({ user }) {
       setRecipeURL({ ...recipeURL, query: '' });
       return responseRecipe;
     } else {
+      // FIXME: better error reporting, find where the 500 response is coming from check front end console
+      // https://www.delish.com/cooking/recipe-ideas/recipes/a50173/chocolate-pumpkin-cheesecake-recipe/
       const responseRecipe = await recipeAPI.findRecipe(url);
       setRecipeURL({ ...recipeURL, query: '' });
       return responseRecipe;

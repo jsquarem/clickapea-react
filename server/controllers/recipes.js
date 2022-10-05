@@ -1,17 +1,18 @@
 const Recipe = require('../models/recipe');
 const recipeServices = require('../services/recipeServices');
 
-const index = async (req, res) => {
-  const profileID = req.user.profile;
-  try {
-    const recipes = await Recipe.find({
-      profile: profileID,
-    });
-    res.status(201).json({ recipes });
-  } catch (err) {
-    res.status(400).json({ err });
-  }
-};
+// const index = async (req, res) => {
+//   //  const profileID = req.user.profile;
+//   const profileID = '';
+//   try {
+//     const recipes = await Recipe.find({
+//       profile: profileID,
+//     });
+//     res.status(201).json({ recipes });
+//   } catch (err) {
+//     res.status(400).json({ err });
+//   }
+// };
 
 const getIngredients = async (req, res) => {
   try {
@@ -40,7 +41,6 @@ const getNewRecipeImages = async (req, res) => {
 const searchRecipes = async (req, res) => {
   try {
     const searchTerm = req.params.query;
-    console.log(searchTerm, '<-trying');
     const searchResults = await Recipe.aggregate().search({
       autocomplete: {
         query: `${searchTerm}`,
@@ -59,7 +59,7 @@ const searchRecipes = async (req, res) => {
     });
     res.status(201).json(searchResultsArray);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ err });
   }
 };
 
@@ -69,21 +69,33 @@ const getRecipeByID = async (req, res) => {
     const recipe = await Recipe.findById(recipeID).populate(
       'ingredients cuisines dishTypes diets occasions equipment'
     );
-    console.log(recipe, '<-recipe');
     res.status(201).json({
       recipe,
       profile: '',
       recipeBooks: [],
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ err });
+  }
+};
+
+const getRecipeByURL = async (req, res) => {
+  console.log('found it');
+  try {
+    const recipeResponseObject = await recipeServices.getRecipeByURL(req);
+    console.log(recipeResponseObject, '<-recipeResponseObject');
+    res.status(201).json(recipeResponseObject);
+  } catch (err) {
+    res.status(500).json({ err });
+    console.log(err);
   }
 };
 
 module.exports = {
-  index,
+  // index,
   getIngredients,
   getNewRecipeImages,
   searchRecipes,
   getRecipeByID,
+  getRecipeByURL,
 };

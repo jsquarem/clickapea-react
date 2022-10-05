@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import * as recipeAPI from '../../utils/recipeAPI';
-import Table from 'react-bootstrap/Table';
 
 export default function CartShoppingList({ shoppingList }) {
   const [shoppingListItems, setShoppingListItems] = useState([]);
@@ -8,9 +7,6 @@ export default function CartShoppingList({ shoppingList }) {
     try {
       const response = await recipeAPI.getRecipes(shoppingList);
       setShoppingListItems(response);
-      //setLoading(false);
-      console.log(response, '<-response');
-      //console.log(response.recipeBooks, '<-response');
     } catch (err) {
       console.log(err.message);
     }
@@ -19,11 +15,9 @@ export default function CartShoppingList({ shoppingList }) {
   useEffect(() => {
     fetchRecipes();
   }, [shoppingList, fetchRecipes]);
-  console.log('Im here');
   return (
     <div className="col-12 bg-white rounded my-4 py-3">
       {shoppingListItems.map((aisle, index) => {
-        console.log('Im here2');
         return (
           <div key={`aisle-${index}`}>
             <div className="row">
@@ -31,14 +25,13 @@ export default function CartShoppingList({ shoppingList }) {
                 <h4>{aisle.aisle}</h4>
               </div>
             </div>
-            {aisle.ingredients.map((ingredient) => {
+            {aisle.ingredients.map((ingredient, index) => {
               let image = 'no.jpg';
               if (ingredient.image) {
                 image = ingredient.image;
               }
-              console.log('Im here3');
               return (
-                <div className="row">
+                <div className="row" key={ingredient.id + '-' + index}>
                   <div className="col-1 offset-2">
                     <div className="form-check form-switch">
                       <input className="form-check-input" type="checkbox" />

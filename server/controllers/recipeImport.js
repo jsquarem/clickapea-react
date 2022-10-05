@@ -1,12 +1,12 @@
 require('dotenv').config();
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const RecipeBook = require('../models/recipeBook');
 const Equipment = require('../models/equipment');
 const Ingredient = require('../models/ingredient');
 const RecipeURL = require('../models/recipeURL');
 const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
-
 const {
   Cuisine,
   DishType,

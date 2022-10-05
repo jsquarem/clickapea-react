@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useEffect } from 'react';
 import IngredientList from '../../components/IngredientList/IngredientList';
-import RecipeImage from '../../components/RecipeImage/RecipeImage';
 import RecipeExtras from '../../components/RecipeExtras/RecipeExtras';
 import EquipmentList from '../EquipmentList/EquipmentList';
 import RecipeInstructions from '../RecipeInstructions/RecipeInstructions';
@@ -25,7 +23,6 @@ export default function RecipeCard({ recipeObject, user }) {
       taste: recipeObject.recipe.taste,
     });
   }, []);
-  console.log(recipeObject, '<-recipeObject in recipecard');
 
   return (
     <>

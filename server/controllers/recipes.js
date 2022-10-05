@@ -115,16 +115,15 @@ const searchRecipes = async (req, res) => {
   try {
     const searchTerm = req.params.query;
     console.log(searchTerm, '<-trying');
-    const data = await Recipe.aggregate()
-      .search({
-        "autocomplete": {
-          "query": `${searchTerm}`,
-          "path": 'title',
-          "fuzzy": {
-            "maxEdits": 2,
-          },
+    const data = await Recipe.aggregate().search({
+      autocomplete: {
+        query: `${searchTerm}`,
+        path: 'title',
+        fuzzy: {
+          maxEdits: 2,
         },
-      });
+      },
+    });
     console.log(data, '<-data');
     const dataArray = data.map((object) => {
       const dataObj = {
@@ -144,25 +143,24 @@ const searchRecipes = async (req, res) => {
 const getRecipeByID = async (req, res) => {
   try {
     const recipeID = req.params.recipeID;
-    const recipe = await Recipe.findById(recipeID).populate('ingredients cuisines dishTypes diets occasions equipment');
+    const recipe = await Recipe.findById(recipeID).populate(
+      'ingredients cuisines dishTypes diets occasions equipment'
+    );
     console.log(recipe, '<-recipe');
     res.status(201).json({
       recipe,
       profile: '',
       recipeBooks: [],
     });
-    
   } catch (e) {
     res.status(500).send({ message: e.message });
   }
 };
-
-
 
 module.exports = {
   index,
   getRecipes,
   getNewRecipeImages,
   searchRecipes,
-  getRecipeByID
+  getRecipeByID,
 };

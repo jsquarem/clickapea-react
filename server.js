@@ -4,7 +4,7 @@ const path = require('path');
 const logger = require('morgan');
 const favicon = require('serve-favicon');
 
-require('./config/database');
+require('./server/config/database');
 
 const app = express();
 
@@ -15,10 +15,10 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.use(require('./config/auth'));
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/recipes', require('./routes/api/recipes'));
-app.use('/api/planner', require('./routes/api/planner'));
+app.use(require('./server/config/auth'));
+app.use('/api/users', require('./server/routes/api/users'));
+app.use('/api/recipes', require('./server/routes/api/recipes'));
+app.use('/api/planner', require('./server/routes/api/planner'));
 // "catch all" route
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

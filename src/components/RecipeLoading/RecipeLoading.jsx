@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { UNSAFE_DataRouterStateContext } from 'react-router-dom';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import './RecipeLoading.css';
 
 export default function RecipeLoading() {
   const [message, setMessage] = useState('');
-
-  //useEffect(() => {
-  // startAnimation();
-  // //}, []);
-  // const startAnimation = () => {
-  //console.log(message, '<-message');
 
   useEffect(() => {
     const textList = [
@@ -41,14 +33,6 @@ export default function RecipeLoading() {
     };
   }, []);
 
-  // return (
-  //   <div
-  //     style={{ minHeight: '38em', opacity: '.5', color: '#463d39' }}
-  //     className="col-12 p-5 mt-2 d-flex align-items-center justify-content-center bg-primary text-center rounded-pill"
-  //   >
-  //     <h1 style={{ fontSize: '5rem' }}>{message}</h1>
-  //   </div>
-  // );
   return (
     <div className="container">
       <div className="row">

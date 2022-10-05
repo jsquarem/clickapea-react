@@ -1,25 +1,18 @@
-import update from 'immutability-helper';
-import { memo, useCallback, useState, useEffect } from 'react';
-import { NativeTypes } from 'react-dnd-html5-backend';
-//import { Box } from '../PlannerRecipes/PlannerRecipes.jsx';
+import { memo, useState, useEffect } from 'react';
 import { PlannerCalendar } from '../PlannerCalendar/PlannerCalendar.jsx';
 import { PlannerRecipes } from '../PlannerRecipes/PlannerRecipes.jsx';
-import { ItemTypes } from './ItemTypes.js';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import './Planner.css';
 
 export const Planner = memo(function Planner() {
-  const [loading, setLoading] = useState(false);
   const [recipeBooks, setRecipeBooks] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
     try {
       recipeBookAPI.getBooks().then((response) => {
         setRecipeBooks(response.recipeBooks);
-        setLoading(false);
       });
     } catch (err) {}
   }, []);

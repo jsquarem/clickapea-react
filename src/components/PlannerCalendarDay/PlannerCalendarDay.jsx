@@ -8,12 +8,6 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   recipes,
   dateType,
 }) {
-  //const [dayRecipes, setDayRecipes] = useState(recipes);
-
-  // useEffect();
-  // console.log(accept, '<-accept');
-  // console.log(dayNumber, 'dayNumber');
-  // console.log(handleOnDrop, 'handleOnDrop');
   if (dateType === 'nextMonth') {
     accept = [''];
   }
@@ -32,9 +26,7 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
   } else if (canDrop) {
     backgroundColor = '#d5eff2';
   }
-  /* $primary: #93a603;
-$secondary: #819ea5; */
-  // console.log(recipes, '<-recipes');
+
   return (
     <div
       ref={drop}
@@ -69,15 +61,3 @@ $secondary: #819ea5; */
     </div>
   );
 });
-
-// return (
-//   <div ref={drop} style={{ ...style, backgroundColor }} data-testid="dustbin">
-//     {isActive
-//       ? 'Release to drop'
-//       : `This dustbin accepts: ${accept.join(', ')}`}
-
-//     {lastDroppedItem && (
-//       <p>Last dropped: {JSON.stringify(lastDroppedItem)}</p>
-//     )}
-//   </div>
-// )

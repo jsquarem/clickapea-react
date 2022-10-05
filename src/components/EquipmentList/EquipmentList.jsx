@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect } from 'react';
 import Image from 'react-bootstrap/Image';
 
 export default function EquipmentList({ equipmentList }) {
-  console.log(equipmentList, '<--equipmentList');
   return (
     <div className="col-12 text-center mx-2">
       <div className="row d-flex align-items-end justify-content-around">

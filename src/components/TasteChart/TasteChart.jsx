@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Chart as ChartJS,
   RadialLinearScale,
@@ -9,7 +8,6 @@ import {
   Legend,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
-import { useEffect } from 'react';
 
 ChartJS.register(
   RadialLinearScale,
@@ -21,26 +19,14 @@ ChartJS.register(
 );
 
 export default function TasteChart({ tasteData }) {
-  // const [tasteState, setTasteState] = useState(null);
-  //const [chartState, setChartState] = useState(null);
   const labels = [];
   const data = [];
-  // console.log(chartState, '<-chartState');
-  // useEffect(() => {
-  //   setTasteState(tasteData);
-  // }, []);
-  // console.log(chartState, '<-chartState');
-
-  // useEffect(() => {
-  //   if (tasteState) {
-  console.log(tasteData, '<-tasteData');
   for (const [key, value] of Object.entries(tasteData)) {
     if (key != 'spiciness') {
       labels.push(key);
       data.push(value);
     }
   }
-  console.log(data, '<-data');
   const chartData = {
     labels: labels,
     datasets: [
@@ -59,9 +45,6 @@ export default function TasteChart({ tasteData }) {
       },
     },
   };
-  //setChartState({ data: chartData, options: options });
-  //   }
-  // }, [tasteState]);
 
   return <Radar data={chartData} options={options} />;
 }

@@ -6,12 +6,10 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import { Check } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import './AddRecipeBookButton.css';
-import { addRecipe } from '../../utils/recipeAPI';
 
 export default function AddToRecipeBookButton({ recipeID, user }) {
   const [recipeBooks, setRecipeBooks] = useState([]);
@@ -20,8 +18,6 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
   const [bookName, setBookName] = useState({
     name: '',
   });
-  // console.log(user, '<-user');
-  // console.log(recipeBooks, '<--recipeBooks');
 
   const getRecipeBooks = () => {
     recipeBookAPI.getBooks().then((response) => {

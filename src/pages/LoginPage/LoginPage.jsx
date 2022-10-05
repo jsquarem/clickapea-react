@@ -31,7 +31,6 @@ export default function RecipeBookPage({ handleSignUpOrLogin }) {
       handleSignUpOrLogin();
       navigate('/');
     } catch (err) {
-      // Invalid user data (probably duplicate email)
       setError(err.message);
     }
   }

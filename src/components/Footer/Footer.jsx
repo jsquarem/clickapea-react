@@ -5,7 +5,6 @@ import Card from 'react-bootstrap/Card';
 import Stack from 'react-bootstrap/Stack';
 import * as recipeAPI from '../../utils/recipeAPI';
 import './Footer.css';
-import CartRecipeList from '../CartRecipeList/CartRecipeList';
 
 export default function Footer() {
   const [newRecipeImages, setNewRecipeImages] = useState([]);
@@ -14,9 +13,6 @@ export default function Footer() {
     try {
       const response = await recipeAPI.getNewRecipeImages();
       setNewRecipeImages(response.recipeURLs);
-      //setLoading(false);
-      console.log(response, '<-response');
-      //console.log(response.recipeBooks, '<-response');
     } catch (err) {
       console.log(err.message);
     }
@@ -26,7 +22,6 @@ export default function Footer() {
     fetchNewRecipeImages();
   }, []);
 
-  console.log(newRecipeImages, '<-newRecipeImages');
   let imageCount = 8;
   return (
     <div className="bg-light 100vw p-3" style={{ minHeight: '200px' }}>

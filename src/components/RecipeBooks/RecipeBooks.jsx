@@ -1,26 +1,19 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import Accordion from 'react-bootstrap/Accordion';
 import { ListGroup } from 'react-bootstrap';
-// import Draggable, { DraggableCore } from 'react-draggable';
 import './RecipeBooks.css';
 
 export default function RecipeBooks({ recipeBooks, draggable }) {
-  //   const [error, setError] = useState('');
-  //   const [isLoading, setIsLoading] = useState(true);
   const [isDraggable, setIsDraggable] = useState(!!draggable);
-  //const [isDragging, setIsDragging] = useState(false);
 
   const handleStart = (e) => {
     console.log(e, '<-handleStart');
-    //setIsDragging(true);
   };
   const handleDrag = (e) => {
     console.log(e, '<-handleDrag');
   };
   const handleStop = (e) => {
     console.log(e, '<-handleStop');
-    //setIsDragging(false);
   };
 
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {

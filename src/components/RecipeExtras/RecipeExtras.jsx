@@ -5,7 +5,6 @@ import './RecipeExtras.css';
 import TasteChart from '../../components/TasteChart/TasteChart';
 
 export default function RecipeExtras({ recipeExtras }) {
-  console.log(recipeExtras, '<-recipeExtras');
   return (
     <div className="col-12 mt-4">
       <div className="row">

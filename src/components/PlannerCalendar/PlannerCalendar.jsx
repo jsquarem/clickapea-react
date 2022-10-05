@@ -1,16 +1,12 @@
 import { useCallback, useMemo, useState, memo, useEffect } from 'react';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import * as plannerAPI from '../../utils/plannerApi';
 import { PlannerCalendarDay } from '../PlannerCalendarDay/PlannerCalendarDay.jsx';
-import Button from 'react-bootstrap/Button';
 import './PlannerCalendar.css';
 
 export const PlannerCalendar = memo(function PlannerCalendar(accept) {
-  // console.log('in PlannerCalendar');
-  const [lastRecipeDropped, setLastRecipeDropped] = useState('');
   const [loading, setLoading] = useState(true);
-  //console.log(loading, '<-loading');
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [plannerEvents, setPlannerEvents] = useState([
@@ -19,18 +15,14 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
       recipes: [],
     },
   ]);
-  // console.log(plannerEvents, '<-plannerEvents');
 
   const getPlanner = useCallback(async () => {
-    //setLoading(true);
     const month = generateWeeksOfTheMonth;
     const firstDay = month[0][0];
     const lastDay = month[month.length - 1][6];
     try {
       const response = await plannerAPI.getEvents({ firstDay, lastDay });
       setPlannerEvents(response.plannerEvents);
-      // setLoading(false);
-      //setEvents(response);
     } catch (err) {
       console.log(err.message);
     }
@@ -78,7 +70,6 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
   }, [generateFirstDayOfEachWeek, firstDayOfFirstWeekOfMonth, generateWeek]);
 
   const handleDrop = useCallback((day, item) => {
-    // console.log(item, day, '<-item, index');
     plannerAPI.addEvent({ recipeID: item.recipeID, date: day }).then(() => {
       getPlanner();
     });
@@ -100,9 +91,6 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
         <div className="col-auto">
           <span className="h2">{selectedDate.clone().format('MMM YYYY')}</span>
         </div>
-        {/* <div className="col-auto align-self-end position-absolute cart-button">
-          <Button variant="primary">Create Shopping List</Button>
-        </div> */}
       </div>
       <div className="bg-white rounded border">
         <div className="d-flex justify-content-around">
@@ -134,7 +122,6 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
                   recipes.push(...event.recipes);
                 }
               });
-              // console.log(recipes, '<-recipes calendar');
               return (
                 // Month Days
                 <PlannerCalendarDay

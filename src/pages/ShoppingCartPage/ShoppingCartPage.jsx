@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartRecipeList from '../../components/CartRecipeList/CartRecipeList';
 import CartShoppingList from '../../components/CartShoppingList/CartShoppingList';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
@@ -7,15 +7,10 @@ import Container from 'react-bootstrap/Container';
 export default function ShoppingCartPage({ user }) {
   const [recipes, setRecipes] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [loading, setLoading] = useState(true);
   const fetchRecipes = async () => {
-    console.log(user, '<-user');
-    console.log(recipes);
     try {
       const response = await recipeBookAPI.getBooks();
       setRecipes(response.recipeBooks);
-      //setLoading(false);
-      console.log(response.recipeBooks, '<-response');
     } catch (err) {
       console.log(err.message);
     }
@@ -29,14 +24,11 @@ export default function ShoppingCartPage({ user }) {
     } else {
       setCartItems([...cartItems, recipeID]);
     }
-
-    //setCartItems
   };
 
   useEffect(() => {
     fetchRecipes();
   }, []);
-  console.log(cartItems.length, '<-cartItems.length');
 
   return (
     <Container style={{ minHeight: '73.4vh' }}>

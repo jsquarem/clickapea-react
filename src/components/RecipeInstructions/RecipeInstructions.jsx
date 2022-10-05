@@ -1,23 +1,18 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function RecipeInstructions({ recipeInstructions }) {
-  // console.log(recipeInstructions, '<-recipeInstructions');
   return (
     <div className="col-12 bg-white rounded my-3 pb-2">
       <h2 className="text-center">Cooking Instructions</h2>
       {recipeInstructions.map((step, idx) => {
-        // console.log(step, '<-step');
         return (
-          <>
+          <div key={'instruction-' + idx}>
             <h4 className="mt-2">
               Step {idx + 1}: {step.name}
             </h4>
-            <ListGroup key={'instruction-' + idx}>
+            <ListGroup>
               {step.steps.map((instruction, index) => {
-                // console.log(instruction, '<-instruction');
                 return (
                   <ListGroup.Item key={'instruction-' + idx + '-' + index}>
                     <div className="row">
@@ -37,7 +32,7 @@ export default function RecipeInstructions({ recipeInstructions }) {
                 );
               })}
             </ListGroup>
-          </>
+          </div>
         );
       })}
     </div>

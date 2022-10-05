@@ -15,12 +15,7 @@ export default function ImportRecipePage({ user }) {
   const [recipeObject, setRecipeObject] = useState(null);
   const [loading, setLoading] = useState(false);
   const location = useLocation();
-  console.log(location);
-  console.log(recipeURL, '<-recipeURL');
   const { recipeID } = useParams();
-  if (recipeID) {
-    console.log(recipeID, '<-recipeID');
-  }
 
   useEffect(() => {
     if (location.state && location.state.query) {
@@ -40,7 +35,6 @@ export default function ImportRecipePage({ user }) {
   useEffect(() => {
     if (loading) {
       getRecipe(recipeURL).then((response) => {
-        console.log(response, '<-response in use effect');
         setRecipeObject(response);
         setLoading(false);
       });
@@ -48,16 +42,13 @@ export default function ImportRecipePage({ user }) {
   }, [loading]);
 
   const getRecipe = async (url) => {
-    console.log(url, '<-url');
     if (url.query.startsWith('http')) {
       const responseRecipe = await recipeAPI.addRecipe(url);
       setRecipeURL({ ...recipeURL, query: '' });
-      // console.log(responseRecipe, '<-responseRecipe1');
       return responseRecipe;
     } else {
       const responseRecipe = await recipeAPI.findRecipe(url);
       setRecipeURL({ ...recipeURL, query: '' });
-      // console.log(responseRecipe, '<-responseRecipe2');
       return responseRecipe;
     }
   };

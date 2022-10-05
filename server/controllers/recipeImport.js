@@ -1,12 +1,12 @@
 require('dotenv').config();
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) =>
+  import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const RecipeBook = require('../models/recipeBook');
 const Equipment = require('../models/equipment');
 const Ingredient = require('../models/ingredient');
 const RecipeURL = require('../models/recipeURL');
 const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
-
 const {
   Cuisine,
   DishType,
@@ -35,7 +35,6 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
     'privacy.owner': null,
   }).populate('ingredients cuisines dishTypes diets occasions equipment');
   if (recipeDocument) {
-    console.log('found it!!!!!!!');
     return recipeDocument;
   }
   // if exists in response then get or create, else initialize empty
@@ -73,7 +72,6 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
   newRecipe.diets = dietDocuments;
   newRecipe.occasions = occasionDocuments;
   newRecipe.equipment = equipmentDocuments;
-  //console.log(newRecipe, '<-newRecipe');
   recipeDocument = await Recipe.create(newRecipe);
   recipeDocument = await recipeDocument.populate(
     'ingredients cuisines dishTypes diets occasions equipment'
@@ -202,12 +200,8 @@ const getRecipeURL = async (recipeURL) => {
   let newUrl = false;
   try {
     const recipeURLDocument = await RecipeURL.findOne({ url: recipeURL.url });
-    //console.log(recipeURLDocument, '<-recipeURLDocument');
     if (recipeURLDocument) return [recipeURLDocument, newUrl];
-
     const searchRecipeURLObj = new URL(recipeURL);
-    const constructedRecipeURL =
-      searchRecipeURLObj.origin + searchRecipeURLObj.pathname;
     try {
       const constructedRecipeURLDocument = await RecipeURL.findOne({
         origin: searchRecipeURLObj.origin,
@@ -227,13 +221,10 @@ const getRecipeURL = async (recipeURL) => {
   }
 };
 
-// const baseUrl = https://api.spotify.com/v1
-
 const requestData = async (url, options) => {
   try {
     const response = await fetch(url, options);
     const data = await response.json();
-    console.log(data, '<-data');
     return data;
   } catch (error) {
     console.log(error);
@@ -244,11 +235,8 @@ const requestData = async (url, options) => {
 };
 
 const addRecipe = async (req, res) => {
-  console.log(req.params.query, '<-req.params.query');
-  //console.log(req.params.profileID, '<-req.params.profileID');
   if (req.params.query.startsWith('http')) {
     const recipeURLRaw = req.params.query;
-    console.log(recipeURLRaw, '<-recipeURLRaw');
     try {
       const options = {
         method: 'GET',
@@ -261,16 +249,12 @@ const addRecipe = async (req, res) => {
       const extractAPIURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/extract?analyze=true&includeTaste=true`;
 
       let recipe = {};
-      //console.log(await getRecipeURL(recipeURLRaw), '<-getRecipeURL');
       const [recipeURLDocument, newRecipe] = await getRecipeURL(recipeURLRaw);
-      //console.log(newRecipe, '<-newRecipe');
       if (newRecipe) {
         const recipeRequestURL = `${extractAPIURL}&url=${
           recipeURLDocument.origin + recipeURLDocument.pathname
         }`;
-        console.log(recipeRequestURL, '<-recipeRequestURL');
         const recipeData = await requestData(recipeRequestURL, options);
-        console.log(recipeData, '<-added');
         if (
           recipeData.preparationMinutes == -1 &&
           recipeData.cookingMinutes == -1
@@ -280,18 +264,15 @@ const addRecipe = async (req, res) => {
           });
         }
         recipe = await addRecipeToDB(recipeData, recipeURLDocument);
-        console.log('added one');
       } else {
         recipe = await Recipe.findOne({
           recipeURL: recipeURLDocument._id,
         }).populate('ingredients cuisines dishTypes diets occasions equipment');
         console.log('found one');
-        //console.log(recipe, '<-recipe');
       }
       if ('profile' in req.body) {
         const profileID = req.body.profile;
         const profileDocument = await Profile.findById(profileID);
-        console.log(profileDocument, '<-profileDocument');
         recipeBookDocuments = await RecipeBook.find({ owner: profileDocument });
       } else {
         profileDocument = null;
@@ -323,7 +304,6 @@ const index = async (req, res) => {
   let recipeBookDocuments = [];
   const profileID = req.user.profile._id;
   const profileDocument = await Profile.findById(profileID);
-  console.log(profileDocument, '<-profileDocument');
   return res.render('searchURL', {
     recipe,
     profile: profileDocument,

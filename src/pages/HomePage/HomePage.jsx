@@ -36,9 +36,9 @@ export default function HomePage({ user }) {
     }
   }
 
-  const renderMenu = (results, menuProps) => {
+  const renderMenu = (results) => {
     return (
-      <Menu {...menuProps}>
+      <Menu id="typeahead-menu">
         {results.map((result, idx) => (
           <MenuItem
             key={result.label}

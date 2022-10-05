@@ -1,15 +1,7 @@
 import { memo } from 'react';
 import { useDrag } from 'react-dnd';
 import { GripVertical } from 'react-bootstrap-icons';
-const style = {
-  border: '1px dashed gray',
-  //backgroundColor: 'white',
-  lineHeight: '40px',
-  //marginRight: '1.5rem',
-  //marginBottom: '1.5rem',
-  cursor: 'move',
-  //float: 'left',
-};
+
 export const PlannerRecipes = memo(function PlannerRecipes({
   image,
   name,
@@ -29,7 +21,12 @@ export const PlannerRecipes = memo(function PlannerRecipes({
   return (
     <div
       ref={drag}
-      style={{ ...style, opacity }}
+      style={{
+        border: '1px dashed gray',
+        lineHeight: '40px',
+        cursor: 'move',
+        opacity,
+      }}
       data-testid="box"
       className="d-flex flex-row justify-content-start h-100 bg-light"
     >

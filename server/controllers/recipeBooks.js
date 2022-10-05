@@ -57,14 +57,14 @@ const add = async (req, res) => {
     await recipeBookDocument.save();
     return res.status(200).json(recipeBookDocument);
   } catch (err) {
-    return res
-      .status(500)
-      .json({ err: 'Failed to create recipe book' });
-  }  
+    return res.status(500).json({ err: 'Failed to create recipe book' });
+  }
 };
 
 const index = async (req, res) => {
-  const profileID = req.user.profile._id;
+  console.log(req.user, '<-req.user');
+  const profileID = req.user.profile;
+  console.log(profileID, '<-profileID');
   try {
     const recipeBooks = await RecipeBook.find({
       profile: profileID,

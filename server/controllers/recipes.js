@@ -1,17 +1,18 @@
 const Recipe = require('../models/recipe');
 const recipeServices = require('../services/recipeServices');
 
-const index = async (req, res) => {
-  const profileID = req.user.profile;
-  try {
-    const recipes = await Recipe.find({
-      profile: profileID,
-    });
-    res.status(201).json({ recipes });
-  } catch (err) {
-    res.status(400).json({ err });
-  }
-};
+// const index = async (req, res) => {
+//   //  const profileID = req.user.profile;
+//   const profileID = '';
+//   try {
+//     const recipes = await Recipe.find({
+//       profile: profileID,
+//     });
+//     res.status(201).json({ recipes });
+//   } catch (err) {
+//     res.status(400).json({ err });
+//   }
+// };
 
 const getIngredients = async (req, res) => {
   try {
@@ -78,10 +79,23 @@ const getRecipeByID = async (req, res) => {
   }
 };
 
+const getRecipeByURL = async (req, res) => {
+  console.log('found it');
+  try {
+    const recipeResponseObject = await recipeServices.getRecipeByURL(req);
+    console.log(recipeResponseObject, '<-recipeResponseObject');
+    res.status(201).json(recipeResponseObject);
+  } catch (err) {
+    res.status(500).json({ err });
+    console.log(err);
+  }
+};
+
 module.exports = {
-  index,
+  // index,
   getIngredients,
   getNewRecipeImages,
   searchRecipes,
   getRecipeByID,
+  getRecipeByURL,
 };

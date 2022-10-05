@@ -4,20 +4,16 @@ const RecipeBook = require('../models/recipeBook');
 
 const create = async (req, res) => {
   const profileID = req.user.profile;
-  // console.log(profileID, '<-profileID');
   const recipeBookName = req.body.name;
   let recipeBookDocument = {
     name: '',
     profile: '',
   };
-  // console.log(recipeBookName, '<-recipeBookName');
   try {
-    // console.log(recipeBookName, '<-recipeBookName');
     recipeBookDocument = await RecipeBook.findOne({
       name: recipeBookName,
       profile: profileID,
     });
-    // console.log(recipeBookDocument, '<--recipeBookDocument1');
     if (recipeBookDocument) {
       console.log('recipe exists');
       return res.status(409).json({ err: 'Recipe Book Exists for User' });
@@ -26,11 +22,9 @@ const create = async (req, res) => {
       name: recipeBookName,
       profile: profileID,
     };
-    // console.log(recipeBookDocument, '<--recipeBookDocument2');
     try {
       recipeBookDocument = await RecipeBook.create(recipeBookDocument);
       console.log('created one');
-      // console.log(recipeBookDocument, '<-recipeBookDocument3');
       res.status(201).json({ recipeBookDocument });
     } catch (err) {
       res.status(400).json({ err });
@@ -45,14 +39,10 @@ const add = async (req, res) => {
   const recipeID = req.params.recipeID;
   try {
     const recipeBookDocument = await RecipeBook.findOne({ _id: recipeBookID });
-    // console.log(recipeBookDocument, '<-recipeBookDocument');
     if (recipeBookDocument.recipes.includes(recipeID)) {
-      return res.status(304).json({
-        error: 'Recipe already exists in book',
-      });
+      return res.status(304).json({ err: 'Recipe already exists in book' });
     }
     const recipeDocument = await Recipe.findOne({ _id: recipeID });
-    // console.log(recipeDocument, '<-recipeDocument');
     recipeBookDocument.recipes.push(recipeDocument);
     await recipeBookDocument.save();
     return res.status(200).json(recipeBookDocument);
@@ -62,9 +52,7 @@ const add = async (req, res) => {
 };
 
 const index = async (req, res) => {
-  console.log(req.user, '<-req.user');
   const profileID = req.user.profile;
-  console.log(profileID, '<-profileID');
   try {
     const recipeBooks = await RecipeBook.find({
       profile: profileID,

@@ -1,6 +1,6 @@
 import tokenService from './tokenService';
 
-const BASE_URL = '/api/recipes/books';
+const BASE_URL = '/api/books';
 
 export function create(recipeBook) {
   return fetch(BASE_URL, {

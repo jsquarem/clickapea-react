@@ -1,19 +1,11 @@
 const router = require('express').Router();
-const recipeImportController = require('../../controllers/recipeImport');
-const recipeBookController = require('../../controllers/recipeBooks');
 const recipeController = require('../../controllers/recipes');
 
-// Recipes
-// router.get('/search/profile/:profileID', recipeController.index);
+router.post('/search', recipeController.getIngredients);
 router.get('/search/new', recipeController.getNewRecipeImages);
 router.get('/search/:query', recipeController.searchRecipes);
 router.get('/search/find/:recipeID', recipeController.getRecipeByID);
-router.post('/search', recipeController.getIngredients);
-router.get('/import/:query', recipeImportController.getRecipeByURL);
 
-//Books
-router.get('/books', recipeBookController.index);
-router.get('/books/:recipeBookID/add/:recipeID', recipeBookController.add);
-router.post('/books', recipeBookController.create);
+router.get('/import/:query', recipeController.getRecipeByURL);
 
 module.exports = router;

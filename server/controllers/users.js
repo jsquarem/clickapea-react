@@ -9,7 +9,6 @@ module.exports = {
 };
 
 async function signup(req, res) {
-  //console.log(req, '<-req');
   const user = new User({ ...req.body });
   const profile = new Profile({
     firstName: req.body.firstName,
@@ -47,7 +46,7 @@ async function login(req, res) {
   }
 }
 
-/*----- Helper Functions -----*/
+//========= Helper Functions =//
 
 function createJWT(user) {
   console.log(user, '<-user in createJWT');

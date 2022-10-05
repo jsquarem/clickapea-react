@@ -31,23 +31,6 @@ export function findRecipe(query) {
   });
 }
 
-// export function profileRecipes(query = '') {
-//   const queryURL = `${BASE_URL}/search/profile/${query}`;
-//   return fetch(queryURL, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: 'Bearer ' + tokenService.getToken(),
-//     },
-//   }).then((res) => {
-//     if (res.ok) return res.json();
-//     return res.json().then((response) => {
-//       console.log(response);
-//       throw new Error(response.error);
-//     });
-//   });
-// }
-
 export function getRecipes(data) {
   const queryURL = `${BASE_URL}/search`;
   return fetch(queryURL, {

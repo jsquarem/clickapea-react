@@ -26,7 +26,6 @@ export function getBooks() {
     },
   }).then((res) => {
     if (res.ok) return res.json();
-
     throw new Error(
       'Bad Credentials, Check Your server terminal for more information'
     );

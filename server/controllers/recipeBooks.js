@@ -15,7 +15,6 @@ const create = async (req, res) => {
       profile: profileID,
     });
     if (recipeBookDocument) {
-      console.log('recipe exists');
       return res.status(409).json({ err: 'Recipe Book Exists for User' });
     }
     recipeBookDocument = {
@@ -24,7 +23,6 @@ const create = async (req, res) => {
     };
     try {
       recipeBookDocument = await RecipeBook.create(recipeBookDocument);
-      console.log('created one');
       res.status(201).json({ recipeBookDocument });
     } catch (err) {
       res.status(400).json({ err });

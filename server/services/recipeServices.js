@@ -317,7 +317,7 @@ const requestData = async (url, options) => {
 
 //=========== Responds to controller =================//
 
-const getManyRecipesIngredientsByRecipeID = async (recipeIDs) => {
+const getIngredientsByRecipeID = async (recipeIDs) => {
   try {
     const recipeDocuments = await Recipe.find({
       _id: {
@@ -395,6 +395,6 @@ const getRecipeByURL = async (req) => {
 };
 
 module.exports = {
-  getManyRecipesIngredientsByRecipeID,
+  getIngredientsByRecipeID,
   getRecipeByURL,
 };

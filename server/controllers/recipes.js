@@ -40,7 +40,6 @@ const getNewRecipeImages = async (req, res) => {
 const searchRecipes = async (req, res) => {
   try {
     const searchTerm = req.params.query;
-    console.log(searchTerm, '<-trying');
     const searchResults = await Recipe.aggregate().search({
       autocomplete: {
         query: `${searchTerm}`,
@@ -59,7 +58,7 @@ const searchRecipes = async (req, res) => {
     });
     res.status(201).json(searchResultsArray);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ err });
   }
 };
 
@@ -69,14 +68,13 @@ const getRecipeByID = async (req, res) => {
     const recipe = await Recipe.findById(recipeID).populate(
       'ingredients cuisines dishTypes diets occasions equipment'
     );
-    console.log(recipe, '<-recipe');
     res.status(201).json({
       recipe,
       profile: '',
       recipeBooks: [],
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ err });
   }
 };
 

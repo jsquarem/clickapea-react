@@ -4,12 +4,12 @@ const recipeBookController = require('../../controllers/recipeBooks');
 const recipeController = require('../../controllers/recipes');
 
 // Recipes
-router.get('/search/profile/:profileID', recipeController.index);
+// router.get('/search/profile/:profileID', recipeController.index);
 router.get('/search/new', recipeController.getNewRecipeImages);
 router.get('/search/:query', recipeController.searchRecipes);
 router.get('/search/find/:recipeID', recipeController.getRecipeByID);
 router.post('/search', recipeController.getIngredients);
-router.get('/import/:query', recipeImportController.addRecipe);
+router.get('/import/:query', recipeImportController.getRecipeByURL);
 
 //Books
 router.get('/books', recipeBookController.index);

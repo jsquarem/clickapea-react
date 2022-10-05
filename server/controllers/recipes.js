@@ -1,28 +1,16 @@
 const Recipe = require('../models/recipe');
 const recipeServices = require('../services/recipeServices');
 
-// const index = async (req, res) => {
-//   //  const profileID = req.user.profile;
-//   const profileID = '';
-//   try {
-//     const recipes = await Recipe.find({
-//       profile: profileID,
-//     });
-//     res.status(201).json({ recipes });
-//   } catch (err) {
-//     res.status(400).json({ err });
-//   }
-// };
-
 const getIngredients = async (req, res) => {
   try {
     const recipeIDs = req.body;
-    const ingredientsList =
-      await recipeServices.getManyRecipesIngredientsByRecipeID(recipeIDs);
+    const ingredientsList = await recipeServices.getIngredientsByRecipeID(
+      recipeIDs
+    );
     res.status(201).send(ingredientsList);
   } catch (err) {
     console.log(err);
-    res.status(400).send({ err });
+    res.status(400).send({ err: 'It broked' });
   }
 };
 
@@ -34,7 +22,7 @@ const getNewRecipeImages = async (req, res) => {
       .select('image title');
     res.status(201).json({ recipeURLs });
   } catch (err) {
-    res.status(400).json({ err });
+    res.status(400).json({ err: 'Broked' });
   }
 };
 

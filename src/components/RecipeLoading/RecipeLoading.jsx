@@ -17,14 +17,14 @@ export default function RecipeLoading() {
       "Yea ok, well, sorry about this, but looks like it's broken",
       "Yeah..... as a valued customer, you're entitled to a 100% refund on this search",
     ];
-    let index = 0;
+    let i = 0;
     const showNextMessage = () => {
-      if (index >= textList.length) {
+      if (i >= textList.length) {
         setMessage('Sowwy :(');
         return;
       }
-      setMessage(textList[index]);
-      index++;
+      setMessage(textList[i]);
+      i++;
       let timer = setTimeout(showNextMessage, 3000);
     };
     showNextMessage();

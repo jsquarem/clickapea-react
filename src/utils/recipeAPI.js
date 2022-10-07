@@ -32,7 +32,7 @@ export function findRecipe(query) {
 }
 
 export function getRecipes(data) {
-  const queryURL = `${BASE_URL}/search`;
+  const queryURL = `${BASE_URL}/search/ingredients`;
   return fetch(queryURL, {
     method: 'POST',
     body: JSON.stringify(data),

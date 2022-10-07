@@ -161,15 +161,12 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
 };
 
 const getEquipment = async (analyzedInstructionRaws) => {
-  console.log('found equipment');
-  console.log(analyzedInstructionRaws[0], '<-analyzedInstructionRaws[0]');
   const equipmentDocumentsRaw = [];
   for (const instruction of analyzedInstructionRaws[0].steps) {
     if (!instruction.equipment) continue;
     for (const equipment of instruction.equipment) {
       let equipmentDocument = await Equipment.findOne({ id: equipment.id });
       if (!equipmentDocument) {
-        console.log(equipment, '<-equipmentDocument');
         equipmentDocument = await Equipment.create(equipment);
       }
       equipmentDocumentsRaw.push(equipmentDocument);
@@ -184,8 +181,6 @@ const getEquipment = async (analyzedInstructionRaws) => {
     }
     return false;
   });
-
-  console.log(equipmentDocuments, '<-equipmentDocuments');
   return equipmentDocuments;
 };
 

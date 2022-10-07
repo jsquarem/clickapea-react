@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { LinkContainer } from 'react-router-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
@@ -8,6 +9,8 @@ import './Footer.css';
 
 export default function Footer() {
   const [newRecipeImages, setNewRecipeImages] = useState([]);
+
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
 
   const fetchNewRecipeImages = useCallback(async () => {
     try {
@@ -23,8 +26,16 @@ export default function Footer() {
   }, []);
 
   let imageCount = 8;
+  if (isMobile) {
+    imageCount = 3;
+  }
+
   return (
-    <div className="bg-light 100vw p-3" style={{ minHeight: '200px' }}>
+    <div
+      className="bg-light 100vw p-3"
+      style={{ minHeight: '200px' }}
+      data-testid="footer"
+    >
       <div
         className="text-center p-3"
         style={{ backgroundColor: `rgba(0, 0, 0, 0.2)` }}
@@ -44,7 +55,11 @@ export default function Footer() {
                       {newRecipeImages
                         .slice(i * imageCount, (i + 1) * imageCount)
                         .map((recipe) => (
-                          <Card className="bg-transparent" key={recipe._id}>
+                          <Card
+                            className="bg-transparent"
+                            role="new-recipe-image"
+                            key={recipe._id}
+                          >
                             <LinkContainer
                               to={`/recipes/import/${recipe._id}`}
                               style={{ cursor: 'pointer' }}

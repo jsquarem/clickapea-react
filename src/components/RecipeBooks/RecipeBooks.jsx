@@ -6,16 +6,6 @@ import './RecipeBooks.css';
 export default function RecipeBooks({ recipeBooks, draggable }) {
   const [isDraggable, setIsDraggable] = useState(!!draggable);
 
-  const handleStart = (e) => {
-    console.log(e, '<-handleStart');
-  };
-  const handleDrag = (e) => {
-    console.log(e, '<-handleDrag');
-  };
-  const handleStop = (e) => {
-    console.log(e, '<-handleStop');
-  };
-
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
     const recipeComponents = recipeBook?.recipes?.map((recipe) => {
       return isDraggable ? (

@@ -9,12 +9,17 @@ import './Planner.css';
 export const Planner = memo(function Planner() {
   const [recipeBooks, setRecipeBooks] = useState([]);
 
-  useEffect(() => {
+  const updateRecipeBooks = async () => {
     try {
-      recipeBookAPI.getBooks().then((response) => {
-        setRecipeBooks(response.recipeBooks);
-      });
-    } catch (err) {}
+      const recipeBooksResponse = await recipeBookAPI.getBooks();
+      setRecipeBooks(recipeBooksResponse.recipeBooks);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    updateRecipeBooks();
   }, []);
 
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {

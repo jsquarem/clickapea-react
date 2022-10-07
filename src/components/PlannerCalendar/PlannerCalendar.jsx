@@ -6,8 +6,6 @@ import { PlannerCalendarDay } from '../PlannerCalendarDay/PlannerCalendarDay.jsx
 import './PlannerCalendar.css';
 
 export const PlannerCalendar = memo(function PlannerCalendar(accept) {
-  const [loading, setLoading] = useState(true);
-
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [plannerEvents, setPlannerEvents] = useState([
     {
@@ -94,8 +92,8 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
       </div>
       <div className="bg-white rounded border">
         <div className="d-flex justify-content-around">
-          {generateWeeksOfTheMonth[0].map((day, index) => (
-            <div className="day-week-header" key={`week-day-${index}`}>
+          {generateWeeksOfTheMonth[0].map((day, weekIndex) => (
+            <div className="day-week-header" key={`week-day-${weekIndex}`}>
               {dayjs(day).format('dd')}
             </div>
           ))}

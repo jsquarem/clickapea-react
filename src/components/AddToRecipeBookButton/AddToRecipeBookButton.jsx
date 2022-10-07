@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 import { useEffect } from 'react';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
@@ -19,16 +18,15 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     name: '',
   });
 
-  const getRecipeBooks = () => {
-    recipeBookAPI.getBooks().then((response) => {
-      setRecipeBooks(response.recipeBooks);
-      setLoading(false);
-    });
+  const updateRecipeBooks = async () => {
+    const recipeBookResponse = await recipeBookAPI.getBooks();
+    setRecipeBooks(recipeBookResponse.recipeBooks);
+    setLoading(false);
   };
 
   useEffect(() => {
     if (user) {
-      getRecipeBooks();
+      updateRecipeBooks();
     }
   }, [loading]);
 
@@ -37,11 +35,12 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     setBookName({ [e.target.name]: e.currentTarget.value });
   };
 
-  const handleBookAdd = (e) => {
+  const handleBookAdd = async (e) => {
     e.preventDefault();
     setRecipeBooks([]);
     const url = `${e.target.parentNode.parentNode.id}/add/${recipeID}`;
-    recipeBookAPI.addRecipeToBook(url).then(() => setLoading(true));
+    await recipeBookAPI.addRecipeToBook(url);
+    setLoading(true);
   };
 
   const handleBookCreateForm = (e) => {
@@ -54,15 +53,14 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
     e.preventDefault();
     setLoading(true);
     try {
-      await recipeBookAPI.create(bookName).then((response) => {
-        if (recipeBooks) {
-          setRecipeBooks([...recipeBooks, response.recipeBookDocument]);
-        } else {
-          setRecipeBooks([response.recipeBookDocument]);
-        }
-        setBookName({ name: '' });
-        setAddBook(false);
-      });
+      const recipeBookResponse = await recipeBookAPI.create(bookName);
+      if (recipeBooks) {
+        setRecipeBooks([...recipeBooks, recipeBookResponse.recipeBookDocument]);
+      } else {
+        setRecipeBooks([recipeBookResponse.recipeBookDocument]);
+      }
+      setBookName({ name: '' });
+      setAddBook(false);
     } catch (err) {
       console.log(err.message);
     }
@@ -82,7 +80,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
       title="Add to Recipe Book"
       variant="primary text-white"
     >
-      {recipeBooks.map((recipeBook, index) => {
+      {recipeBooks.map((recipeBook, i) => {
         let checkmarkClass = '';
         let checkmark = '';
         let unchecked = 'book-name';
@@ -94,8 +92,8 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
         return (
           <Dropdown.Item
             style={{ minWidth: '100%' }}
-            eventKey={index}
-            key={index}
+            eventKey={i}
+            key={i}
             onClick={handleBookAdd}
             className={checkmarkClass}
             id={recipeBook._id}

@@ -11,7 +11,7 @@ export default function HomePage({ user }) {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
   console.log(user, '<-user');
-  function handleChange(e) {
+  const handleChange = async (e) => {
     if (e.length > 2) {
       if (e.startsWith('htt')) {
         if (user) {
@@ -24,17 +24,14 @@ export default function HomePage({ user }) {
           setQuery({ ...query, query: e });
         }
       } else {
-        //recipe query
         setIsLoading(true);
-        recipeAPI.searchRecipes(e).then((response) => {
-          console.log(response, '<-response');
-          setIsLoading(false);
-          setOptions(response);
-          setQuery({ ...query, query: e });
-        });
+        const recipeResponse = await recipeAPI.searchRecipes(e);
+        setIsLoading(false);
+        setOptions(recipeResponse);
+        setQuery({ ...query, query: e });
       }
     }
-  }
+  };
 
   const renderMenu = (results) => {
     return (

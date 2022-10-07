@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function RecipeInstructions({ recipeInstructions }) {
   return (
     <div className="col-12 bg-white rounded my-3 pb-2">
       <h2 className="text-center">Cooking Instructions</h2>
-      {recipeInstructions.map((step, idx) => {
+      {recipeInstructions.map((step, i) => {
         return (
-          <div key={'instruction-' + idx}>
+          <div key={'instruction-' + i}>
             <h4 className="mt-2">
-              Step {idx + 1}: {step.name}
+              Step {i + 1}: {step.name}
             </h4>
             <ListGroup>
-              {step.steps.map((instruction, index) => {
+              {step.steps.map((instruction, j) => {
                 return (
-                  <ListGroup.Item key={'instruction-' + idx + '-' + index}>
+                  <ListGroup.Item key={'instruction-' + i + '-' + j}>
                     <div className="row">
                       <div className="col-3 col-lg-1 m-auto">
                         <div

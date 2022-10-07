@@ -3,7 +3,8 @@ import * as recipeAPI from '../../utils/recipeAPI';
 
 export default function CartShoppingList({ shoppingList }) {
   const [shoppingListItems, setShoppingListItems] = useState([]);
-  const fetchRecipes = useCallback(async () => {
+
+  const updateRecipes = useCallback(async () => {
     try {
       const response = await recipeAPI.getRecipes(shoppingList);
       setShoppingListItems(response);
@@ -13,25 +14,26 @@ export default function CartShoppingList({ shoppingList }) {
   }, [shoppingList]);
 
   useEffect(() => {
-    fetchRecipes();
-  }, [shoppingList, fetchRecipes]);
+    updateRecipes();
+  }, [shoppingList, updateRecipes]);
+
   return (
     <div className="col-12 bg-white rounded my-4 py-3">
-      {shoppingListItems.map((aisle, index) => {
+      {shoppingListItems.map((aisle, i) => {
         return (
-          <div key={`aisle-${index}`}>
+          <div key={`aisle-${i}`}>
             <div className="row">
               <div className="col-10 offset-2">
                 <h4>{aisle.aisle}</h4>
               </div>
             </div>
-            {aisle.ingredients.map((ingredient, index) => {
+            {aisle.ingredients.map((ingredient, j) => {
               let image = 'no.jpg';
               if (ingredient.image) {
                 image = ingredient.image;
               }
               return (
-                <div className="row" key={ingredient.id + '-' + index}>
+                <div className="row" key={ingredient.id + '-' + j}>
                   <div className="col-1 offset-2">
                     <div className="form-check form-switch">
                       <input className="form-check-input" type="checkbox" />

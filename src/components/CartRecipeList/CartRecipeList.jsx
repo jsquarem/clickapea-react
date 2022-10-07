@@ -1,13 +1,6 @@
-import { useCallback, useState } from 'react';
-import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import { Check } from 'react-bootstrap-icons';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { PlusCircle, DashCircle } from 'react-bootstrap-icons';
 
 export default function CartRecipeList({ recipes, onClick, shoppingList }) {
-  const [cartList, setCartList] = useState([]);
-
   const recipeBoks = recipes.map((book) => {
     const recipeListItems = book.recipes.map((recipe) => {
       if (shoppingList.includes(recipe._id)) {

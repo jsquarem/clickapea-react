@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect } from 'react';
 import Image from 'react-bootstrap/Image';
 import './RecipeImage.css';
 

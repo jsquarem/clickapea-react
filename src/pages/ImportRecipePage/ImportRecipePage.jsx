@@ -34,10 +34,12 @@ export default function ImportRecipePage({ user }) {
 
   useEffect(() => {
     if (loading) {
-      getRecipe(recipeURL).then((response) => {
-        setRecipeObject(response);
+      const updateRecipeObjectState = async (recipeURL) => {
+        const recipe = await getRecipe(recipeURL);
+        setRecipeObject(recipe);
         setLoading(false);
-      });
+      };
+      updateRecipeObjectState(recipeURL);
     }
   }, [loading]);
 
@@ -70,7 +72,10 @@ export default function ImportRecipePage({ user }) {
   }
 
   return (
-    <Container style={{ minHeight: '73vh' }}>
+    <Container
+      style={{ minHeight: '73vh' }}
+      data-testid="recipe-import-container"
+    >
       <div className="row">
         <div className="col-8 offset-2 mt-5">
           <Form className="form" onSubmit={handleRecipeImport}>
@@ -82,6 +87,7 @@ export default function ImportRecipePage({ user }) {
                   name="recipeURL"
                   value={recipeURL.query}
                   onChange={handleChange}
+                  data-testid="recipe-import-input"
                 />
                 <Button variant="outline-success" type="submit">
                   Find

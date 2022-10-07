@@ -1,7 +1,7 @@
 const Recipe = require('../models/recipe');
 const recipeServices = require('../services/recipeServices');
 
-const getIngredients = async (req, res) => {
+const getIngredientsByRecipeIDs = async (req, res) => {
   try {
     const recipeIDs = req.body;
     const ingredientsList = await recipeServices.getIngredientsByRecipeID(
@@ -10,23 +10,24 @@ const getIngredients = async (req, res) => {
     res.status(201).send(ingredientsList);
   } catch (err) {
     console.log(err);
-    res.status(400).send({ err: 'It broked' });
+    res.status(400).json({ err });
   }
 };
 
 const getNewRecipeImages = async (req, res) => {
+  const imagesRequested = 24;
   try {
     const recipeURLs = await Recipe.find({})
       .sort('-createdAt')
-      .limit(24)
+      .limit(imagesRequested)
       .select('image title');
     res.status(201).json({ recipeURLs });
   } catch (err) {
-    res.status(400).json({ err: 'Broked' });
+    res.status(400).json({ err });
   }
 };
 
-const searchRecipes = async (req, res) => {
+const searchRecipeTitles = async (req, res) => {
   try {
     const searchTerm = req.params.query;
     const searchResults = await Recipe.aggregate().search({
@@ -81,9 +82,9 @@ const getRecipeByURL = async (req, res) => {
 
 module.exports = {
   // index,
-  getIngredients,
+  getIngredientsByRecipeIDs,
   getNewRecipeImages,
-  searchRecipes,
+  searchRecipeTitles,
   getRecipeByID,
   getRecipeByURL,
 };

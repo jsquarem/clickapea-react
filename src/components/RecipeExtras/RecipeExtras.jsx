@@ -1,6 +1,3 @@
-import React, { useState } from 'react';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
-import { useEffect } from 'react';
 import './RecipeExtras.css';
 import TasteChart from '../../components/TasteChart/TasteChart';
 
@@ -10,13 +7,14 @@ export default function RecipeExtras({ recipeExtras }) {
       <div className="row">
         <div className="col-12 col-md-6">
           <div className="col-12 text-left">
-            <strong>Preparation Time: </strong>{' '}
+            <strong>Preparation Time:&nbsp;</strong>
             {recipeExtras.preparationMinutes} Minutes
             <br />
-            <strong>Cooking Time: </strong> {recipeExtras.cookingMinutes}{' '}
-            Minutes
+            <strong>Cooking Time:&nbsp;</strong>
+            {recipeExtras.cookingMinutes} Minutes
             <br />
-            <strong>Ready in: </strong> {recipeExtras.readyInMinutes} Minutes
+            <strong>Ready in:&nbsp;</strong> {recipeExtras.readyInMinutes}
+            Minutes
           </div>
           <div className="col-12 text-center">
             <div className="row">

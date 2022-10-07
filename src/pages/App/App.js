@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import './Custom.scss';
-// import RecipeBookPage from '../RecipeBookPage/RecipeBookPage';
 import ImportRecipePage from '../ImportRecipePage/ImportRecipePage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';

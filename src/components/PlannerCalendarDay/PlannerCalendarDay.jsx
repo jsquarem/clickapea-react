@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { memo } from 'react';
 import { useDrop } from 'react-dnd';
 export const PlannerCalendarDay = memo(function PlannerCalendarDay({
@@ -38,10 +37,10 @@ export const PlannerCalendarDay = memo(function PlannerCalendarDay({
         style={{ margin: '0px 2px', width: '96%' }}
         className="align-self-end mt-auto"
       >
-        {recipes.map((recipe, index) => {
+        {recipes.map((recipe, i) => {
           return (
             <div
-              key={recipe._id + '-' + index}
+              key={recipe._id + '-' + i}
               className="bg-primary text-center text-white rounded mb-1 p-1 w-100"
             >
               <p

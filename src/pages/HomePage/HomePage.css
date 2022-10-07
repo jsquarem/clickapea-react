@@ -3,8 +3,8 @@
 } */
 header img {
   width: 100vw;
-  height: 76vh;
-  min-height: 76vh;
+  height: 72vh;
+  min-height: 72vh;
   object-fit: cover;
   filter: brightness(0.7);
 }
@@ -23,7 +23,7 @@ section {
   font-family: 'Roboto', sans-serif;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 760px) {
   section {
     min-width: 80vw;
   }

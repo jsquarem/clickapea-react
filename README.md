@@ -2,6 +2,14 @@
 
 An app to simplify, organize, and empower internet recipe storage. Pull recipes from the internet, or search for recipes in the Clickapea database. Once you save a recipe to your account, you can build meal planners and shopping lists using that recipe.
 
+## Getting Setup
+
+```
+git clone git@github.com:jsquarem/clickapea-react.git clickapea-react
+cd clickapea-react/
+npm install
+```
+
 <a href="https://trello.com/b/OC3Bb5jZ/clickapea">Trello board w/ ERD and Wireframes</a>
 
 ## Wireframes

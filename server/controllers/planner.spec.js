@@ -4,45 +4,45 @@ let {
   addRecipeToPlannerDocument,
   createPlannerDocument,
 } = require('../services/plannerService');
+const { getMockReq, getMockRes } = require('@jest-mock/express');
 
 jest.mock('../services/plannerService');
 
-const mockResponse = () => {
-  const res = {
-    statusCode: null,
-  };
-  res.status = jest.fn(statusCode => {
-    res.statusCode = statusCode;
-    return res
-  });
-  res.json = jest.fn(payload => JSON.stringify(payload));
-  return res;
-};
-
 describe('#index', () => {
   describe('when index is passed valid input...', () => {
+
     beforeEach(() => {
       getPlannerDocumentByProfileID.mockReset();
     });
 
     it('it should respond with expected output', async () => {
-      const expectedOutput = {foo: 'bar'};
-
+      const expectedOutput = { foo: [] };
       getPlannerDocumentByProfileID.mockResolvedValueOnce(expectedOutput);
 
-      const req = {user: {profile: 'testProfileId'}};
+      const req = getMockReq({user: {profile: 'testProfileId'}});
+      const { res, next } = getMockRes();
 
-      const res = mockResponse();
       await index(req, res);
 
-      expect(res.statusCode).toBe(201);
       expect(getPlannerDocumentByProfileID).toHaveBeenCalledTimes(1);
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining(expectedOutput),
+      );
     });
   });
 
-  describe('when index is passed invalid input...', () => {
-    it('it should respond with expected output', () => {
-
-    });
-  });
+  // describe('when index is passed invalid input...', () => {
+  //   beforeEach(() => {
+  //     getPlannerDocumentByProfileID.mockReset();
+  //   });
+  //   it('it should respond with error message', async () => {
+  //     const req = getMockReq({user: {profile: 'testProfileId'}});
+  //     const res = getMockRes();
+  //     await index(req, res);
+  //
+  //     expect(res.statusCode).toBe(500);
+  //     expect(getPlannerDocumentByProfileID).toHaveBeenCalledTimes(1);
+  //   });
+  // });
 })

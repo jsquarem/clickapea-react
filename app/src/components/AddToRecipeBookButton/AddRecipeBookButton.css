@@ -1,0 +1,23 @@
+.dropdown-menu {
+  min-width: 100%;
+}
+.dropdown-menu.show {
+  box-shadow: 0 10px 10px #666;
+}
+
+a.book-form.dropdown-item {
+  background: none;
+  color: #8c7b74;
+}
+
+.book-name {
+  color: #8c7b74;
+}
+
+.instructions-text {
+  color: #463d39;
+}
+
+.btn-group > .book-create {
+  border-radius: 0;
+}

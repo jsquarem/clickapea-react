@@ -44,13 +44,16 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
+    "@jest-mock/express": "^2.0.1",
+    "jest": "^29.1.2",
     "react-error-overlay": "^6.0.11",
     "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "server:test": "npx jest",
+    "frontend:test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

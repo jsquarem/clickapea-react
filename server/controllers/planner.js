@@ -1,47 +1,26 @@
-const Profile = require('../models/profile');
-const Planner = require('../models/planner');
+const { addRecipeToPlannerDocument, getPlannerDocumentByProfileID } = require('../services/plannerService');
 
 const index = async (req, res) => {
   const profileID = req.user.profile;
   try {
-    const profileDocument = await Profile.findById(profileID);
-    const plannerEvents = await Planner.find({
-      profile: profileDocument,
-    }).populate({ path: 'recipes', select: '_id title' });
-    res.status(201).json({ plannerEvents });
+    const plannerDocument = await getPlannerDocumentByProfileID(profileID);
+    res.status(201).json(plannerDocument);
   } catch (err) {
-    res.status(400).json({ err });
+    res.status(500).json({ err });
   }
 };
 
 const add = async (req, res) => {
-  const profileID = req.user.profile;
   try {
-    const existingPlannerDocument = await Planner.findOne({
+    const input = {
+      profileID: req.user.profile,
+      recipeID: req.body.recipeID,
       date: req.body.date,
-      profile: profileID,
-    });
-    if (existingPlannerDocument) {
-      try {
-        existingPlannerDocument.recipes.push(req.body.recipeID);
-        existingPlannerDocument.save();
-        res.status(201).json({ existingPlannerDocument });
-      } catch (err) {
-        res
-          .status(401)
-          .json({ err: 'Failed to add recipe to existing planner' });
-      }
-    } else {
-      const plannerObject = {
-        date: req.body.date,
-        profile: profileID,
-        recipes: [req.body.recipeID],
-      };
-      const plannerDocument = await Planner.create(plannerObject);
-      res.status(201).json({ plannerDocument });
     }
+    const plannerDocument = await addRecipeToPlannerDocument(input);
+    res.status(201).json(plannerDocument);
   } catch (err) {
-    res.status(400).json({ err: 'Failed to add planner to database' });
+    res.status(500).json({ err });
   }
 };
 

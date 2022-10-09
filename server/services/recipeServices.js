@@ -11,7 +11,7 @@ const {
   Cuisine,
   DishType,
   Diet,
-  Occaision,
+  Occasion,
 } = require('../models/recipeTaxonomy');
 
 //=========== Helper functions =====================//
@@ -179,10 +179,12 @@ const getEquipment = async (analyzedInstructionRaws) => {
 
 const getOccasions = async (occasionRaws) => {
   const occasionDocuments = [];
+  console.log(occasionRaws, '<-occasionRaws');
   for (const occasion of occasionRaws) {
-    let occasionDocument = await Occaision.findOne({ name: occasion });
+    console.log(occasion, '<-occasion');
+    let occasionDocument = await Occasion.findOne({ name: occasion });
     if (!occasionDocument) {
-      occasionDocument = await Occaision.create({ name: occasion });
+      occasionDocument = await Occasion.create({ name: occasion });
     }
     occasionDocuments.push(occasionDocument);
   }

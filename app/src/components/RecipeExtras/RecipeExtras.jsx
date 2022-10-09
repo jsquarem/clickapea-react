@@ -9,12 +9,13 @@ export default function RecipeExtras({ recipeExtras }) {
         <div className="col-12 col-md-6">
           <div className="col-12 text-left">
             <strong>Preparation Time:&nbsp;</strong>
-            {recipeExtras.preparationMinutes > 0 && recipeExtras.readyInMinutes
-              ? recipeExtras.preparation + ' Minutes'
+            {recipeExtras.preparationMinutes > 0 &&
+            recipeExtras.preparationMinutes
+              ? recipeExtras.preparationMinutes + ' Minutes'
               : 'Unknown'}
             <br />
             <strong>Cooking Time:&nbsp;</strong>
-            {recipeExtras.cookingMinutes > 0 && recipeExtras.readyInMinutes
+            {recipeExtras.cookingMinutes > 0 && recipeExtras.cookingMinutes
               ? recipeExtras.cookingMinutes + ' Minutes'
               : 'Unknown'}
             <br />

@@ -50,9 +50,11 @@ export function getRecipes(data) {
 
 export function getNewRecipeImages() {
   const queryURL = `${BASE_URL}/search/new`;
+  console.log(queryURL, '<-queryURL');
   return fetch(queryURL, {
     method: 'GET',
   }).then((res) => {
+    console.log(res, '<-res');
     if (res.ok) return res.json();
     return res.json().then((response) => {
       console.log(response);

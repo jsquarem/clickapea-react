@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../app/build')));
 
 app.use(require('./config/auth'));
+console.log('here');
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/recipes', require('./routes/api/recipes'));
 app.use('/api/books', require('./routes/api/recipeBooks'));

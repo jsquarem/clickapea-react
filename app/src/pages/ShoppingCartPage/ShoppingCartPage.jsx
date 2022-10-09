@@ -10,7 +10,8 @@ export default function ShoppingCartPage({ user }) {
   const fetchRecipes = async () => {
     try {
       const response = await recipeBookAPI.getBooks();
-      setRecipes(response.recipeBooks);
+
+      setRecipes(response);
     } catch (err) {
       console.log(err.message);
     }

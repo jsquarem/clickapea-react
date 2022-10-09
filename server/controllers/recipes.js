@@ -15,6 +15,7 @@ const getIngredientsByRecipeIDs = async (req, res) => {
 };
 
 const getNewRecipeImages = async (req, res) => {
+  console.log('getNewRecipeImages');
   const imagesRequested = 24;
   try {
     const recipeURLs = await Recipe.find({})
@@ -22,6 +23,7 @@ const getNewRecipeImages = async (req, res) => {
       .limit(imagesRequested)
       .select('image title');
     res.status(201).json({ recipeURLs });
+    console.log(recipeURLs, '<-recipeURLs');
   } catch (err) {
     res.status(400).json({ err });
   }

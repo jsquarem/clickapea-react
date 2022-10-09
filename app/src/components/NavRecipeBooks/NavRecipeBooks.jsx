@@ -54,7 +54,7 @@ export default function RecipeBooks({ user }) {
     );
   });
   // }
-  return (
+  return recipeBooks.length > 0 ? (
     <NavDropdown
       title={
         <>
@@ -65,6 +65,18 @@ export default function RecipeBooks({ user }) {
       className="main-nav-dropdown"
     >
       {recipeBooksComponent}
+    </NavDropdown>
+  ) : (
+    <NavDropdown
+      title={
+        <>
+          Saved Recipes <ChevronDown style={{ fontSize: '1.25rem' }} />
+        </>
+      }
+      id="basic-nav-dropdown"
+      className="main-nav-dropdown"
+    >
+      <NavDropdown.Item>You have no recipes</NavDropdown.Item>
     </NavDropdown>
   );
 }

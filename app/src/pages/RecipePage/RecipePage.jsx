@@ -8,6 +8,7 @@ import RecipeSearchForm from '../../components/RecipeSearchForm/RecipeSearchFrom
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 import Container from 'react-bootstrap/Container';
+import './RecipePage.css';
 
 export default function ImportRecipePage({ user }) {
   const [error, setError] = useState('');
@@ -78,7 +79,7 @@ export default function ImportRecipePage({ user }) {
       data-testid="recipe-import-container"
     >
       <div className="row">
-        <div className="col-8 offset-2 mt-5">
+        <div className="col-12 col-md-8 offset-md-2 mt-5">
           <RecipeSearchForm user={user} />
           <p>
             While Clickapea supports recipe importing from 100s of sites, recipe

@@ -1,0 +1,20 @@
+@media screen and (max-width: 760px) {
+  .rbt {
+    width: 75% !important;
+  }
+}
+.rbt {
+  width: 91%;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.rbt > div > input {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.input-group-append > .btn {
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import IngredientList from '../../components/IngredientList/IngredientList';
 import RecipeExtras from '../../components/RecipeExtras/RecipeExtras';
 import EquipmentList from '../EquipmentList/EquipmentList';
@@ -33,7 +34,7 @@ export default function RecipeCard({ recipeObject, user }) {
         <div
           className="col-12 p-3 rounded"
           style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)) , url('${recipeObject.recipe.image}')`,
+            backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0)) , url('${recipeObject.recipe.image}')`,
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
@@ -41,13 +42,30 @@ export default function RecipeCard({ recipeObject, user }) {
         >
           <div className="row">
             <div className="col-12 col-md-6">
-              <h1 className="text-center text-light">
+              <h1 className="text-center text-white">
                 {recipeObject.recipe.title}
               </h1>
               <AddToRecipeBookButton
                 recipeID={recipeObject.recipe._id}
                 user={user}
               />
+              <div className="row">
+                <div className="col-3">
+                  <img src="https://catcollection7-11.s3.us-east-2.amazonaws.com/up-arrow.png" />{' '}
+                </div>
+                <div className="col-7 mt-5 text-center">
+                  <span className="text-white h4 pt-5 text-center">
+                    Add recipe to a recipebook to build a&nbsp;
+                    <Link className="recipe-link" to="/planner">
+                      Planner
+                    </Link>
+                    &nbsp;or&nbsp;
+                    <Link className="recipe-link" to="/list">
+                      Shopping List
+                    </Link>
+                  </span>
+                </div>
+              </div>
             </div>
             <div className="col-12 col-md-6 recipe-ingredients bordered rounded">
               <IngredientList

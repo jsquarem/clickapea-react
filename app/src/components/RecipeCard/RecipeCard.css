@@ -19,3 +19,11 @@
   bottom: 1%;
   background-color: rgba(255, 255, 255, 0.9);
 } */
+
+.recipe-link {
+  color: #d5eff2;
+}
+
+.recipe-link:hover {
+  color: #729ea2;
+}

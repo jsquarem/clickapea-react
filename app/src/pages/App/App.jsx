@@ -12,7 +12,7 @@ import NavBar from '../../components/Nav/Nav';
 import Footer from '../../components/Footer/Footer';
 import userService from '../../utils/userService';
 import MealPlannerPage from '../MealPlannerPage/MealPlannerPage';
-import ShoppingCartPage from '../ShoppingCartPage/ShoppingCartPage';
+import ShoppingListPage from '../ShoppingListPage/ShoppingListPage';
 import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 
 export default function App() {
@@ -33,7 +33,7 @@ export default function App() {
       <Routes>
         <Route exact path="/" element={<HomePage user={user} />} />
         <Route path="/planner" element={<MealPlannerPage user={user} />} />
-        <Route path="/cart" element={<ShoppingCartPage user={user} />} />
+        <Route path="/list" element={<ShoppingListPage user={user} />} />
         <Route path="/loading" element={<RecipeLoading user={user} />} />
         <Route path="/recipes/" element={<RecipePage user={user} />} />
         <Route path="/recipes/:recipeID" element={<RecipePage user={user} />} />

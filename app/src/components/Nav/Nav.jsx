@@ -47,8 +47,8 @@ export default function NavBar({ user, handleLogout }) {
                 <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
                   /
                 </span>
-                <LinkContainer to="/cart">
-                  <Nav.Link>Shopping Cart</Nav.Link>
+                <LinkContainer to="/list">
+                  <Nav.Link>Shopping List</Nav.Link>
                 </LinkContainer>
               </>
             )}

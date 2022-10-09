@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import './Custom.scss';
-import ImportRecipePage from '../ImportRecipePage/ImportRecipePage';
+import RecipePage from '../RecipePage/RecipePage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import HomePage from '../HomePage/HomePage';
@@ -13,7 +13,6 @@ import Footer from '../../components/Footer/Footer';
 import userService from '../../utils/userService';
 import MealPlannerPage from '../MealPlannerPage/MealPlannerPage';
 import ShoppingCartPage from '../ShoppingCartPage/ShoppingCartPage';
-import RecipePage from '../RecipePage/RecipePage';
 import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 
 export default function App() {
@@ -33,18 +32,11 @@ export default function App() {
       <NavBar user={user} handleLogout={handleLogout} />
       <Routes>
         <Route exact path="/" element={<HomePage user={user} />} />
-        <Route path="/recipes" element={<RecipePage user={user} />} />
         <Route path="/planner" element={<MealPlannerPage user={user} />} />
         <Route path="/cart" element={<ShoppingCartPage user={user} />} />
         <Route path="/loading" element={<RecipeLoading user={user} />} />
-        <Route
-          path="/recipes/import"
-          element={<ImportRecipePage user={user} />}
-        />
-        <Route
-          path="/recipes/import/:recipeID"
-          element={<ImportRecipePage user={user} />}
-        />
+        <Route path="/recipes/" element={<RecipePage user={user} />} />
+        <Route path="/recipes/:recipeID" element={<RecipePage user={user} />} />
         <Route
           path="/login"
           element={<LoginPage handleSignUpOrLogin={handleSignUpOrLogin} />}

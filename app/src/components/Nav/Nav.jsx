@@ -29,8 +29,8 @@ export default function NavBar({ user, handleLogout }) {
             <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
               /
             </span>
-            <LinkContainer to="/recipes/import">
-              <Nav.Link>Import Recipe</Nav.Link>
+            <LinkContainer to="/recipes">
+              <Nav.Link>Recipes</Nav.Link>
             </LinkContainer>
             {user && (
               <>

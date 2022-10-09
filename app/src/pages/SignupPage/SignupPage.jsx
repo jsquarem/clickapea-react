@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import userService from '../../utils/userService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 
 export default function SignUpPage({ handleSignUpOrLogin }) {
@@ -127,6 +127,9 @@ export default function SignUpPage({ handleSignUpOrLogin }) {
             </Form>
           </Card.Body>
         </Card>
+        <div>
+          Already have an account? <Link to="/login">Login here!</Link>
+        </div>
       </div>
     </Container>
   );

@@ -151,7 +151,7 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
           </div>
         ) : user ? (
           <span className="instructions-text">
-            Add a recipe book to save this recipe!
+            Click to Create Another Recipe Book
           </span>
         ) : (
           <span className="instructions-text">

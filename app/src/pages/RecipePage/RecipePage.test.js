@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import ImportRecipePage from './ImportRecipePage';
+import ImportRecipePage from './RecipePage';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 it('should render recipe import page', () => {

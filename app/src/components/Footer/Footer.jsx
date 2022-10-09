@@ -61,7 +61,7 @@ export default function Footer() {
                             key={recipe._id}
                           >
                             <LinkContainer
-                              to={`/recipes/import/${recipe._id}`}
+                              to={`/recipes/${recipe._id}`}
                               style={{ cursor: 'pointer' }}
                             >
                               <Card.Img

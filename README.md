@@ -7,7 +7,11 @@ An app to simplify, organize, and empower internet recipe storage. Pull recipes 
 ```
 git clone git@github.com:jsquarem/clickapea-react.git clickapea-react
 cd clickapea-react/
+npm start
+cd app/
 npm install
+npm run build
+npm start
 ```
 
 <a href="https://trello.com/b/OC3Bb5jZ/clickapea">Trello board w/ ERD and Wireframes</a>

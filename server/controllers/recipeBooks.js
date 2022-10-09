@@ -1,4 +1,4 @@
-const Profile = require('../models/profile');
+// const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
 const RecipeBook = require('../models/recipeBook');
 

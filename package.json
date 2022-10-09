@@ -1,10 +1,10 @@
 {
   "name": "clickapea",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
-    "build:ui": "cd app && npm install && npm run build",
-    "deploy": "git push heroku main",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy"
+    "start": "npm start --prefix server",
+    "install-client": "cd app && npm install && npm run build && cd ..",
+    "install-server": "cd server && npm install && cd .. ",
+    "heroku-postbuild": "npm run install-client && npm run install-server"
   }
 }

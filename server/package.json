@@ -22,7 +22,10 @@
   },
   "scripts": {
     "server:test": "npx jest",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build:ui": "cd ../app && npm install && npm run build",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy"
   },
   "browserslist": {
     "production": [

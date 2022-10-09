@@ -1,0 +1,9 @@
+{
+  "name": "clickapea-server",
+  "version": "0.1.0",
+  "scripts": {
+    "build:ui": "cd ../react-front && npm install && npm run build",
+    "deploy": "git push heroku master",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy"
+  }
+}

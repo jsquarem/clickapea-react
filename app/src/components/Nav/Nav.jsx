@@ -1,7 +1,9 @@
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import NavRecipeBooks from '../NavRecipeBooks/NavRecipeBooks';
 import { LinkContainer } from 'react-router-bootstrap';
 import './Nav.css';
 
@@ -30,8 +32,16 @@ export default function NavBar({ user, handleLogout }) {
               /
             </span>
             <LinkContainer to="/recipes">
-              <Nav.Link>Recipes</Nav.Link>
+              <Nav.Link>Find Recipes</Nav.Link>
             </LinkContainer>
+            {user && (
+              <>
+                <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">
+                  /
+                </span>
+                <NavRecipeBooks />
+              </>
+            )}
             {user && (
               <>
                 <span className="d-none d-md-block align-self-center h3 pt-2 nav-span">

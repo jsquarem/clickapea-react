@@ -5,6 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import './Custom.scss';
 import RecipePage from '../RecipePage/RecipePage';
+import RecipeBooksPage from '../RecipeBooksPage/RecipeBooksPage';
 import SignupPage from '../SignupPage/SignupPage';
 import LoginPage from '../LoginPage/LoginPage';
 import HomePage from '../HomePage/HomePage';
@@ -36,6 +37,7 @@ export default function App() {
         <Route path="/list" element={<ShoppingListPage user={user} />} />
         <Route path="/loading" element={<RecipeLoading user={user} />} />
         <Route path="/recipes/" element={<RecipePage user={user} />} />
+        <Route path="/books/" element={<RecipeBooksPage user={user} />} />
         <Route path="/recipes/:recipeID" element={<RecipePage user={user} />} />
         <Route
           path="/login"

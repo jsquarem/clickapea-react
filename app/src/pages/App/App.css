@@ -1,0 +1,85 @@
+/* .App {
+  text-align: center;
+  background-color: #efd9ce;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Indie+Flower&family=Maven+Pro&display=swap');
+@font-face {
+  font-family: 'Gumela';
+  src: url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.eot');
+  src: url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.eot?#iefix')
+      format('embedded-opentype'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.woff2')
+      format('woff2'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.woff')
+      format('woff'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.ttf')
+      format('truetype'),
+    url('//db.onlinewebfonts.com/t/00561b492d88a5287a5def1e83a34882.svg#Gumela')
+      format('svg');
+}
+
+* {
+  font-family: 'Maven Pro', sans-serif;
+  /* font-size: 1.3rem; */
+  /* font-weight: normal;
+  font-size: 20px; */
+  /* font: Gumela normal 20px; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: 'Caveat', cursive;
+  /* font-size: 2em !important; */
+}
+
+nav a {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.7em !important;
+}
+
+.btn {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.7em !important;
+}
+
+.btn-outline-success:hover {
+  color: white !important;
+}

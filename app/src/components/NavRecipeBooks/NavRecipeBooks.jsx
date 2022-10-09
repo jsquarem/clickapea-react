@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ChevronDown } from 'react-bootstrap-icons';
-import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
-import Accordion from 'react-bootstrap/Accordion';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { ListGroup, Nav } from 'react-bootstrap';
 import * as recipeBookAPI from '../../utils/recipeBookAPI';
 import './NavRecipeBooks.css';
 
@@ -25,7 +21,6 @@ export default function RecipeBooks({ user }) {
     updateRecipeBooks();
   }, []);
   console.log(recipeBooks);
-  //if (recipeBooks.length > 0) {
   const recipeBooksComponent = recipeBooks.map((recipeBook) => {
     const recipeComponents = recipeBook.recipes.map((recipe) => {
       return (

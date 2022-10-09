@@ -5,8 +5,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start-server": "cd server && node server.js",
-    "build": "cd app/ && npm install && npm run build && cd .. && npm start-server"
+    "start": "cd server && node server.js",
+    "build": "cd app/ && npm install && npm run build"
   },
   "cacheDirectories": [
     "node_modules",

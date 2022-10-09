@@ -5,8 +5,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node server/server.js",
-    "build": "cd app/ && npm install && npm run build"
+    "start": "cd server && npm install && npm start",
+    "heroku-postbuild": "cd app/ && npm install && npm run build"
   },
   "license": "MIT"
 }

@@ -15,8 +15,12 @@ export default function IngredientList({ ingredients }) {
     for (let i = 0; i < ingredientState.length; i += 2) {
       let ingredientOne = '';
       let ingredientTwo = '';
-      ingredientOne = ingredientState[i].original;
-      ingredientTwo = ingredientState[i + 1]?.original;
+      const replaceArray = ['&nbsp;'];
+      ingredientOne = ingredientState[i].original.replaceAll('&nbsp;', ' ');
+      ingredientTwo = ingredientState[i + 1]?.original.replaceAll(
+        '&nbsp;',
+        ' '
+      );
       row = (
         <tr key={i}>
           <td>{ingredientOne}</td>

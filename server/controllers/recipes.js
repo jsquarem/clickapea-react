@@ -15,7 +15,6 @@ const getIngredientsByRecipeIDs = async (req, res) => {
 };
 
 const getNewRecipeImages = async (req, res) => {
-  console.log('getNewRecipeImages');
   const imagesRequested = 24;
   try {
     const recipeURLs = await Recipe.find({})
@@ -23,7 +22,6 @@ const getNewRecipeImages = async (req, res) => {
       .limit(imagesRequested)
       .select('image title');
     res.status(201).json({ recipeURLs });
-    console.log(recipeURLs, '<-recipeURLs');
   } catch (err) {
     res.status(400).json({ err });
   }
@@ -71,10 +69,10 @@ const getRecipeByID = async (req, res) => {
 };
 
 const getRecipeByURL = async (req, res) => {
-  console.log('found it');
+  console.log('getRecipeByURL');
   try {
-    const recipeResponseObject = await recipeServices.getRecipeByURL(req);
-    console.log(recipeResponseObject, '<-recipeResponseObject');
+    const recipeResponseObject = await recipeServices.findOneOrCreate(req);
+    console.log(recipeResponseObject, '<-recipeResponseObject in here');
     res.status(201).json(recipeResponseObject);
   } catch (err) {
     res.status(500).json({ err });

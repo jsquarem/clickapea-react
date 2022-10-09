@@ -34,6 +34,7 @@ export default function HomePage({ user }) {
   };
 
   const renderMenu = (results) => {
+    console.log(results, '<-result');
     return (
       <Menu id="typeahead-menu">
         {results.map((result, idx) => (
@@ -78,9 +79,10 @@ export default function HomePage({ user }) {
                   labelKey={(option) => `${option.label}`}
                   onSearch={handleChange}
                   options={options}
-                  placeholder="Enter a url or search term"
+                  placeholder="Enter a url or search term (3 chars min)"
                   id="recipe-typeahead"
                   renderMenu={renderMenu}
+                  minLength={3}
                 />
                 <div className="input-group-append">
                   <LinkContainer to="/recipes/import" state={query}>

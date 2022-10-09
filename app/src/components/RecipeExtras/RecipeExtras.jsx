@@ -2,19 +2,27 @@ import './RecipeExtras.css';
 import TasteChart from '../../components/TasteChart/TasteChart';
 
 export default function RecipeExtras({ recipeExtras }) {
+  console.log(recipeExtras.readyInMinutes, '<-recipeExtras.readyInMinutes');
   return (
     <div className="col-12 mt-4">
       <div className="row">
         <div className="col-12 col-md-6">
           <div className="col-12 text-left">
             <strong>Preparation Time:&nbsp;</strong>
-            {recipeExtras.preparationMinutes} Minutes
+            {recipeExtras.preparationMinutes > 0
+              ? recipeExtras.preparation + ' Minutes'
+              : 'Unknown'}
             <br />
             <strong>Cooking Time:&nbsp;</strong>
-            {recipeExtras.cookingMinutes} Minutes
+            {recipeExtras.cookingMinutes > 0
+              ? recipeExtras.cookingMinutes + ' Minutes'
+              : 'Unknown'}
             <br />
-            <strong>Ready in:&nbsp;</strong> {recipeExtras.readyInMinutes}
-            Minutes
+            <strong>Ready in:&nbsp;</strong>
+            {recipeExtras.readyInMinutes > 0
+              ? recipeExtras.readyInMinutes + ' Minutes'
+              : 'Unknown'}
+            <br />
           </div>
           <div className="col-12 text-center">
             <div className="row">

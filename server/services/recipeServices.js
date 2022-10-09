@@ -320,8 +320,8 @@ const getIngredientsByRecipeID = async (recipeIDs) => {
   }
 };
 
-const getRecipeByURL = async (req) => {
-  console.log('made it');
+const findOneOrCreate = async (req) => {
+  console.log('findOneOrCreate');
   if (req.params.query.startsWith('http')) {
     const recipeURLRaw = req.params.query;
     try {
@@ -336,24 +336,32 @@ const getRecipeByURL = async (req) => {
       const extractAPIURL = `https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/extract?analyze=true&includeTaste=true`;
       let recipe = {};
       const [recipeURLDocument, newRecipe] = await getRecipeURL(recipeURLRaw);
+
+      // console.log(recipeURLDocument, '<-recipeURLDocument');
+      console.log(newRecipe, '<-newRecipe');
       if (newRecipe) {
         const recipeRequestURL = `${extractAPIURL}&url=${
           recipeURLDocument.origin + recipeURLDocument.pathname
         }`;
         const recipeData = await requestData(recipeRequestURL, options);
-        if (
-          recipeData.preparationMinutes == -1 &&
-          recipeData.cookingMinutes == -1
-        ) {
-          return res.status(503).json({
-            error: 'Could not find valid recipe',
-          });
-        }
+        console.log(recipeData, '<-recipeData');
+        // if (
+        //   recipeData.preparationMinutes == -1 &&
+        //   recipeData.cookingMinutes == -1
+        // ) {
+        //   return res.status(503).json({
+        //     error: 'Could not find valid recipe',
+        //   });
+        // }
         recipe = await addRecipeToDB(recipeData, recipeURLDocument);
       } else {
         recipe = await Recipe.findOne({
           recipeURL: recipeURLDocument._id,
         }).populate('ingredients cuisines dishTypes diets occasions equipment');
+        if (!recipe) {
+          console.log(recipeURLDocument, '<-recipeURLDocument');
+          await RecipeURL.deleteOne({ _id: recipeURLDocument._id });
+        }
       }
       if ('profile' in req.body) {
         const profileID = req.body.profile;
@@ -384,5 +392,5 @@ const getRecipeByURL = async (req) => {
 
 module.exports = {
   getIngredientsByRecipeID,
-  getRecipeByURL,
+  findOneOrCreate,
 };

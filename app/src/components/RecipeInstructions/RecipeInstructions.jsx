@@ -25,7 +25,9 @@ export default function RecipeInstructions({ recipeInstructions }) {
                           </h3>
                         </div>
                       </div>
-                      <div className="col-9 col-lg-11">{instruction.step}</div>
+                      <div className="col-9 col-lg-11">
+                        {instruction.step.replaceAll('&nbsp;', ' ')}
+                      </div>
                     </div>
                   </ListGroup.Item>
                 );

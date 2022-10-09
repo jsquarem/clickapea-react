@@ -11,20 +11,23 @@ export default function RecipeCard({ recipeObject, user }) {
   const [recipeExtras, setRecipeExtras] = useState({});
 
   useEffect(() => {
-    setRecipeExtras({
-      preparationMinutes: recipeObject.recipe.preparationMinutes,
-      cookingMinutes: recipeObject.recipe.cookingMinutes,
-      readyInMinutes: recipeObject.recipe.readyInMinutes,
-      vegetarian: recipeObject.recipe.vegetarian,
-      vegan: recipeObject.recipe.vegan,
-      glutenFree: recipeObject.recipe.glutenFree,
-      dairyFree: recipeObject.recipe.dairyFree,
-      veryHealthy: recipeObject.recipe.veryHealthy,
-      taste: recipeObject.recipe.taste,
-    });
+    console.log(recipeObject, '<-recipeObject');
+    if (recipeObject.recipe) {
+      setRecipeExtras({
+        preparationMinutes: recipeObject.recipe.preparationMinutes,
+        cookingMinutes: recipeObject.recipe.cookingMinutes,
+        readyInMinutes: recipeObject.recipe.readyInMinutes,
+        vegetarian: recipeObject.recipe.vegetarian,
+        vegan: recipeObject.recipe.vegan,
+        glutenFree: recipeObject.recipe.glutenFree,
+        dairyFree: recipeObject.recipe.dairyFree,
+        veryHealthy: recipeObject.recipe.veryHealthy,
+        taste: recipeObject.recipe.taste,
+      });
+    }
   }, []);
 
-  return (
+  return recipeObject.recipe ? (
     <>
       <div className="row recipe-header">
         <div
@@ -58,12 +61,13 @@ export default function RecipeCard({ recipeObject, user }) {
           <EquipmentList equipmentList={recipeObject.recipe.equipment} />
         </div>
       </div>
-
       <div className="row">
         <RecipeInstructions
           recipeInstructions={recipeObject.recipe.analyzedInstructions}
         />
       </div>
     </>
+  ) : (
+    <h1 className="text-center mt-5 pt-5">Unable to import recipe</h1>
   );
 }

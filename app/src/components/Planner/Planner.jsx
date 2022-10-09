@@ -12,7 +12,7 @@ export const Planner = memo(function Planner() {
   const updateRecipeBooks = async () => {
     try {
       const recipeBooksResponse = await recipeBookAPI.getBooks();
-      setRecipeBooks(recipeBooksResponse.recipeBooks);
+      setRecipeBooks(recipeBooksResponse);
     } catch (err) {
       console.log(err);
     }

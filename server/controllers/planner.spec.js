@@ -8,26 +8,25 @@ const { getMockReq, getMockRes } = require('@jest-mock/express');
 
 jest.mock('../services/plannerService');
 
-describe('#index', () => {
-  describe('when index is passed valid input...', () => {
-
+describe('#getPlanners', () => {
+  describe('when getPlanners is passed valid input...', () => {
     beforeEach(() => {
       getPlannerDocumentByProfileID.mockReset();
     });
 
-    it('it should respond with expected output', async () => {
+    it('should respond with expected output', async () => {
       const expectedOutput = { foo: [] };
       getPlannerDocumentByProfileID.mockResolvedValueOnce(expectedOutput);
 
-      const req = getMockReq({user: {profile: 'testProfileId'}});
+      const req = getMockReq({ user: { profile: 'testProfileId' } });
       const { res, next } = getMockRes();
 
-      await index(req, res);
+      await getPlanners(req, res);
 
       expect(getPlannerDocumentByProfileID).toHaveBeenCalledTimes(1);
       expect(res.status).toHaveBeenCalledWith(201);
       expect(res.json).toHaveBeenCalledWith(
-        expect.objectContaining(expectedOutput),
+        expect.objectContaining(expectedOutput)
       );
     });
   });
@@ -45,4 +44,4 @@ describe('#index', () => {
   //     expect(getPlannerDocumentByProfileID).toHaveBeenCalledTimes(1);
   //   });
   // });
-})
+});

@@ -16,7 +16,7 @@ import ShoppingCartPage from '../ShoppingCartPage/ShoppingCartPage';
 import RecipePage from '../RecipePage/RecipePage';
 import RecipeLoading from '../../components/RecipeLoading/RecipeLoading';
 
-function App() {
+export default function App() {
   const [user, setUser] = useState(userService.getUser());
 
   function handleSignUpOrLogin() {
@@ -58,5 +58,3 @@ function App() {
     </Router>
   );
 }
-
-export default App;

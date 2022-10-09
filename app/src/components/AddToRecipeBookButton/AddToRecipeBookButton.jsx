@@ -20,7 +20,8 @@ export default function AddToRecipeBookButton({ recipeID, user }) {
 
   const updateRecipeBooks = async () => {
     const recipeBookResponse = await recipeBookAPI.getBooks();
-    setRecipeBooks(recipeBookResponse.recipeBooks);
+    // console.log(recipeBookResponse)
+    setRecipeBooks(recipeBookResponse);
     setLoading(false);
   };
 

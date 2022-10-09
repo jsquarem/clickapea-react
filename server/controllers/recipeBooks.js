@@ -2,7 +2,7 @@ const Profile = require('../models/profile');
 const Recipe = require('../models/recipe');
 const RecipeBook = require('../models/recipeBook');
 
-const create = async (req, res) => {
+const createRecipeBook = async (req, res) => {
   const profileID = req.user.profile;
   const recipeBookName = req.body.name;
   let recipeBookDocument = {
@@ -32,7 +32,7 @@ const create = async (req, res) => {
   }
 };
 
-const add = async (req, res) => {
+const addRecipeToBook = async (req, res) => {
   const recipeBookID = req.params.recipeBookID;
   const recipeID = req.params.recipeID;
   try {
@@ -49,13 +49,13 @@ const add = async (req, res) => {
   }
 };
 
-const index = async (req, res) => {
+const getRecipeBooks = async (req, res) => {
   const profileID = req.user.profile;
   try {
     const recipeBooks = await RecipeBook.find({
       profile: profileID,
     }).populate({ path: 'recipes', select: '_id title image' });
-    return res.status(201).json({ recipeBooks });
+    return res.status(201).json(recipeBooks);
   } catch (err) {
     return res
       .status(409)
@@ -64,7 +64,7 @@ const index = async (req, res) => {
 };
 
 module.exports = {
-  index,
-  create,
-  add,
+  getRecipeBooks,
+  createRecipeBook,
+  addRecipeToBook,
 };

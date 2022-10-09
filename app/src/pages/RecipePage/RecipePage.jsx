@@ -6,4 +6,4 @@
 // import * as recipeAPI from '../../utils/recipeAPI';
 // import { useEffect } from 'react';
 
-// export default function RecipePage({ user }) {}
+export default function RecipePage({ user }) {}

@@ -1,30 +1,33 @@
-const { addRecipeToPlannerDocument, getPlannerDocumentByProfileID } = require('../services/plannerService');
+const {
+  addRecipeToPlannerDocument,
+  getPlannerDocumentByProfileID,
+} = require('../services/plannerService');
 
-const index = async (req, res) => {
+const getPlanners = async (req, res) => {
   const profileID = req.user.profile;
   try {
-    const plannerDocument = await getPlannerDocumentByProfileID(profileID);
-    res.status(201).json(plannerDocument);
+    const plannerDocuments = await getPlannerDocumentByProfileID(profileID);
+    res.status(201).json(plannerDocuments);
   } catch (err) {
     res.status(500).json({ err });
   }
 };
 
-const add = async (req, res) => {
+const addRecipeToPlanner = async (req, res) => {
   try {
     const input = {
       profileID: req.user.profile,
       recipeID: req.body.recipeID,
       date: req.body.date,
-    }
+    };
     const plannerDocument = await addRecipeToPlannerDocument(input);
     res.status(201).json(plannerDocument);
   } catch (err) {
-    res.status(500).json({ err });
+    res.status(500).json(err);
   }
 };
 
 module.exports = {
-  index,
-  add,
+  getPlanners,
+  addRecipeToPlanner,
 };

@@ -17,7 +17,6 @@ export function addRecipe(recipeURL) {
 }
 
 export function findRecipe(query) {
-  console.log('findRecipe');
   const cleanURL = encodeURIComponent(query.query);
   const queryURL = `${BASE_URL}/search/find/${cleanURL}/`;
   return fetch(queryURL, {

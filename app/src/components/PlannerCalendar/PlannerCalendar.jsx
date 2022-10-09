@@ -19,8 +19,8 @@ export const PlannerCalendar = memo(function PlannerCalendar(accept) {
     const firstDay = month[0][0];
     const lastDay = month[month.length - 1][6];
     try {
-      const response = await plannerAPI.getEvents({ firstDay, lastDay });
-      setPlannerEvents(response.plannerEvents);
+      const plannerEvents = await plannerAPI.getEvents({ firstDay, lastDay });
+      setPlannerEvents(plannerEvents);
     } catch (err) {
       console.log(err.message);
     }

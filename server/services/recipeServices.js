@@ -13,7 +13,6 @@ const {
   Diet,
   Occaision,
 } = require('../models/recipeTaxonomy');
-const ingredient = require('../models/ingredient');
 
 //=========== Helper functions =====================//
 
@@ -100,13 +99,7 @@ const makeIngredientsList = (recipeDocuments) => {
   return ingredientsList;
 };
 
-const parseSpoonResponse = (data, callType = '') => {
-  if (callType == 'recipe') return data;
-  return false;
-};
-
 const addRecipeToDB = async (recipeData, recipeURLDocument) => {
-  const newRecipe = parseSpoonResponse(recipeData, 'recipe');
   const privacyObj = {
     public: true,
     owner: null,
@@ -120,40 +113,40 @@ const addRecipeToDB = async (recipeData, recipeURLDocument) => {
   }
   // if exists in response then get or create, else initialize empty
   // ingredients
-  const extendedIngredientRaws = newRecipe.extendedIngredients;
+  const extendedIngredientRaws = recipeData.extendedIngredients;
   let ingredientDocuments = [];
   if (extendedIngredientRaws)
     ingredientDocuments = await getIngredients(extendedIngredientRaws);
   // cuisines
-  const cuisineRaws = newRecipe.cuisines;
+  const cuisineRaws = recipeData.cuisines;
   let cuisinesDocuments = [];
   if (cuisineRaws) cuisinesDocuments = await getCuisines(cuisineRaws);
   // dishTypes
-  const dishTypeRaws = newRecipe.dishTypes;
+  const dishTypeRaws = recipeData.dishTypes;
   let dishTypeDocuments = [];
   if (dishTypeRaws) dishTypeDocuments = await getDishTypes(dishTypeRaws);
   // diets
-  const dietRaws = newRecipe.diets;
+  const dietRaws = recipeData.diets;
   let dietDocuments = [];
   if (dietRaws) dietDocuments = await getDiets(dietRaws);
   // occasions
-  const occasionRaws = newRecipe.occasions;
+  const occasionRaws = recipeData.occasions;
   let occasionDocuments = [];
   if (occasionRaws) occasionDocuments = await getOccasions(occasionRaws);
-  const analyzedInstructionsRaw = newRecipe.analyzedInstructions;
+  const analyzedInstructionsRaw = recipeData.analyzedInstructions;
   let equipmentDocuments = [];
   if (analyzedInstructionsRaw)
     equipmentDocuments = await getEquipment(analyzedInstructionsRaw);
   // build recipe object
-  newRecipe.recipeURL = recipeURLDocument;
-  newRecipe.privacy = privacyObj;
-  newRecipe.ingredients = ingredientDocuments;
-  newRecipe.cuisines = cuisinesDocuments;
-  newRecipe.dishTypes = dishTypeDocuments;
-  newRecipe.diets = dietDocuments;
-  newRecipe.occasions = occasionDocuments;
-  newRecipe.equipment = equipmentDocuments;
-  recipeDocument = await Recipe.create(newRecipe);
+  recipeData.recipeURL = recipeURLDocument;
+  recipeData.privacy = privacyObj;
+  recipeData.ingredients = ingredientDocuments;
+  recipeData.cuisines = cuisinesDocuments;
+  recipeData.dishTypes = dishTypeDocuments;
+  recipeData.diets = dietDocuments;
+  recipeData.occasions = occasionDocuments;
+  recipeData.equipment = equipmentDocuments;
+  recipeDocument = await Recipe.create(recipeData);
   recipeDocument = await recipeDocument.populate(
     'ingredients cuisines dishTypes diets occasions equipment'
   );

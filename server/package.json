@@ -2,6 +2,9 @@
   "name": "clickapea-server",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "aws-sdk": "^2.1223.0",
     "bcrypt": "^5.0.1",

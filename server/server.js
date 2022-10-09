@@ -13,7 +13,7 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, '../app/build')));
 
 app.use(require('./config/auth'));
 app.use('/api/users', require('./routes/api/users'));
@@ -22,7 +22,7 @@ app.use('/api/books', require('./routes/api/recipeBooks'));
 app.use('/api/planner', require('./routes/api/planner'));
 // "catch all" route
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../app/build', 'index.html'));
 });
 
 const port = process.env.PORT || 3001;

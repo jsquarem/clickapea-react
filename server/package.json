@@ -23,7 +23,7 @@
   "scripts": {
     "server:test": "npx jest",
     "start": "node server.js",
-    "heroku-postbuild": "cd app && npm install && npm run build"
+    "heroku-postbuild": "cd ../app && npm install && npm run build"
   },
   "browserslist": {
     "production": [

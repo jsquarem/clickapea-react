@@ -8,8 +8,5 @@
     "start": "node server.js",
     "build": "cd app/ && npm install && npm run build"
   },
-  "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.0.3"
-  }
+  "license": "MIT"
 }

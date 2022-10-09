@@ -5,8 +5,8 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node server.js",
-    "build": "cd app/ && npm install && npm run build && cd server/ & npm install"
+    "start": "node server/server.js",
+    "build": "cd app/ && npm install && npm run build"
   },
   "license": "MIT"
 }

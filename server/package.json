@@ -21,7 +21,9 @@
     "jest": "^29.1.2"
   },
   "scripts": {
-    "server:test": "npx jest"
+    "server:test": "npx jest",
+    "start": "node server.js",
+    "heroku-postbuild": "cd app && npm install && npm run build"
   },
   "browserslist": {
     "production": [
